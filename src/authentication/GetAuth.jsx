@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from './login';
 import Register from './register';
 import GetUser from './GetUser';
+import Home from '../pages/Home';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const GetAuth = () => {
@@ -28,7 +29,7 @@ const GetAuth = () => {
 
     return (
         <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<GetUser />} />

@@ -1,3 +1,4 @@
+// ! Update with navigation if user does not have an account and needs to register
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";

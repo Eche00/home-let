@@ -4,7 +4,7 @@ import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import GetUser from './GetUser';
 import NotFound from '../pages/NotFound';
 import Login from './login';
-import CreateListing from '../pages/CreateListing';
+import CreateListing from '../pages/CreateProperty';
 
 const GetDash = () => {
     const auth = getAuth();

@@ -1,9 +1,15 @@
-import React from 'react';
+import "../styles/loading.css";
 
 const Loading = () => {
   return (
-    <div>
-      <h1>Loading files here...</h1>
+    <div className="loading-container">
+      <div className="spinner">
+        <div className="block"></div>
+        <div className="block"></div>
+        <div className="block"></div>
+        <div className="block"></div>
+      </div>
+      <p className="loading-text">Loading...</p>
     </div>
   );
 };

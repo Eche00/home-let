@@ -5,6 +5,8 @@ import { auth } from "./lib/firebase";
 import GetAuth from "./authentication/GetAuth";
 import GetDash from "./authentication/GetDash";
 import Loading from "./components/loading";
+import Footer from "./components/Footer";
+import './styles/Footer.css'
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -26,14 +28,12 @@ function App() {
 
   return (
     <div>
-
-      {
-        isAuthenticated
-          // if user is authenticated show GetDash, else GetAuth
-          ? <GetDash />
-          : <GetAuth />
-      }
+      <div className="main-content">
+        {isAuthenticated ? <GetDash /> : <GetAuth />}
+      </div>
+      <Footer />
     </div>
+
   );
 }
 

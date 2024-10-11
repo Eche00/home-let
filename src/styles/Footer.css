@@ -1,0 +1,31 @@
+.main-content {
+  margin-bottom: 120px;
+}
+
+.footer {
+  background-color: red;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  padding: 20px;
+}
+
+
+.pc-footer,
+.mob-footer {
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .pc-footer {
+    display: none;
+  }
+}
+
+@media (min-width: 767px) {
+  .mob-footer {
+    display: none;
+  }
+}

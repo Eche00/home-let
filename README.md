@@ -80,6 +80,16 @@ HOME RENTALS will be a one-stop-shop for all real estate needs, offering listing
 8.⁠ ⁠*Login/Registration Page*:
 - Separate registration processes for landlords/agents and users.
 
+
+## Developer Logic
+1. Footer: Will only display a regular footer with all rights reserved but when logged in and on mobile, will include a mobile navigation.
+
+2. Header: Will have just some list of items displayed based on condition
+
+3. Mobile Navigation: Will disable most of the header except logo, and will have a hamburger in the menu item.
+
+4. Dashboards: The Dashboard component will conditionally select an item out of three components based on the role ie, `AdminDash`, `CustomerDash` and `VendorDash`.
+
 ## System Roadmap
 - Web App Development:
 Consisting of the Frontend and Backend.

@@ -1,11 +1,11 @@
-// ! FOR IFEOMA: Update with labels, and navigate to login page with a link if user ha an account
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
+import { Link } from "react-router-dom";
 import { handleRegistration } from "../lib/regLogic";
-import "../styles/Register.css"; // Ensure the correct path
-import registerImage from '../assets/woman-home.jpeg'; // Update the path as needed
+import "../styles/Register.css";
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -46,13 +46,15 @@ const Register = () => {
     setLoading(true);
     setError("");
 
-    // Combine the day, month, and year into a single date string
-    const fullDOB = `${formData.dobYear}-${String(formData.dobMonth).padStart(2, '0')}-${String(formData.dobDay).padStart(2, '0')}`;
+    const fullDOB = `${formData.dobYear}-${String(formData.dobMonth).padStart(
+      2,
+      "0"
+    )}-${String(formData.dobDay).padStart(2, "0")}`;
 
     try {
       await handleRegistration({
         ...formData,
-        dob: fullDOB, // Send the full date as a single field
+        dob: fullDOB,
       });
       navigate("/dashboard");
     } catch (error) {
@@ -65,82 +67,99 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-content">
-        <div className="register-image">
-          <img src={registerImage} alt="Register" />
-        </div>
         <div className="register-form-container">
           <h1 className="register-title">Register</h1>
           {error && <p className="register-error">{error}</p>}
           <form onSubmit={handleSubmit} className="register-form">
-            <label htmlFor="">Username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               name="username"
-              placeholder="ifeoma123"
+              id="username"
+              placeholder="eg. johndoe123"
               value={formData.username}
               onChange={handleChange}
               required
               className="input-field"
             />
+
+            <label htmlFor="fullName">Full Name</label>
             <input
               type="text"
               name="fullName"
-              placeholder="Full Name"
+              id="fullName"
+              placeholder="John Doe"
               value={formData.fullName}
               onChange={handleChange}
               required
               className="input-field"
             />
+
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              id="email"
+              placeholder="johndoe@email.com"
               value={formData.email}
               onChange={handleChange}
               required
               className="input-field"
             />
+
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              id="password"
+              placeholder="******"
               value={formData.password}
               onChange={handleChange}
               required
               className="input-field"
             />
+
+            <label htmlFor="address">Address</label>
             <input
               type="text"
               name="address"
-              placeholder="Address"
+              id="address"
+              placeholder="123 Maple Leaf Street, Owerri, Imo State"
               value={formData.address}
               onChange={handleChange}
               required
               className="input-field"
             />
+
+            <label htmlFor="gender">Gender</label>
             <select
               name="gender"
+              id="gender"
               value={formData.gender}
               onChange={handleChange}
               required
               className="input-field"
             >
-              <option value="" disabled>Select Gender</option>
+              <option value="" disabled>
+                Select Gender
+              </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
 
-            {/* Date of Birth Selectors */}
             <div className="dob-container">
               <select
                 name="dobDay"
+                id="dobDay"
                 value={formData.dobDay}
                 onChange={handleChange}
                 required
                 className="input-field"
               >
-                <option value="" disabled>Day</option>
+                <option value="" disabled>
+                  Day
+                </option>
                 {Array.from({ length: 31 }, (_, i) => (
                   <option key={i + 1} value={i + 1}>
                     {String(i + 1).padStart(2, "0")}
@@ -150,12 +169,15 @@ const Register = () => {
 
               <select
                 name="dobMonth"
+                id="dobMonth"
                 value={formData.dobMonth}
                 onChange={handleChange}
                 required
                 className="input-field"
               >
-                <option value="" disabled>Month</option>
+                <option value="" disabled>
+                  Month
+                </option>
                 {Array.from({ length: 12 }, (_, i) => (
                   <option key={i + 1} value={i + 1}>
                     {String(i + 1).padStart(2, "0")}
@@ -165,12 +187,15 @@ const Register = () => {
 
               <select
                 name="dobYear"
+                id="dobYear"
                 value={formData.dobYear}
                 onChange={handleChange}
                 required
                 className="input-field"
               >
-                <option value="" disabled>Year</option>
+                <option value="" disabled>
+                  Year
+                </option>
                 {Array.from({ length: 120 }, (_, i) => {
                   const year = new Date().getFullYear() - i;
                   return (
@@ -182,16 +207,18 @@ const Register = () => {
               </select>
             </div>
 
-            <label className="register-checkbox">
+            <label htmlFor="termsAgreed" className="register-checkbox">
               <input
                 type="checkbox"
                 name="termsAgreed"
+                id="termsAgreed"
                 checked={formData.termsAgreed}
                 onChange={handleChange}
                 required
               />
               I agree to the Terms and Conditions
             </label>
+
             <button
               type="submit"
               disabled={loading}
@@ -199,6 +226,10 @@ const Register = () => {
             >
               {loading ? "Registering..." : "Register"}
             </button>
+
+            <p className="login-redirect">
+              Already have an account? <Link to="/Login" className="click">Login here</Link>.
+            </p>
           </form>
         </div>
       </div>

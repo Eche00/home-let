@@ -90,6 +90,8 @@ HOME RENTALS will be a one-stop-shop for all real estate needs, offering listing
 
 4. Dashboards: The Dashboard component will conditionally select an item out of three components based on the role ie, `AdminDash`, `CustomerDash` and `VendorDash`.
 
+5. NavigationItems: Home (noAuth), About Us, Contact Us, Product List, Agents (Auth), Register (noAuth), Login (noAuth), Dashboard (Auth), Terms and Conditions, and Our Services.
+
 ## System Roadmap
 - Web App Development:
 Consisting of the Frontend and Backend.

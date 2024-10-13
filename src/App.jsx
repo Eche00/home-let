@@ -6,7 +6,7 @@ import GetAuth from "./authentication/GetAuth";
 import GetDash from "./authentication/GetDash";
 import Loading from "./components/loading";
 import Footer from "./components/Footer";
-import './styles/Footer.css'
+import Header from "./components/Header";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -28,7 +28,8 @@ function App() {
 
   return (
     <div>
-      <div className="main-content">
+      <Header />
+      <div className="top bottom">
         {isAuthenticated ? <GetDash /> : <GetAuth />}
       </div>
       <Footer />

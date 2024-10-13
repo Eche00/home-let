@@ -1,3 +1,4 @@
+// src/lib/firebase.js
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -18,6 +19,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storageF = getStorage(app); 
+export const auth = getAuth(app); // Named export
+export const db = getFirestore(app); // Named export
+export const storageF = getStorage(app); // Named export

@@ -1,4 +1,4 @@
-/* ! remember to clean the code, i lef them unattended to */
+
 .register-container {
     display: flex;
     justify-content: center;
@@ -14,6 +14,10 @@
     width: 100%;
     max-width: 900px;
     background-color: #fff;
+    background-image: url("../assets//bg-overlay.png");
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -42,6 +46,13 @@
     margin-bottom: 20px;
     text-align: center;
   }
+
+  .auth-nav {
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+}
+
   
   .register-error {
     color: red;
@@ -62,6 +73,7 @@
     border-radius: 4px;
     background-color: #ccc;
     width: 100%; 
+    color: #006633;
     box-sizing: border-box; 
   }
 
@@ -145,5 +157,13 @@
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+  
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .register-form-container {
+        width: 100%;
+      }
   }
   

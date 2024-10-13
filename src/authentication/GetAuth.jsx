@@ -5,6 +5,7 @@ import Register from './register';
 import GetUser from './GetUser';
 import Home from '../pages/Home';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import ForgotPassword from './ForgotPassword';
 
 const GetAuth = () => {
     const [user, setUser] = React.useState(null);
@@ -31,6 +32,7 @@ const GetAuth = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<GetUser />} />
             {/* Redirect to login if no match */}

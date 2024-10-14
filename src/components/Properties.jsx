@@ -4,7 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import "../styles/ProductList.css"; 
+import "../styles/ProductList.css";
 
 // Skeleton Loader Component
 function SkeletonLoader() {
@@ -19,9 +19,9 @@ function SkeletonLoader() {
 function Properties() {
     const navigate = useNavigate();
     const [properties, setProperties] = useState([]);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
 
-    // getting properties from db
+    // Getting properties from db
     useEffect(() => {
         const propertyDataRef = collection(db, "propertyData");
 
@@ -31,7 +31,7 @@ function Properties() {
                     id: doc.id,
                     ...doc.data().data,
                 }));
-                // getting recently updated properties
+                // Getting recently updated properties
                 const last5Properties = propertyData
                     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     .slice(0, 4);
@@ -44,7 +44,7 @@ function Properties() {
             });
     }, [navigate]);
 
-    // handling a clicked property
+    // Handling a clicked property
     const handleClick = (property) => {
         navigate(`/preview/${property.id}`);
     };
@@ -61,29 +61,31 @@ function Properties() {
                                 <SkeletonLoader key={index} />
                             ))
                         ) : (
-                            // property container
+                            // Property container
                             properties.map((property) => (
-                                // each property
-                                <div key={property.id} className="eachProperty">
+                                // Each property, click event attached to the entire div
+                                <div
+                                    key={property.id}
+                                    className="eachProperty"
+                                    onClick={() => handleClick(property)} // Event handler moved here
+                                >
                                     <div className="image-container">
-                                        {/* property hero image  */}
+                                        {/* Property hero image */}
                                         <img
-                                            onClick={() => handleClick(property)}
                                             className="propertyHeroImage"
                                             src={property.imageUrls[0]}
                                             alt=""
                                         />
-                                        {/* property state (top-right corner of the image) */}
+                                        {/* Property state (top-right corner of the image) */}
                                         <div className="property-state">
                                             <FontAwesomeIcon icon={faMapMarkerAlt} /> <span>{property.state}</span>
                                         </div>
                                     </div>
-                                    {/* property title */}
+                                    {/* Property title */}
                                     <h2 className="propertyTitle">
                                         {property.title} ({property.houseType})
                                     </h2>
                                 </div>
-
                             ))
                         )}
                     </div>

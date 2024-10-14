@@ -1,0 +1,23 @@
+.pc-menu {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.pc-menu li {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pc-menu li:hover {
+    background-color: #555;
+}
+
+/* Hide PC menu on smaller screens */
+@media screen and (max-width: 768px) {
+    .pc-menu {
+        display: none;
+    }
+}

@@ -17,17 +17,17 @@
   right: 0;
 }
 
-
 .mob-footer {
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  display: block;
+  display: flex;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: -1;
 }
 
 @media (max-width: 767px) {

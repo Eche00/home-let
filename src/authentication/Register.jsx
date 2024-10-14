@@ -64,6 +64,7 @@ const Register = () => {
     }
   };
 
+  
   return (
     <div className="register-container">
       <div className="register-content">
@@ -216,7 +217,7 @@ const Register = () => {
                 onChange={handleChange}
                 required
               />
-              I agree to the Terms and Conditions
+            <Link to="/terms" className="click"> I agree to the Terms and Conditions</Link>
             </label>
 
             <button

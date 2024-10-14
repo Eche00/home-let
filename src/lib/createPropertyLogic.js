@@ -15,6 +15,8 @@ export const handleCreateProperty = async (formData) => {
       propertyDataDoc
     );
 
-    await setDoc(propertyDataRef, { data: formData });
+    setDoc(propertyDataRef, { data: formData }).then(() => {
+      console.log("Property Data uploaded successfully");
+    });
   } catch (error) {}
 };

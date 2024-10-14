@@ -5,6 +5,12 @@ import GetUser from './GetUser';
 import NotFound from '../pages/NotFound';
 import Login from './login';
 import CreateListing from '../pages/CreateProperty';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import ProductList from '../pages/ProductList';
+import Terms from '../pages/Terms';
+import Services from '../pages/Services';
+import PropertyPreview from '../pages/PropertyPreview';
 
 const GetDash = () => {
     const auth = getAuth();
@@ -48,17 +54,22 @@ const GetDash = () => {
 
     return (
         <div>
-           <div className='header'>
+            <div className='head'>
                 <p>Hello, {user.displayName || user.email}!</p>
                 <button onClick={handleLogout}>Logout</button>
-           </div>
+            </div>
             <Routes>
                 {/* Define all the routes here */}
                 <Route path="/dashboard" element={<GetUser />} />
                 <Route path="/add" element={<CreateListing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
-
+                <Route path="/about-us" element={<About />} />
+                <Route path="/contact-us" element={<Contact />} />
+                <Route path="/properties" element={<ProductList />} />
+                <Route path="/preview/:propertyId" element={<PropertyPreview />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/our-services" element={<Services />} />
                 {/* Redirect from "/" to "/dashboard" */}
                 <Route path="/" element={<Navigate to="/dashboard" />} />
             </Routes>

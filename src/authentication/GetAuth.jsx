@@ -6,6 +6,12 @@ import GetUser from './GetUser';
 import Home from '../pages/Home';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import ForgotPassword from './ForgotPassword';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import ProductList from '../pages/ProductList';
+import Terms from '../pages/Terms';
+import Services from '../pages/Services';
+import PropertyPreview from '../pages/PropertyPreview';
 
 const GetAuth = () => {
     const [user, setUser] = React.useState(null);
@@ -35,6 +41,12 @@ const GetAuth = () => {
             <Route path="/password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<GetUser />} />
+            <Route path="/about-us" element={<About />} />
+            <Route path="/contact-us" element={<Contact />} />
+            <Route path="/properties" element={<ProductList />} />
+            <Route path="/preview/:propertyId" element={<PropertyPreview />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/our-services" element={<Services />} />
             {/* Redirect to login if no match */}
             <Route path="*" element={<Navigate to="/login" />} />
         </Routes>

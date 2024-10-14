@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { Link } from "react-router-dom";
-import "../styles/Login.css"; 
+import "../styles/Login.css";
 import hood from '../assets/hood.jpg'
+import Properties from "../components/Properties";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -57,47 +58,52 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-    <div className="login-content">
-      <img src={hood} alt="Login illustration" className="login-image" />
-      <div className="login-form-container">
-        <h1 className="login-title">Login</h1>
-        {error && <p className="login-error">{error}</p>}
-        <form onSubmit={handleSubmit} className="login-form">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="input-field"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="input-field"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className={`login-button ${loading ? "disabled" : ""}`}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-          <div className="forgot-password">
-            <Link to="/Password">Forgot Password?</Link>
+    <>
+      <div className="login-container">
+        <div className="login-content">
+          <img src={hood} alt="Login illustration" className="login-image" />
+          <div className="login-form-container">
+            <h1 className="login-title">Login</h1>
+            {error && <p className="login-error">{error}</p>}
+            <form onSubmit={handleSubmit} className="login-form">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="input-field"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="input-field"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className={`login-button ${loading ? "disabled" : ""}`}
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
+              <div className="forgot-password">
+                <Link to="/Password">Forgot Password?</Link>
+              </div>
+              <div className="forgot-password">
+                Don't have an account?  <Link to="/register">Register Now</Link>
+              </div>
+            </form>
           </div>
-          <div className="forgot-password">
-          Don't have an account?  <Link to="/register">Register Now</Link>
-          </div>
-        </form>
+        </div>
       </div>
-    </div>
-  </div>
-  
+
+      {/* include properties for display */}
+      <div className="properties"> <Properties /></div>
+    </>
+
   );
 };
 

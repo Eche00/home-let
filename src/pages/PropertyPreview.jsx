@@ -3,11 +3,36 @@ import { useParams } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import "../styles/PropertyPreview.css";
-import RelatedProperties from "../components/RelatedProperties";  // Import the RelatedProperties component
+import RelatedProperties from "../components/RelatedProperties";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHomeLgAlt, faMapMarkerAlt, faRestroom } from "@fortawesome/free-solid-svg-icons";
+
+// Modal Component
+const Modal = ({ isOpen, closeModal, property }) => {
+  if (!isOpen) return null; // Don't render the modal if it's not open
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>Physical Inspection</h2>
+        <p>First check if user is authenticated, if not then display a button to close modal and link to login page.</p>
+        <p>
+        A form will be contained here to handle and create a collection called inspections. 
+        It will contain the requested date, time, and will add the vendor's id too.
+        </p>
+        <p>On creation, the status becomes pending till the vendor accepts or decline to decide its new state, then a complete state when it is done.</p>
+        <button onClick={closeModal} className="close-modal-button">Close</button>
+      </div>
+    </div>
+  );
+};
 
 function PropertyPreview() {
-    const { propertyId } = useParams(); // getting propertyId
+     // getting propertyId
+    const { propertyId } = useParams();
     const [property, setProperty] = useState({});
+    // state for modal
+    const [isModalOpen, setIsModalOpen] = useState(false); 
 
     useEffect(() => {
         // getting the properties from the db
@@ -28,6 +53,16 @@ function PropertyPreview() {
                 console.error("Error retrieving document:", error);
             });
     }, [propertyId]);
+
+    // Function to handle modal open
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+
+    // Function to handle modal close
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
 
     return (
         <div key={property.id} className="previewPropertyContainer">
@@ -56,53 +91,62 @@ function PropertyPreview() {
             )}
 
             {/* Property Title and Details */}
-            <div className="flex-container">
-                <div className="flex-left">
-                    <h2 className="previewPropertyTitle">
-                        {property.title} ({property.houseType})
-                    </h2>
-                    <p className="previewPropertyAddress">
-                        <b>Address: </b>
-                        {property.address}, {property.city}, {property.state} State
-                    </p>
+            <div className="previewDetails">
+                <div className="flex-container">
+                    <div className="flex-left">
+                        <h2 className="previewPropertyTitle">
+                            {property.title} ({property.houseType})
+                        </h2>
+                        <p className="previewPropertyAddress">
+                            <FontAwesomeIcon icon={faMapMarkerAlt} />  <b>Address: </b>
+                            {property.address}, {property.city}, {property.state} State
+                        </p>
+                    </div>
+                    <div className="flex-right">
+                        {/* video section */}
+                        {property.video?.url && property.video.url !== "" && (
+                            <div className="previewPropertyVideoContainer">
+                                <a href={property.video.url} target="_blank" rel="noopener noreferrer">
+                                    <button className="previewPropertyVideoButton">Request Virtual Tour</button>
+                                </a>
+                            </div>
+                        )}
+                        {/* To Open the agent's profile url */}
+                        <button
+                            className="previewPropertyInspectButton"
+                            // open the modal on click
+                            // debit the customer if status is pending
+                            // credit the vendor if status is completed
+                            onClick={openModal} 
+                        >
+                            Physical Inspection
+                        </button>
+                    </div>
                 </div>
-                <div className="flex-right">
-                    {/* video section */}
-                    {property.video?.url && property.video.url !== "" && (
-                        // * A click on this button checks if the user is authenticated, if not then navigate back to login
-                        // !  If user is logged in, create a collection (inspections), 
-                        // ! which contains the id  of the customer and the vendor, and a status array for pending, accepted, cancelled, completed, and null   
-                        // ! Physical inspections has a cost too                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                //    
-                        <div className="previewPropertyVideoContainer">
-                            <a href={property.video.url} target="_blank" rel="noopener noreferrer">
-                                <button className="previewPropertyVideoButton">Request Virtual Tour</button>
-                            </a>
-                        </div>
-                    )}
-                    {/* To Open the agent's profile url */}
-                    <button
-                        className="previewPropertyInspectButton"
-                    // * A click on this button will
-                    >
-                        Physical Inspection
-                    </button>
+
+                {/* Property Description */}
+                <div className="previewPropertyDescription">
+                    {property.description} with {property.amenities}
+
+                    {/* Room Details */}
+                    <div className="previewPropertyRoomSection">
+                        <p>For {property.type}</p>
+                        <p>  <FontAwesomeIcon icon={faRestroom} /> {property.bathrooms} Bathrooms</p>
+                        <p>  <FontAwesomeIcon icon={faHomeLgAlt} /> {property.bedrooms} Bedrooms</p>
+                    </div>
+
+                    <div>
+                        A physical tour of the building attracts an inspection fee of 4,000 NGN.
+                        Once requested, an inspection date will be set to physically inspect the {property.houseType}.
+                    </div>
                 </div>
-            </div>
-
-            {/* Property Description */}
-            <div className="previewPropertyDescription">
-                {property.description} with {property.amenities}
-            </div>
-
-            {/* Room Details */}
-            <div className="previewPropertyRoomSection">
-                <p>For {property.type}</p>
-                <p>{property.bathrooms} Bathrooms</p>
-                <p>{property.bedrooms} Bedrooms</p>
             </div>
 
             {/* Related Properties Component */}
             <RelatedProperties currentProperty={property} />
+
+            {/* Modal Component */}
+            <Modal isOpen={isModalOpen} closeModal={closeModal} property={property} />
         </div>
     );
 }

@@ -1,48 +1,33 @@
 .previewPropertyImgContainer {
     display: grid;
-    /* Use grid layout */
     grid-template-columns: 1fr 1fr;
-    /* Two equal columns */
     gap: 10px;
-    /* Space between grid items */
-    /* margin-top: 20px; */
     padding: 0 50px;
 }
 
 .previewPropertyImgMain {
     grid-column: 1;
-    /* Place main image in the first column */
     height: 400px;
-    /* Set height for the main image */
 }
 
 .previewPropertyImgSideContainer {
     grid-column: 2;
-    /* Place side images in the second column */
     display: grid;
-    /* Nested grid for stacking images */
     grid-template-rows: 1fr 1fr;
-    /* Two equal rows */
 }
 
 .previewPropertyImgLarge {
     width: 100%;
-    /* Main image fills its container width */
     height: 510px;
-    /* Fill the set height of 400px */
     object-fit: cover;
-    /* Maintain aspect ratio */
     border: 5px solid #f4f4f4;
     border-radius: 8px;
 }
 
 .previewPropertyImg {
     width: 100%;
-    /* Ensure side images fill the width */
     height: 250px;
-    /* Set height for side images */
     object-fit: cover;
-    /* Maintain aspect ratio */
     border-radius: 8px;
     border: 5px solid #f4f4f4;
 }
@@ -64,71 +49,43 @@
 
 .flex-container {
     display: flex;
-    /* Use flexbox layout */
     justify-content: space-between;
-    /* Pushes items to the ends */
     align-items: center;
-    /* Vertically center items */
     padding: 20px;
-    /* Optional padding */
-    background-color: #f9f9f9;
-    /* Optional background color */
-    border: 1px solid #ccc;
-    /* Optional border */
-    border-radius: 8px;
-    /* Optional rounded corners */
+    border-bottom: 1px solid #333;
 }
 
 .flex-left,
 .flex-right {
     flex: 0 1 auto;
-    /* Allow them to shrink and grow */
-    /* Additional styles can be added here */
 }
 
 .previewPropertyVideoButton {
     background-color: #006633;
-    /* Button color */
     color: white;
-    /* Text color */
     border: none;
-    /* Remove default border */
     padding: 10px 20px;
-    /* Padding */
     font-size: 16px;
-    /* Font size */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Change cursor on hover */
     text-decoration: none;
-    /* Remove underline */
 }
 
 .previewPropertyInspectButton {
     background-color: #2c2c2c;
-    /* Button color */
     color: white;
-    /* Text color */
     border: none;
-    /* Remove default border */
     padding: 10px 20px;
-    /* Padding */
     font-size: 16px;
-    /* Font size */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Change cursor on hover */
     text-decoration: none;
-    /* Remove underline */
 }
 
 .previewPropertyVideoButton:hover, 
 .previewPropertyInspectButton:hover {
     background-color: gold;
     color: #2c2c2c;
-    /* Darken button color on hover */
 }
 
 
@@ -137,35 +94,65 @@
     padding: 20px;
 }
 
+
+
+.previewDetails {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
 .previewPropertyRoomSection {
     display: flex;
-    justify-content: space-around;
-    /* Distribute items with space around */
-    align-items: center;
-    /* Align items vertically in the center */
-    padding: 10px;
-    /* Add some padding around the section */
-    background-color: #f9f9f9;
-    /* Optional background color */
-    border-radius: 8px;
-    /* Rounded corners */
-    border: 1px solid #ccc;
-    /* Optional border */
+    justify-content: flex-start; 
+    align-items: flex-start; 
 }
 
 .previewPropertyRoomSection p {
-    margin: 0;
-    /* Remove default margins */
-    font-size: 16px;
-    /* Set font size */
-    font-weight: 500;
-    /* Optional font weight */
-    color: #333;
-    /* Text color */
+    margin: 10px; 
+    font-size: 16px; 
+    font-weight: 500; 
+    color: #333; 
 }
 
 
 
+/* Modal overlay to cover the background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal content box */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  /* Close button */
+  .close-modal-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #006633;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
@@ -175,12 +162,10 @@
 
     .previewPropertyImgLarge {
         height: 410px;
-        /* Fill the set height of 400px */
     }
 
     .previewPropertyImg {
         height: 200px;
-        /* Set height for side images */
     }
     .flex-container {
         display: block;

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import "../styles/PropertyPreview.css";
+import RelatedProperties from "../components/RelatedProperties";  // Import the RelatedProperties component
 
 function PropertyPreview() {
     const { propertyId } = useParams(); // getting propertyId
@@ -21,8 +22,6 @@ function PropertyPreview() {
                 const selectedProperty = propertyData.find(
                     (prop) => prop.id === propertyId
                 );
-                console.log(selectedProperty);
-                console.log(propertyId);
                 setProperty(selectedProperty);
             })
             .catch((error) => {
@@ -32,62 +31,78 @@ function PropertyPreview() {
 
     return (
         <div key={property.id} className="previewPropertyContainer">
-            {/* property title */}
-            <h2 className="previewPropertyTitle">
-                {property.title} ({property.houseType})
-            </h2>
-
-            {/* video section */}
-            {property.video?.url && property.video.url !== "" && (
-                <div className="previewPropertyVideoContainer">
-                    <video className="previewPropertyVideo" controls>
-                        <source src={property.video.url} type="video/mp4" />
-                    </video>
-                </div>
-            )}
-
-            {/* image section */}
+            {/* Image Section */}
             {property.imageUrls && property.imageUrls.length > 0 && (
-                <div className="previewPropertyImgContainerOverflow">
-                    <div className="previewPropertyImgContainer">
-                        {property.imageUrls.map((url) => (
+                <div className="previewPropertyImgContainer">
+                    <img
+                        key={property.imageUrls[0]}
+                        className="previewPropertyImgLarge"
+                        src={property.imageUrls[0]}
+                        alt="Property"
+                        onClick={() => window.open(property.imageUrls[0], "_blank")}
+                    />
+                    <div className="previewPropertyImgSideContainer">
+                        {property.imageUrls.slice(1, 3).map((url) => (
                             <img
                                 key={url}
                                 className="previewPropertyImg"
                                 src={url}
                                 alt="Property"
+                                onClick={() => window.open(url, "_blank")}
                             />
                         ))}
                     </div>
                 </div>
             )}
 
-            {/* property description */}
-            <p className="previewPropertyDescription">
-                <b>Description: </b>
-                {property.description}
-            </p>
+            {/* Property Title and Details */}
+            <div className="flex-container">
+                <div className="flex-left">
+                    <h2 className="previewPropertyTitle">
+                        {property.title} ({property.houseType})
+                    </h2>
+                    <p className="previewPropertyAddress">
+                        <b>Address: </b>
+                        {property.address}, {property.city}, {property.state} State
+                    </p>
+                </div>
+                <div className="flex-right">
+                    {/* video section */}
+                    {property.video?.url && property.video.url !== "" && (
+                        // * A click on this button checks if the user is authenticated, if not then navigate back to login
+                        // !  If user is logged in, create a collection (inspections), 
+                        // ! which contains the id  of the customer and the vendor, and a status array for pending, accepted, cancelled, completed, and null   
+                        // ! Physical inspections has a cost too                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                //    
+                        <div className="previewPropertyVideoContainer">
+                            <a href={property.video.url} target="_blank" rel="noopener noreferrer">
+                                <button className="previewPropertyVideoButton">Request Virtual Tour</button>
+                            </a>
+                        </div>
+                    )}
+                    {/* To Open the agent's profile url */}
+                    <button
+                        className="previewPropertyInspectButton"
+                    // * A click on this button will
+                    >
+                        Physical Inspection
+                    </button>
+                </div>
+            </div>
 
-            {/* property address */}
-            <p className="previewPropertyAddress">
-                <b>Address: </b>
-                {property.address}, {property.city}, {property.state} State
-            </p>
+            {/* Property Description */}
+            <div className="previewPropertyDescription">
+                {property.description} with {property.amenities}
+            </div>
 
-            {/* property amenities */}
-            <p className="previewPropertyAmenities">
-                <b>Amenities: </b>
-                {property.amenities}
-            </p>
-
-            {/* property type */}
-            <p className="previewPropertyType">For {property.type}</p>
-
-            {/* room details */}
+            {/* Room Details */}
             <div className="previewPropertyRoomSection">
+                <p>For {property.type}</p>
                 <p>{property.bathrooms} Bathrooms</p>
                 <p>{property.bedrooms} Bedrooms</p>
             </div>
+
+            {/* Related Properties Component */}
+            <RelatedProperties currentProperty={property} />
         </div>
     );
 }

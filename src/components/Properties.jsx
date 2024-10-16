@@ -4,7 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import "../styles/ProductList.css";
+import "../styles/Properties.css";
 
 // Skeleton Loader Component
 function SkeletonLoader() {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import "../styles/ProductList.css";
+import "../styles/Properties.css";
 
 function ProductList() {
   const navigate = useNavigate();

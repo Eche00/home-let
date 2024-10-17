@@ -1,18 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { handleCreateProperty } from "../lib/createPropertyLogic";
-import { Link, useNavigate } from "react-router-dom";
-
+import {
+  handleCreateProperty,
+  handleImageUpload,
+  handleVideoUpload,
+} from "../lib/createPropertyLogic";
+import { useNavigate } from "react-router-dom";
 import "../styles/CreateProperty.css";
 import { auth } from "../lib/firebase";
-import storageImage from "../lib/uploadLogic";
+import Loading from "../components/uploadLoading";
+
 function CreateProperty() {
   const [user, setUser] = useState(null);
-  const [files, setFiles] = useState([]); // state to handle image selection
-  const [error, setError] = useState(false); // state to manage image error
-  const [loading, setLoading] = useState(false); // state to manage form submission loader
+  const [files, setFiles] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(null);
+  const [videoUrlPreview, setVideoUrlPreview] = useState(null);
+  const [imageLimitError, setImageLimitError] = useState(false);
 
   const navigate = useNavigate();
-  const imageRef = useRef(); // handling hidden file input
+  const imageRef = useRef();
 
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -26,36 +33,62 @@ function CreateProperty() {
     type: "rent",
     bedrooms: 1,
     bathrooms: 1,
+    video: { file: "", url: "" },
   });
 
-  // Fetching logged in user data
   useEffect(() => {
-    // Get the current user from Firebase
     const currentUser = auth.currentUser;
-    // Set the user state if logged in
-    setUser(currentUser);
+    if (currentUser) {
+      setUser(currentUser);
+
+      // Update formData to include the user ID in the video field
+      setFormData((prevData) => ({
+        ...prevData,
+        video: { file: currentUser.uid, url: "" }, // Replace null with user ID
+      }));
+    } else {
+      navigate("/login"); // Redirect to login if not authenticated
+    }
   }, [navigate]);
 
-  // handling getting property form inputs
   const handleChange = (e) => {
     setError(false);
 
-    // handling if the Property is rent or sale
+    // Handle video selection
+    if (e.target.id === "video") {
+      const videoFile = e.target.files[0];
+
+      // Ensure the selected file is a valid video format
+      if (videoFile && videoFile.type.startsWith("video/")) {
+        setVideoUrl(videoFile);
+        setVideoUrlPreview(URL.createObjectURL(videoFile)); // Create video preview
+      } else {
+        console.error("Invalid video format");
+        setVideoUrl(null);
+        setVideoUrlPreview(null); // Reset if not valid
+      }
+    }
+
+    // Handle property type (Rent or Sale)
     if (e.target.id === "sale" || e.target.id === "rent") {
       setFormData({ ...formData, type: e.target.id });
-    }
-    // handling the rest of the property property form data
-    if (
-      e.target.id === "title" ||
-      e.target.id === "address" ||
-      e.target.id === "state" ||
-      e.target.id === "city" ||
-      e.target.id === "houseType" ||
-      e.target.id === "amenities" ||
-      e.target.id === "description" ||
-      e.target.type === "number"
+    } else if (
+      ["title", "address", "state", "city", "houseType", "amenities", "description"].includes(e.target.id)
     ) {
       setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+  };
+
+  // Handle image selection
+  const handleImageChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+
+    if (selectedFiles.length > 3) {
+      setImageLimitError(true);
+      setFiles(selectedFiles.slice(0, 3)); // Limit to 3 images
+    } else {
+      setImageLimitError(false);
+      setFiles(selectedFiles);
     }
   };
 
@@ -63,30 +96,24 @@ function CreateProperty() {
     e.preventDefault();
     setLoading(true);
 
-    // Check if files are selected
-    if (files.length <= 0) {
+    if (files.length === 0) {
       setError(true);
-      console.error("No files selected");
+      console.error("No images selected");
       setLoading(false);
       return;
     }
+
     try {
-      // handling image upload to firebase & property form submission
-      if (files.length > 0 && files.length + formData.imageUrls.length < 4) {
-        const promises = [];
-        for (let i = 0; i < files.length; i++) {
-          promises.push(storageImage(files[i]));
-        }
-        await Promise.all(promises).then((urls) => {
-          setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
-          });
-        });
-      }
-      // Submit property form & navigate to preview
-      await handleCreateProperty(formData);
-      navigate("/dashboard");
+      // Upload images
+      let updatedFormData = await handleImageUpload(files, formData);
+
+      // Upload video after image upload
+      updatedFormData = await handleVideoUpload(videoUrl, updatedFormData);
+
+      // Create property in Firebase
+      await handleCreateProperty(updatedFormData);
+
+      navigate("/dashboard"); // Redirect after success
     } catch (error) {
       setError(true);
       console.error("Error submitting form:", error);
@@ -98,209 +125,313 @@ function CreateProperty() {
   return (
     <div>
       {user ? (
-        <div className="contain">
-          {/* container  */}
-          <div className=" container">
-            {/* property form */}
+        <>
+          <div className="create-container">
             <form onSubmit={handleSubmit} className="createPropertyForm">
-              <p className="msg">Fill all input</p>
+              <h2 className="msg">Fill all input</h2>
               <span className="line"></span>
+
               <div className="formContainer">
-                {/* upload img section  */}
+                {/* Image Upload */}
                 <div className="addImg">
-                  <label
-                    className="createPropertyLabels"
-                    htmlFor="images"
-                    ref={imageRef}>
+                  <label className="createPropertyLabels" htmlFor="images" ref={imageRef}>
                     <span className="plus">+</span>
                     {files.length > 0
-                      ? ` ${files.length}/3 Files
-                         selected`
-                      : " Click to add image"}
+                      ? ` ${files.length}/3 Files selected`
+                      : "  Select 3 Images for Preview"}
                   </label>
                   <input
                     id="images"
+                    accept="image/*"
                     multiple
                     style={{ display: "none" }}
-                    onChange={(e) => setFiles(e.target.files)}
+                    onChange={handleImageChange}
                     type="file"
                   />
                 </div>
-                {/* title section  */}
-                <section>
-                  <label className="createPropertyLabels" htmlFor="title">
-                    Title
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    id="title"
-                    placeholder="New 2 Bedroom Duplex with astonishing City Views"
-                    onChange={handleChange}
-                    value={formData.title}
-                    className="propertyFormInput"
-                  />
-                </section>
-                {/* address section  */}
-                <section>
-                  <label className="createPropertyLabels" htmlFor="address">
-                    Address
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    id="address"
-                    placeholder="Nnamdi Azikiwe street"
-                    onChange={handleChange}
-                    value={formData.address}
-                    className="propertyFormInput"
-                  />{" "}
-                  <input
-                    required
-                    className="propertyFormInput"
-                    type="text"
-                    id="state"
-                    placeholder="Anambra"
-                    onChange={handleChange}
-                    value={formData.state}
-                  />
-                  <input
-                    required
-                    className="propertyFormInput"
-                    type="text"
-                    id="city"
-                    onChange={handleChange}
-                    placeholder="Nnewi"
-                    value={formData.city}
-                  />
-                </section>
-                {/* House type section  */}
-                <section>
-                  <label className="createPropertyLabels" htmlFor="type">
-                    Type
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    id="houseType"
-                    placeholder="Duplex"
-                    onChange={handleChange}
-                    value={formData.houseType}
-                    className="propertyFormInput"
-                  />
-                </section>
-                {/* amenities section  */}
-                <section>
-                  <label className="createPropertyLabels" htmlFor="amenities">
-                    Amenities
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    id="amenities"
-                    placeholder="Balcony, 
-              Parking,
-              Swimming Pool  etc.."
-                    onChange={handleChange}
-                    value={formData.amenities}
-                    className="propertyFormInput"
-                  />
-                </section>
-                {/* description section  */}
-                <section>
-                  <label className="createPropertyLabels" htmlFor="description">
-                    Description
-                  </label>
-                  <textarea
-                    className="formDescription"
-                    required
-                    name=""
-                    id="description"
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}
-                    value={formData.description}
-                    placeholder="A beautiful 2-bedroom, 3-bathroom all in suite duplex located in the reare part of the city. With stunning views , spacious living areas, and and well  furnished..."></textarea>
-                </section>
-                {/* checkboxes */}
-                <div className="boxContainer">
-                  <div className="eachBox">
+
+                {/* Display list of selected files */}
+                {files.length > 0 && files.length <= 3 ? (
+                  <ul>
+                    {files.map((file) => (
+                      <li key={file.name}>{file.name}</li>
+                    ))}
+                  </ul>
+                ) : files.length > 3 ? null : (
+                  null
+                )}
+
+                {/* Image limit error */}
+                {imageLimitError && (
+                  <div className="errorMessage">
+                    You can only select 3 images.
+                  </div>
+                )}
+
+
+
+                <div className="propertyForm">
+                  {/* Property Title */}
+                  <section>
+                    <label className="createPropertyLabels" htmlFor="title">
+                      Title
+                    </label>
                     <input
-                      type="checkbox"
-                      className="box"
-                      name=""
-                      id="sale"
+                      required
+                      type="text"
+                      id="title"
+                      placeholder="New 2 Bedroom Duplex with City Views"
                       onChange={handleChange}
-                      checked={formData.type === "sale"}
+                      value={formData.title}
+                      className="propertyFormInput"
                     />
-                    <span className="createPropertyLabels">Sale</span>
+                  </section>
+
+                  {/* Address, State, City */}
+                  <div className="addressStateCity">
+                    {/* Address */}
+                    <section className="address">
+                      <label className="createPropertyLabels" htmlFor="address">
+                        Address
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        id="address"
+                        placeholder="123 Maple Leaf Street"
+                        onChange={handleChange}
+                        value={formData.address}
+                        className="propertyFormInput"
+                      />
+                    </section>
+
+                    {/* City */}
+                    <section className="city">
+                      <label className="createPropertyLabels" htmlFor="city">
+                        City
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        id="city"
+                        placeholder=" Example City"
+                        onChange={handleChange}
+                        value={formData.city}
+                        className="propertyFormInput"
+                      />
+                    </section>
+
+                    {/* State */}
+                    <section className="state">
+                      <label className="createPropertyLabels" htmlFor="state">
+                        State
+                      </label>
+                      <select
+                        required
+                        id="state"
+                        onChange={handleChange}
+                        value={formData.state}
+                      // className="propertyFormInput"
+                      >
+                        <option value="" disabled>Select State</option>
+                        <option value="Abia">Abia</option>
+                        <option value="Adamawa">Adamawa</option>
+                        <option value="Akwa Ibom">Akwa Ibom</option>
+                        <option value="Anambra">Anambra</option>
+                        <option value="Bauchi">Bauchi</option>
+                        <option value="Bayelsa">Bayelsa</option>
+                        <option value="Benue">Benue</option>
+                        <option value="Borno">Borno</option>
+                        <option value="Cross River">Cross River</option>
+                        <option value="Delta">Delta</option>
+                        <option value="Ebonyi">Ebonyi</option>
+                        <option value="Edo">Edo</option>
+                        <option value="Ekiti">Ekiti</option>
+                        <option value="Enugu">Enugu</option>
+                        <option value="Gombe">Gombe</option>
+                        <option value="Imo">Imo</option>
+                        <option value="Jigawa">Jigawa</option>
+                        <option value="Kaduna">Kaduna</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Katsina">Katsina</option>
+                        <option value="Kebbi">Kebbi</option>
+                        <option value="Kogi">Kogi</option>
+                        <option value="Kwara">Kwara</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Nasarawa">Nasarawa</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Ogun">Ogun</option>
+                        <option value="Ondo">Ondo</option>
+                        <option value="Osun">Osun</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Plateau">Plateau</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="Sokoto">Sokoto</option>
+                        <option value="Taraba">Taraba</option>
+                        <option value="Yobe">Yobe</option>
+                        <option value="Zamfara">Zamfara</option>
+                        <option value="FCT">Federal Capital Territory (FCT)</option>
+                      </select>
+                    </section>
                   </div>
 
-                  <div className="eachBox">
-                    <input
-                      type="checkbox"
-                      className="box"
-                      name=""
-                      id="rent"
-                      onChange={handleChange}
-                      checked={formData.type === "rent"}
-                    />
-                    <span className="createPropertyLabels">Rent</span>
-                  </div>
+                  <div className="addressStateCity">
+                    {/* House Type */}
+                    <section className="state">
+                      <label className="createPropertyLabels" htmlFor="houseType">
+                        House Type
+                      </label>
+                      <select
+                        id="houseType"
+                        value={formData.houseType}
+                        onChange={handleChange}
+                        className="propertyFormInput"
+                        required
+                      >
+                        <option value="" disabled>
+                          Select House Type
+                        </option>
+                        <option value="duplex">Duplex</option>
+                        <option value="selfContain">Self Contain</option>
+                        <option value="bungalow">Bungalow</option>
+                        <option value="flat">Flat</option>
+                        <option value="hostel">Hostel</option>
+                      </select>
+                    </section>
 
-                  {/* rooms */}
-                  <div className="boxContainer">
-                    <div className="eachBox">
+
+                    {/* Bedrooms */}
+                    <section className="state">
+                      <label className="createPropertyLabels" htmlFor="bedrooms">
+                        Bedrooms
+                      </label>
                       <input
                         type="number"
                         id="bedrooms"
-                        min={"1"}
-                        max={"10"}
-                        className="roomBoxes"
-                        required
-                        onChange={handleChange}
                         value={formData.bedrooms}
+                        onChange={handleChange}
+                        className="propertyFormInput"
                       />
-                      <p className="createPropertyLabels">: Beds</p>
-                    </div>
-                    <div className="eachBox">
+                    </section>
+
+                    {/* Bathrooms */}
+                    <section className="state">
+                      <label className="createPropertyLabels" htmlFor="bathrooms">
+                        Bathrooms
+                      </label>
                       <input
                         type="number"
                         id="bathrooms"
-                        min={"1"}
-                        max={"10"}
-                        className="roomBoxes"
-                        required
-                        onChange={handleChange}
                         value={formData.bathrooms}
+                        onChange={handleChange}
+                        className="propertyFormInput"
                       />
-                      <p className="createPropertyLabels">: Bath</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    </section>
 
-              <div className="submitContainer">
-                {error && (
-                  <>
-                    <p className="error">
-                      Error uploading property{" "}
-                      <span className="redirect"> Try again</span>
-                    </p>
-                  </>
-                )}
-                <Link to="/dashboard" className="cancel">
-                  Cancel
-                </Link>
-                <button disabled={loading} className="propertySubmitButton">
-                  Submit
-                </button>
+                    {/* Property Type (Rent or Sale) */}
+                    <section className="state">
+                      <label className="createPropertyLabels" htmlFor="propertyType">
+                        Property Type
+                      </label>
+                      <select
+                        id="propertyType"
+                        value={formData.type}
+                        onChange={handleChange}
+                        className="propertyFormInput"
+                        required
+                      >
+                        <option value="" disabled>
+                          Select Property Type
+                        </option>
+                        <option value="rent">For Rent</option>
+                        <option value="sale">For Sale</option>
+                      </select>
+                    </section>
+
+
+
+                  </div>
+
+
+
+
+                  {/* Description */}
+                  <section className="formDescription">
+                    <label className="createPropertyLabels" htmlFor="description">
+                      Description
+                    </label>
+                    <textarea
+                      required
+                      id="description"
+                      placeholder="Property description: Give a detailed description of the property including the upsides and downsides."
+                      onChange={handleChange}
+                      value={formData.description}
+
+                    />
+                  </section>
+
+
+
+
+
+                  {/* Amenities */}
+                  <section>
+                    <label className="createPropertyLabels" htmlFor="amenities">
+                      Amenities
+                    </label>
+                    <input
+                      type="text"
+                      id="amenities"
+                      placeholder="Pool, Gym, etc."
+                      onChange={handleChange}
+                      value={formData.amenities}
+                      className="propertyFormInput"
+                    />
+                  </section>
+
+
+
+                  {/* Video Upload */}
+                  <div className="addVideo">
+                    <label className="createPropertyLabels" htmlFor="video">
+                      <span className="plus">+</span>
+                      {videoUrl ? ` Video selected, click to change` : " Click to add video"}
+                    </label>
+                    <input
+                      id="video"
+                      accept="video/*"
+                      style={{ display: "none" }}
+                      onChange={handleChange}
+                      type="file"
+                    />
+                  </div>
+                  {videoUrlPreview && (
+                    <video className="videoPreview" controls>
+                      <source src={videoUrlPreview} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </div>
+
+                {/* Error Message */}
+                {error && <p className="errorMessage">Please fill out all fields correctly</p>}
+
+                {/* Submit Button */}
+
+                {loading ?
+                 <div className="load"> <Loading /></div>
+                  :
+                  <button type="submit" className="propertySubmitButton">
+                    Upload Property
+                  </button>
+                }
+
               </div>
             </form>
           </div>
-        </div>
+        </>
       ) : (
-        <p>loading</p>
+        <p>Loading...</p>
       )}
     </div>
   );

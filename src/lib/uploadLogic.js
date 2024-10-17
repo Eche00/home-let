@@ -26,4 +26,5 @@ const storageImage = async (file) => {
     );
   });
 };
+
 export default storageImage;

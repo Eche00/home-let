@@ -34,7 +34,7 @@ function Properties() {
                 // Getting recently updated properties
                 const last5Properties = propertyData
                     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                    .slice(0, 4);
+                    .slice(0, 3);
                 setProperties(last5Properties);
                 setLoading(false); // Set loading to false when data is loaded
             })
@@ -57,7 +57,7 @@ function Properties() {
                     <div className="lastFiveProduct">
                         {loading || properties.length === 0 ? (
                             // Show skeleton loader for each property when loading or no properties are found
-                            [1, 2, 3, 4].map((_, index) => (
+                            [1, 2, 3].map((_, index) => (
                                 <SkeletonLoader key={index} />
                             ))
                         ) : (

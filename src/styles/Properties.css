@@ -21,7 +21,7 @@
 }
 
 .eachProperty {
-    width: 25%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -42,7 +42,7 @@
 .propertyTitle {
     font-size: 15px;
     padding: 0 10px;
-    width: 100%;
+    /* width: 100%; */
     overflow: hidden;
 }
 

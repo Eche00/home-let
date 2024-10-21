@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   handleCreateProperty,
   handleImageUpload,
-  handleVideoUpload,
+  handleVideoUpload
 } from "../lib/createPropertyLogic";
 import { useNavigate } from "react-router-dom";
 import "../styles/CreateProperty.css";
@@ -150,7 +150,7 @@ function CreateProperty() {
                   />
                 </div>
 
-                {/* Display list of selected files */}
+                {/* If picture files are selected, Display list of selected files */}
                 {files.length > 0 && files.length <= 3 ? (
                   <ul>
                     {files.map((file) => (
@@ -161,7 +161,7 @@ function CreateProperty() {
                   null
                 )}
 
-                {/* Image limit error */}
+                {/* If Image is more than 3, show limit error */}
                 {imageLimitError && (
                   <div className="errorMessage">
                     You can only select 3 images.
@@ -169,8 +169,9 @@ function CreateProperty() {
                 )}
 
 
-
-                <div className="propertyForm">
+                <div 
+                // Start the cover for the form
+                className="propertyForm">
                   {/* Property Title */}
                   <section>
                     <label className="createPropertyLabels" htmlFor="title">
@@ -231,7 +232,6 @@ function CreateProperty() {
                         id="state"
                         onChange={handleChange}
                         value={formData.state}
-                      // className="propertyFormInput"
                       >
                         <option value="" disabled>Select State</option>
                         <option value="Abia">Abia</option>
@@ -274,6 +274,8 @@ function CreateProperty() {
                       </select>
                     </section>
                   </div>
+
+
 
                   <div className="addressStateCity">
                     {/* House Type */}
@@ -347,12 +349,7 @@ function CreateProperty() {
                         <option value="sale">For Sale</option>
                       </select>
                     </section>
-
-
-
                   </div>
-
-
 
 
                   {/* Description */}
@@ -366,12 +363,8 @@ function CreateProperty() {
                       placeholder="Property description: Give a detailed description of the property including the upsides and downsides."
                       onChange={handleChange}
                       value={formData.description}
-
                     />
                   </section>
-
-
-
 
 
                   {/* Amenities */}
@@ -413,13 +406,15 @@ function CreateProperty() {
                   )}
                 </div>
 
+
+
+
                 {/* Error Message */}
                 {error && <p className="errorMessage">Please fill out all fields correctly</p>}
 
                 {/* Submit Button */}
-
                 {loading ?
-                 <div className="load"> <Loading /></div>
+                  <div className="load"> <Loading /></div>
                   :
                   <button type="submit" className="propertySubmitButton">
                     Upload Property

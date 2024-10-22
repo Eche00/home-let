@@ -63,6 +63,7 @@ const GetDash = () => {
                 <Route path="/dashboard" element={<GetUser />} />
                 <Route path="/add" element={<CreateListing />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/about-us" element={<About />} />
                 <Route path="/contact-us" element={<Contact />} />

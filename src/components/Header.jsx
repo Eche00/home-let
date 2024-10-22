@@ -23,7 +23,7 @@ const Header = () => {
             </div>
             <div className="menu">
                 {/* PC menu, visible only on larger screens */}
-                <PcMenu />
+               <div className='pcOnly'> <PcMenu /></div>
                 <div className="mobile-menu-icon" onClick={toggleMobileMenu}>
                     <FontAwesomeIcon icon={faBars} />
                 </div>

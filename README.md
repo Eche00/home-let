@@ -65,7 +65,7 @@ HOME RENTALS will be a one-stop-shop for all real estate needs, offering listing
 
 - Manage User's and User Activities.
 
-6.⁠ ⁠*User Dashboard*:
+6.⁠ ⁠**User Dashboard**:
 - Manage profile.
 
 - View booked inspections.

@@ -1,11 +1,16 @@
 /* Centering the container */
 .loading-container {
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh; 
-    background-color: #f0f0f0; 
+    z-index: 1;
+    background-color: #fff; 
   }
   
   .spinner {

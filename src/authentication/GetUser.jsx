@@ -53,18 +53,19 @@ const GetUser = () => {
     }, []);
     
 
-    if (loading) {
-        return <Loading />; 
-    }
+    // if (loading) {
+    //     return <Loading />; 
+    // }
 
     if (!userRole) {
         return <div>User role not found</div>; 
     }
 
+
     return (
         <div>
-            <p>User Role: {userRole}</p>
-            {userGroup && <p>User Group: {userGroup}</p>} 
+            <div>User Role: {userRole}</div>
+            {userGroup && <div>User Group Status: {userGroup}</div>} 
 
             {/* Conditional rendering for Dashboard based on user role */}
             {userRole === 'customer' && <CustomerDash />}

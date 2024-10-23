@@ -2,10 +2,6 @@
   margin-bottom: 120px;
 }
 
-
-
-
-
 .pc-footer {
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -18,16 +14,7 @@
 }
 
 .mob-footer {
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
+ display: flex;
 }
 
 @media (max-width: 767px) {

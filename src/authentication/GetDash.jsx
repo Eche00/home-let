@@ -4,13 +4,13 @@ import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import GetUser from './GetUser';
 import NotFound from '../pages/NotFound';
 import Login from './login';
-import CreateListing from '../pages/CreateProperty';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import ProductList from '../pages/ProductList';
 import Terms from '../pages/Terms';
 import Services from '../pages/Services';
 import PropertyPreview from '../pages/PropertyPreview';
+import AddProperty from '../pages/AddProperty';
 
 const GetDash = () => {
     const auth = getAuth();
@@ -61,7 +61,7 @@ const GetDash = () => {
             <Routes>
                 {/* Define all the routes here */}
                 <Route path="/dashboard" element={<GetUser />} />
-                <Route path="/add" element={<CreateListing />} />
+                <Route path="/add" element={<AddProperty />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Login />} />
                 <Route path="*" element={<NotFound />} />

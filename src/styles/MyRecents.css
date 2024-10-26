@@ -1,0 +1,116 @@
+.myRecentProductsContainer{
+  width: 85%;
+}
+.myRecentProducts {
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+
+}
+
+.lastFiveProduct:hover {
+  cursor: pointer;
+}
+
+.properties-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.eachPropertyRecent {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  padding: 10px;
+  gap: 10px;
+}
+
+.reg-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recentPropertyTitle {
+  font-size: 12px;
+  display: flex;
+  flex: 1;
+  /* width: 100%; */
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.recentPropertyHeroImage {
+  width: 30%;
+  height: 50px;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.property-state {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #006633;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.viewButton{
+  cursor: pointer;
+  background: #006633;
+  padding: 10px 15px;
+  height: fit-content;
+}
+.viewMore{
+font-size: 14px;
+font-weight: 400;
+color: #006633;
+cursor: pointer;
+}
+.viewMore:hover{
+color: #006633;
+font-size: 15px;
+transition: font-size 0.2s ease;
+
+}
+
+
+@keyframes pulse {
+
+  0%,
+  100% {
+      background-color: #f0f0f0;
+  }
+
+  50% {
+      background-color: #e0e0e0;
+  }
+}

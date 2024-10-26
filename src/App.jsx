@@ -14,7 +14,8 @@ function App() {
   useEffect(() => {
     // Check the authentication state
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(!!user); // If user is not null, user is authenticated
+      // If user is not null, user is authenticated
+      setIsAuthenticated(!!user);
     });
 
     // Cleanup subscription on unmount

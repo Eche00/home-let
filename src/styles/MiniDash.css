@@ -1,7 +1,7 @@
 .dashboardContainer {
   justify-content: flex-start; 
   align-items: flex-start; 
-  margin: 40px auto;
+  margin: 30px auto;
 }
 
 .profileSection {
@@ -26,14 +26,18 @@
 .profileName {
   font-size: 22px;
   font-weight: bold;
-  color: #333;
+  /* color: #333; */
   margin: 0;
 }
 
 .profileEmail {
   font-size: 14px;
-  color: #666;
+  /* color: #666; */
   margin: 4px 0;
+}
+
+.role {
+  text-align: center;
 }
 
 .profileButton {

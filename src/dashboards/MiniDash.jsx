@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../lib/firebase"; 
-import "../styles/MiniDash.css"; 
-import flat from "../assets/fiat.png"; 
+import { db } from "../lib/firebase";
+import "../styles/MiniDash.css";
+import flat from "../assets/fiat.png";
 
 // Skeleton loader component
 const SkeletonLoader = () => (
@@ -20,7 +20,7 @@ const SkeletonLoader = () => (
   </div>
 );
 
-function MiniDash() {
+function MiniDash({ closeMenu }) { // Accept closeMenu as a prop
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +30,6 @@ function MiniDash() {
     // handle authentication change
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        // Fetch user profile from Firestore
         const userDocRef = doc(db, "users", currentUser.uid);
         const userDoc = await getDoc(userDocRef);
 
@@ -38,9 +37,9 @@ function MiniDash() {
           const userData = userDoc.data();
           setUser({
             role: userData.role,
-            name: userData.fullName || "Guest User", 
+            name: userData.fullName || "Guest User",
             email: userData.email || currentUser.email,
-            profilePhotoUrl: userData.profilePhotoUrl || currentUser.photoURL || flat, 
+            profilePhotoUrl: userData.profilePhotoUrl || currentUser.photoURL || flat,
           });
         } else {
           console.log("No user document found");
@@ -61,12 +60,11 @@ function MiniDash() {
   }, []);
 
   if (loading) {
-    // Show skeleton loader while data is being fetched
-    return <SkeletonLoader />; 
+    return <SkeletonLoader />;
   }
 
   if (!user) {
-    return <p>No user data available.</p>; 
+    return <p>No user data available.</p>;
   }
 
   return (
@@ -80,10 +78,15 @@ function MiniDash() {
         <div className="profileDetails">
           <h2 className="profileName">{user.name}</h2>
           <p className="profileEmail">{user.email}</p>
-          <Link to="/profile" className="profileButton">
+          <Link to="/profile" className="profileButton" onClick={closeMenu}> {/* Close menu on click */}
             Go to Profile
           </Link>
         </div>
+      </div>
+      <div className="role">
+        {user.role === "admin" && <div>You have admin privileges.</div>}
+        {user.role === "vendor" && <div>You have vendor privileges.</div>}
+        {user.role === "customer" && <div>You do not have vendor privileges.</div>}
       </div>
     </div>
   );

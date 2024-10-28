@@ -21,6 +21,7 @@ import "../styles/GetDash.css";
 import History from "../dashboards/MiniDash";
 import Withdrawal from "../pages/Widthdrawal";
 import TransactionForm from "../pages/TransactionForm";
+import AllUsers from "../pages/AllUsers";
 
 const GetDash = () => {
   const auth = getAuth();
@@ -76,7 +77,6 @@ const GetDash = () => {
           <Route path="/preview/:propertyId" element={<PropertyPreview />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/our-services" element={<Services />} />
-          {/* eche added routes  */}
           <Route path="/vendor-properties" element={<VendorProperties />} />
           <Route index element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
@@ -85,6 +85,8 @@ const GetDash = () => {
           <Route path="/history" element={<History />} />
           <Route path="/inspection" element={<Inspection />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/users" element={<AllUsers />} />
           <Route path="/new-transaction" element={<TransactionForm />} />
 
           {/* Redirect from "/" to "/dashboard" */}

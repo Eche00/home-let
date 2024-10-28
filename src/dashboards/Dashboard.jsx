@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Wallet from "./DashboardContent/Wallet";
-import History from "./MiniDash";
+import MiniDash from "./MiniDash";
 import Properties from "../components/Properties";
 import "../styles/Dashboard.css";
 import Loading from "../components/loading";
@@ -46,7 +46,7 @@ const Dashboard = () => {
       </div>
       <div className="first-Dashboard">
         <div className="historyContainer">
-          <History />
+          <MiniDash />
         </div>
         <div className="my-recent">
           {/* Check if userId is available before passing to LastProperty */}

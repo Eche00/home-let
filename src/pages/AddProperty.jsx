@@ -35,7 +35,7 @@ const AddProperty = () => {
 
   return (
     <div>
-      {userRole === 'customer' ? <NotFound /> : <CreateProperty />}
+      {(userRole === 'admin' || userRole === 'vendor') ? <CreateProperty /> : <NotFound />}
     </div>
   );
 };

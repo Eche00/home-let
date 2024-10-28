@@ -22,7 +22,8 @@
 }
 
 .userContainer {
-  display: flex;
+  /* display: flex; */
+  color: #dedede;
   flex-direction: column;
   padding: 15px 20px;
   gap: 20px;
@@ -83,7 +84,7 @@
 }
 
 .routeLinks:hover {
-  color: #458e62;
+  color: yellowgreen;
 }
 
 .dashContainer {
@@ -101,7 +102,15 @@
 }
 
 .active {
-  color: #006633;
+  color: gold;
+}
+
+.side-item {
+  padding: 5px 0;
+}
+
+.icon {
+  margin-right: 5px;
 }
 
 @media (min-width: 799px) {

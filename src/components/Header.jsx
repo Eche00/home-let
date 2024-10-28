@@ -67,7 +67,7 @@ const Header = () => {
 
     // Handle profile image click to navigate to dashboard
     const handleProfileClick = () => {
-        navigate('/dashboard'); 
+        navigate('/profile'); 
     };
 
     return (

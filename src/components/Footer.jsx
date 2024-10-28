@@ -17,12 +17,12 @@ const Footer = () => {
 
     return (
         <div className='footer'>
-            <div className='pc-footer'>All Rights Reserved</div>
-            <>
-                {user ? <div className='mob-footer'>
+            {!user && <div className='pc-footer'>All Rights Reserved</div>}
+            {user && (
+                <div className='mob-footer'>
                     <MobileNav />
-                </div> : null}
-            </>
+                </div>
+            )}
         </div>
     );
 }

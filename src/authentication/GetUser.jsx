@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// import CustomerDash from '../dashboards/CustomerDash';
-// import AdminDash from '../dashboards/AdminDash';
-// import VendorDash from '../dashboards/Dashboard';
 import { auth, db } from '../lib/firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
-import Loading from '../components/loading';
 
 const GetUser = () => {
     const [userRole, setUserRole] = useState(null); 
@@ -67,10 +63,6 @@ const GetUser = () => {
             <div>User Role: {userRole}</div>
             {userGroup && <div>User Group Status: {userGroup}</div>} 
 
-            {/* Conditional rendering for Dashboard based on user role */}
-            {/* {userRole === 'customer' && <CustomerDash />}
-            {userRole === 'vendor' && <VendorDash />}
-            {userRole === 'admin' && <AdminDash />} */}
         </div>
     );
 };

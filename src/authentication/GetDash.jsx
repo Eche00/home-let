@@ -1,7 +1,6 @@
 import React from "react";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import GetUser from "./GetUser";
 import NotFound from "../pages/NotFound";
 import Login from "./login";
 import About from "../pages/About";
@@ -21,6 +20,7 @@ import Settings from "../pages/Settings";
 import "../styles/GetDash.css";
 import History from "../dashboards/MiniDash";
 import Withdrawal from "../pages/Widthdrawal";
+import TransactionForm from "../pages/TransactionForm";
 
 const GetDash = () => {
   const auth = getAuth();
@@ -65,7 +65,7 @@ const GetDash = () => {
       <div className="vendorRoutes">
         <Routes>
           {/* Define all the routes here */}
-          <Route path="/dashboard" element={<GetUser />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add" element={<AddProperty />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
@@ -77,7 +77,7 @@ const GetDash = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/our-services" element={<Services />} />
           {/* eche added routes  */}
-          <Route path="/vendorproperties" element={<VendorProperties />} />
+          <Route path="/vendor-properties" element={<VendorProperties />} />
           <Route index element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/deposit" element={<Deposit />} />
@@ -85,6 +85,7 @@ const GetDash = () => {
           <Route path="/history" element={<History />} />
           <Route path="/inspection" element={<Inspection />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/new-transaction" element={<TransactionForm />} />
 
           {/* Redirect from "/" to "/dashboard" */}
           <Route path="/" element={<Navigate to="/dashboard" />} />

@@ -66,7 +66,7 @@ function Properties() {
                                 // Each property, click event attached to the entire div
                                 <div
                                     key={property.id}
-                                    className="eachProperty"
+                                    className="eachProp"
                                     onClick={() => handleClick(property)} // Event handler moved here
                                 >
                                     <div className="image-container">
@@ -82,7 +82,7 @@ function Properties() {
                                         </div>
                                     </div>
                                     {/* Property title */}
-                                    <h2 className="propertyTitle">
+                                    <h2 className="propTitle">
                                         {property.title} ({property.houseType})
                                     </h2>
                                 </div>

@@ -1,56 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Wallet from "./DashboardContent/Wallet";
 import History from "./MiniDash";
-import MyRecents from "./DashboardContent/MyRecents";
-import RecentProperties from "./DashboardContent/RecentProperties";
+import Properties from "../components/Properties";
 import "../styles/Dashboard.css";
 import Loading from "../components/loading";
-import { auth, db } from "../lib/firebase";
+import { auth, db } from "../lib/firebase"; 
 import { doc, getDoc } from "firebase/firestore";
+import LastProperty from "./DashboardContent/LastProperty";
 
 const Dashboard = () => {
-  const [userRole, setUserRole] = useState(null);
-  const [userGroup, setUserGroup] = useState(null);
   const [loading, setLoading] = useState(true);
+  const userId = auth.currentUser?.uid; 
 
   useEffect(() => {
-    const fetchUserRoleAndGroup = async () => {
+    const fetchUserData = async () => {
       try {
-        const user = auth.currentUser; // Get the authenticated user
+        const user = auth.currentUser; 
         if (user) {
           // Use doc() and getDoc() from Firestore to fetch user document
           const userDocRef = doc(db, "users", user.uid);
           const userDoc = await getDoc(userDocRef);
 
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-
-            // Make sure there's a 'role' and 'group' field in the user document
-            if (userData.role) {
-              setUserRole(userData.role); // Set the user role
-            } else {
-              console.error("Role field not found in user document");
-            }
-
-            if (userData.group) {
-              setUserGroup(userData.group); // Set the user group
-            } else {
-              console.error("Group field not found in user document");
-            }
-          } else {
+          if (!userDoc.exists()) {
             console.log("No such user document!");
           }
-        } else {
-          console.log("No user is logged in");
         }
       } catch (error) {
-        console.error("Error fetching user role and group: ", error);
+        console.error("Error fetching user data: ", error);
       } finally {
         setLoading(false); // Stop the loading state
       }
     };
 
-    fetchUserRoleAndGroup();
+    fetchUserData();
   }, []);
 
   if (loading) {
@@ -66,19 +48,16 @@ const Dashboard = () => {
         <div className="historyContainer">
           <History />
         </div>
-        <div className="myRecents">
-            {userRole === "vendor" ? (
-              // vendor dashboard section
-             
-                <MyRecents />
-              
-            ) : (
-              // customer dashboard section
-              <>add yours here with same classname as mine</>
-            )}
+        <div className="my-recent">
+          {/* Check if userId is available before passing to LastProperty */}
+          {userId ? (
+            <LastProperty userId={userId} /> 
+          ) : (
+            <div>Please log in to see your last property.</div>
+          )}
         </div>
       </div>
-      <RecentProperties />
+      <Properties />
     </div>
   );
 };

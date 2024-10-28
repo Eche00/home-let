@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from './login';
 import Register from './register';
-import GetUser from './GetUser';
 import Home from '../pages/Home';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import ForgotPassword from './ForgotPassword';
@@ -29,10 +28,7 @@ const GetAuth = () => {
         return () => unsubscribe();
     }, [auth]);
 
-    if (user) {
-        // If the user is authenticated, redirect to GetUser
-        return <Navigate to="/user" />;
-    }
+  
 
     return (
         <Routes>
@@ -40,7 +36,6 @@ const GetAuth = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/user" element={<GetUser />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/contact-us" element={<Contact />} />
             <Route path="/properties" element={<ProductList />} />

@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import "../../styles/MyRecents.css";
+import { useNavigate } from "react-router-dom";
+import { collection, getDocs, query } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'; // Import the FontAwesome icon you want to use
+import "../../styles/MyRecent.css";
 import { auth, db } from "../../lib/firebase";
 
-function MyRecents() {
+function LastProperty() {
   const currentUser = auth.currentUser;
-
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
-  const [selectedProperty, setSelectedProperty] = useState({});
 
   useEffect(() => {
-    // const propertyDataRef = collection(db, "propertyData");
     const propertyDataRef = query(collection(db, "propertyData"));
 
     getDocs(propertyDataRef)
       .then((querySnap) => {
-        //const propertyData = querySnap.docs.map((doc) => doc.data().data);
         const propertyData = querySnap.docs.map((doc) => ({
           id: doc.id,
           ...doc.data().data,
@@ -28,7 +26,7 @@ function MyRecents() {
         );
         const last5Properties = matchingPropertyIds
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 5);
+          .slice(0, 1);
 
         setProperties(last5Properties);
       })
@@ -41,44 +39,45 @@ function MyRecents() {
   const handleClick = (property) => {
     navigate(`/preview/${property.id}`);
   };
+
   return (
     <div className="myRecentProductsContainer">
-      <h3 className="recentH3">My top 5 Properties:</h3>
-
       {properties && properties.length > 0 ? (
-        // property container
+        // Property container
         <div className="myRecentProducts">
           {properties.map((property, index) => (
-            //  each property
-            <div key={index} className="eachPropertyRecent">
-              {/* property hero image  */}
+            // Each property
+            <div
+              key={index}
+              className="eachPropertyRecent"
+              onClick={() => handleClick(property)}
+            >
+              <h3 className="recentH3">My Latest Property</h3>
+
+              {/* Property hero image  */}
               <img
                 className="recentPropertyHeroImage"
                 src={property.imageUrls}
                 alt=""
               />
-              {/* property title  */}
+              {/* Property title  */}
               <h2 className="recentPropertyTitle">
                 {property.title} ({property.houseType})
               </h2>
-              {/* property title  */}
-              <h2 className="recentPropertyTitle">For {property.type}</h2>
-              <button
-                className="viewButton"
-                onClick={() => handleClick(property)}>
-                view
-              </button>
             </div>
           ))}
-          <Link to="/vendorproperties" className="viewMore">
-            More &rarr;
-          </Link>
         </div>
       ) : (
-        <p className="noProperty">You have no properties created.</p>
+        <div className="noPropertiesContainer">
+          <FontAwesomeIcon icon={faExclamationTriangle} size="3x" className="noPropertiesIcon" />
+          <h4 className="noPropertiesHeading">There are no properties yet.</h4>
+          <button className="addPropertyButton" onClick={() => navigate('/add')}>
+            Add Property
+          </button>
+        </div>
       )}
     </div>
   );
 }
 
-export default MyRecents;
+export default LastProperty;

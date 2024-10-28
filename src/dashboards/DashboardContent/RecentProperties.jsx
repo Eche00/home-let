@@ -34,7 +34,7 @@ function RecentProperties() {
         // Getting recently updated properties
         const last5Properties = propertyData
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 4);
+          .slice(0, 3);
         setProperties(last5Properties);
         setLoading(false); // Set loading to false when data is loaded
       })

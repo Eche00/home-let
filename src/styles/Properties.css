@@ -20,7 +20,7 @@
     font-size: 2rem;
 }
 
-.eachProperty {
+.eachProp {
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -39,9 +39,9 @@
     overflow: hidden;
 }
 
-.propertyTitle {
+.propTitle {
     font-size: 15px;
-    padding: 0 10px;
+    padding: 20px 10px;
     /* width: 100%; */
     overflow: hidden;
 }
@@ -132,3 +132,20 @@
         background-color: #e0e0e0;
     }
 }
+
+
+
+
+@media (max-width: 840px) {
+    .lastFiveProduct {
+        display: block;
+        padding: 0;
+    }
+
+    .eachProp {
+        width: 100%;
+        margin: 20px 0;
+        display: block;
+        flex-direction: row;
+    }
+  }

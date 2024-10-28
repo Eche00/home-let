@@ -1,31 +1,33 @@
-.allVendorPropertyContainer{
+.allVendorPropertyContainer {
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-border-radius: 10px;
-
-
+  border-radius: 10px;
 }
-.recentH3{
+
+.recentH3 {
   padding: 0px 20px;
   color: #1A1A1A66;
   font-size: 18px;
 }
-.lastFiveProduct{
+
+.lastFiveProduct {
   display: flex;
   gap: 15px;
-width: fit-content;
-  
+  width: fit-content;
+
 
 }
-.vendorProducts{
+
+.vendorProducts {
   box-shadow: none;
   display: flex;
-width: 96%;
-padding: 0;
-justify-content: space-between;
-padding: 20px;
+  /* width: 96%; */
+  padding: 0;
+  justify-content: space-between;
+  padding: 20px;
 }
+
 .lastFiveProduct:hover {
   cursor: pointer;
 }
@@ -35,7 +37,7 @@ padding: 20px;
   justify-content: center;
   align-items: center;
   padding: 20px;
-width: 100%;
+  width: 100%;
 
 }
 
@@ -49,7 +51,7 @@ width: 100%;
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-margin-bottom:  20px;
+  margin-bottom: 20px;
 
 }
 
@@ -145,7 +147,8 @@ margin-bottom:  20px;
 .skeleton-rooms {
   width: 50%;
 }
-.noProperty{
+
+.noProperty {
   padding: 0px 20px;
   font-size: 20px;
   font-weight: bolder;
@@ -155,21 +158,23 @@ margin-bottom:  20px;
 
   0%,
   100% {
-      background-color: #f0f0f0;
+    background-color: #f0f0f0;
   }
 
   50% {
-      background-color: #e0e0e0;
+    background-color: #e0e0e0;
   }
 }
+
 @media (max-width: 800px) {
   .eachProperty {
     width: 100%;
-    
+
   }
+
   .vendorProducts {
     display: flex;
     flex-direction: column;
-  
+
   }
 }

@@ -6,7 +6,7 @@ function Wallet() {
     <div className="walletSubContainer">
       <div className="walletCredit">
         <h3 className="walletDigit">1,373,733</h3>
-        <p className="walletCategory">Income</p>
+        <p className="walletCategory">Income</p>  
       </div>
       <div className="walletDebit">
         <h3 className="walletDigit">1,373,733</h3>

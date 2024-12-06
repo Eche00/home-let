@@ -1,101 +1,63 @@
-.allVendorPropertyContainer{
-  width: 100%;
-  margin-left: auto;
-  overflow: scroll;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  
-}
-.vendorProducts {
-  padding: 0 10px;
-  display: flex;
-  justify-content: center;
-  gap: 1px;
-  flex-wrap: wrap;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-
-}
-
-.lastFiveProduct:hover {
-  cursor: pointer;
-}
-
-.properties-cover {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.allVendorPropertyContainer {
   padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
-.title {
+.recentH3 {
   font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.noProperty {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.vendorProducts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;
+  padding: 10px;
 }
 
 .eachProperty {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
+  background-color: white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.reg-content {
-  display: flex;
-  width: 100%;
-  max-width: 1200px;
-  background-size: cover;
-  background-position: top center;
-  background-repeat: no-repeat;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.propertyTitle {
-  font-size: 15px;
-  padding: 0 10px;
-  /* width: 100%; */
-  overflow: hidden;
-}
-
-.image-container {
-  position: relative;
-  width: 100%;
-  z-index: -1;
+.eachProperty:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .propertyHeroImage {
   width: 100%;
-  height: 350px;
-  display: block;
-  border-radius: 8px 8px 0 0;
+  height: 200px;
   object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
-.property-state {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #006633;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
+.propertyTitle {
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  color: #333;
+  margin: 0;
 }
 
-
-
-@keyframes pulse {
-
-  0%,
-  100% {
-      background-color: #f0f0f0;
-  }
-
-  50% {
-      background-color: #e0e0e0;
+/* Media query for mobile screens */
+@media (max-width: 468px) {
+  .vendorProducts {
+    grid-template-columns: 1fr;
   }
 }

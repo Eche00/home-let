@@ -101,3 +101,8 @@ Consisting of the Frontend and Backend.
 - Social Media and Email Marketing.
 
 - Branding
+
+
+# todo
+
+Add state, and phone number to registration

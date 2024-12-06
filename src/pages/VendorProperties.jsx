@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
 import "../styles/VendorProperties.css";
 
+
 function VendorProperties() {
   const currentUser = auth.currentUser;
 

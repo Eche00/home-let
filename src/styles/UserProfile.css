@@ -1,0 +1,154 @@
+.userPage {
+    padding: 20px;
+    border: #000 1px solid;
+    width: 50%;
+    border-radius: 5px;
+}
+
+.heads {
+    margin: 20px 0 1px 0;
+    color: #dedede;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.profileCover {
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #dedede;
+    box-shadow: 1px 3px 5px #000000a4;
+    display: flex;
+    gap: 10px;
+}
+
+.profilePicture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* border: 2px solid #ccc; */
+}
+
+.emails {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+}
+
+
+
+.infoCover {
+    padding: 20px 10px;
+    background: rgba(187, 185, 185, 0.268);
+    border: 1px solid #333;
+    border-radius: 10px;
+    margin: 10px 0;
+
+}
+
+
+.tr {
+    background-color: #ededed;
+}
+
+.userPage h2 {
+    margin-bottom: 20px;
+}
+
+.userPage table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.userPage td {
+    padding: 25px;
+    border: 1px solid #ccc;
+}
+
+.profileFoot {
+    display: flex;
+    justify-content: space-between;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.Lk {
+    background: #006633;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.deleteButton {
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.updateRoleButton {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #006633;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.updateRoleButton:hover {
+    background-color: #0056b3;
+}
+
+.select {
+    margin-left: 10px;
+    padding: 5px;
+}
+
+
+
+/* Media query for screens smaller than or equal to 400px */
+@media (max-width: 700px) {
+
+    .userPage {
+        padding: 20px;
+        border: #000 1px solid;
+        width: 90%;
+        border-radius: 5px;
+    }
+
+    .head {
+        font-size: 18px;
+
+    }
+
+    .profileCover {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+}

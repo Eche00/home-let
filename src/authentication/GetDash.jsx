@@ -22,6 +22,7 @@ import History from "../dashboards/MiniDash";
 import Withdrawal from "../pages/Widthdrawal";
 import TransactionForm from "../pages/TransactionForm";
 import AllUsers from "../pages/AllUsers";
+import User from "../pages/User";
 
 const GetDash = () => {
   const auth = getAuth();
@@ -75,6 +76,7 @@ const GetDash = () => {
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/properties" element={<ProductList />} />
           <Route path="/preview/:propertyId" element={<PropertyPreview />} />
+          <Route path="/user/:userId" element={<User/>} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/our-services" element={<Services />} />
           <Route path="/vendor-properties" element={<VendorProperties />} />

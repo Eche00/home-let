@@ -46,6 +46,7 @@ function Wallet() {
     fetchTransactions();
   }, [currentUser]);
 
+  
   return (
     <div className="walletSubContainer">
       <div className="walletBalance">

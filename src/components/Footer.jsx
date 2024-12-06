@@ -15,6 +15,7 @@ const Footer = () => {
         return () => unsubscribe(); // Clean up the listener on unmount
     }, []);
 
+    
     return (
         <div className='footer'>
             {!user && <div className='pc-footer'>All Rights Reserved</div>}

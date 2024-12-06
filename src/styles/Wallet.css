@@ -1,7 +1,7 @@
 .walletSubContainer {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .walletDigit {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bolder;
   color: white;
   margin: 0%;

@@ -3,7 +3,7 @@
 }
 
 .pc-footer {
-  background-color: #2C2C2C;
+  /* background-color: #2C2C2C; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   color: #dedede;
@@ -28,6 +28,10 @@
 
 @media (min-width: 799px) {
   .mob-footer {
+    display: none;
+  }
+
+  .pc-footer {
     display: none;
   }
 }

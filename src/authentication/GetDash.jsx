@@ -2,7 +2,7 @@ import React from "react";
 import { getAuth } from "firebase/auth";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import NotFound from "../pages/NotFound";
-import Login from "./login";
+import Login from "./Login";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import ProductList from "../pages/ProductList";

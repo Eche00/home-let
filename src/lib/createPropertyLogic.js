@@ -1,7 +1,7 @@
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import storageImage from "./uploadLogic";
-import storageVideo from "./uploadVideoLogic";
+import storageVideo from "./UploadVideoLogic";
 
 // Function to handle creating a property
 export const handleCreateProperty = async (formData) => {

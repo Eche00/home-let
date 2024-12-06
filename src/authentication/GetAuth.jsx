@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Login from './login';
+import Login from './Login';
 import Register from './register';
 import Home from '../pages/Home';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';

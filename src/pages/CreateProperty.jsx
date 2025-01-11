@@ -61,11 +61,11 @@ function CreateProperty() {
       // Ensure the selected file is a valid video format
       if (videoFile && videoFile.type.startsWith("video/")) {
         setVideoUrl(videoFile);
-        setVideoUrlPreview(URL.createObjectURL(videoFile)); // Create video preview
+        setVideoUrlPreview(URL.createObjectURL(videoFile)); 
       } else {
         console.error("Invalid video format");
         setVideoUrl(null);
-        setVideoUrlPreview(null); // Reset if not valid
+        setVideoUrlPreview(null);
       }
     }
 

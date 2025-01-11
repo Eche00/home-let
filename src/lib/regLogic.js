@@ -8,7 +8,7 @@ const defaultRole = 'customer';
 const defaultGroup = 'activated';
 
 export const handleRegistration = async (formData) => {
-    const { email, password, username, fullName, address, gender, dob } = formData;
+    const { email, password, username, fullName, address, gender, dob, state, number } = formData;
 
     // Ensure terms are agreed
     if (!formData.termsAgreed) {
@@ -30,6 +30,8 @@ export const handleRegistration = async (formData) => {
             group: defaultGroup,
             gender,
             dob,
+            state,
+            number,
             termsAgreed: true,
         });
 

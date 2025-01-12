@@ -104,5 +104,3 @@ Consisting of the Frontend and Backend.
 
 
 # todo
-
-Add state, and phone number to registration

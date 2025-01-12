@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import PcMenu from './PcMenu';
 import MobileMenu from './MobileMenu';
 import flat from "../assets/fiat.png";
+import logo from '../assets/home-let-white.png';
 
 const Header = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -73,7 +74,7 @@ const Header = () => {
     return (
         <div className="header">
             <div className="logo">
-                <img src="/path-to-your-logo/logo.png" alt="Logo" />
+                <img src={logo} alt="Logo" />
             </div>
             <div className="menu">
                 {/* PC menu, visible only on larger screens */}

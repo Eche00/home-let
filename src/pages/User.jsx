@@ -5,6 +5,7 @@ import { db } from "../lib/firebase";
 import { getAuth } from "firebase/auth"; 
 import "../styles/UserProfile.css";
 import flat from "../assets/fiat.png";
+import Loading from "../components/loading";
 
 const User = () => {
     const { userId } = useParams();
@@ -76,12 +77,12 @@ const User = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (
         <div>
-            <div className="row">
+            <div className="userPage">
                 {/* Profile Image Section */}
                 <div className="profileCover">
                     <img src={flat} alt="Profile" className="profilePicture" />
@@ -93,7 +94,7 @@ const User = () => {
 
                 {/* Second Column for Basic Info */}
                 <div>
-                    <div className="row infoCover">
+                    <div className="infoCover">
                         <div className="col-md-6">
                             <strong>Full Name: </strong>
                             <>{user?.fullName}</>
@@ -122,7 +123,6 @@ const User = () => {
                                 <button className="updateRoleButton" onClick={handleRoleUpdate}>
                                     Update Role
                                 </button>
-                                <hr />
                             </div>
                         )}
 

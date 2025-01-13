@@ -1,8 +1,25 @@
 .userPage {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
-    border: #000 1px solid;
-    width: 50%;
-    border-radius: 5px;
+}
+
+.profileCover {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #dedede;
+    box-shadow: 1px 3px 5px #000000a4;
+    background-color: #2d2d2d;
+}
+
+.profileCover .profilePicture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
 }
 
 .heads {
@@ -16,24 +33,6 @@
     flex-direction: column;
 }
 
-.profileCover {
-    background-color: #2d2d2d;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #dedede;
-    box-shadow: 1px 3px 5px #000000a4;
-    display: flex;
-    gap: 10px;
-}
-
-.profilePicture {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    /* border: 2px solid #ccc; */
-}
-
 .emails {
     font-size: 16px;
     font-weight: 600;
@@ -42,78 +41,43 @@
     width: fit-content;
 }
 
-
+.heads p {
+    color: gray;
+    font-size: 14px;
+    margin-top: 5px;
+}
 
 .infoCover {
-    padding: 20px 10px;
-    background: rgba(187, 185, 185, 0.268);
-    border: 1px solid #333;
-    border-radius: 10px;
-    margin: 10px 0;
-
-}
-
-
-.tr {
-    background-color: #ededed;
-}
-
-.userPage h2 {
     margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
-.userPage table {
+.infoCover strong {
+    display: inline-block;
+    width: 120px;
+    font-weight: bold;
+}
+
+.infoCover .col-md-6, .infoCover .col-md-12 {
+    margin-bottom: 10px;
+}
+
+.infoCover .select {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.userPage td {
-    padding: 25px;
-    border: 1px solid #ccc;
-}
-
-.profileFoot {
-    display: flex;
-    justify-content: space-between;
-}
-
-.links {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.Lk {
-    background: #006633;
-    color: white;
-    border-radius: 50%;
-    text-align: center;
-    margin: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-.deleteButton {
-    font-weight: 600;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: red;
-    color: white;
-    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .updateRoleButton {
-    margin-left: 10px;
-    padding: 5px 10px;
-    background-color: #006633;
-    color: white;
+    margin-top: 10px;
+    padding: 8px 16px;
     border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -121,34 +85,11 @@
     background-color: #0056b3;
 }
 
-.select {
-    margin-left: 10px;
-    padding: 5px;
-}
-
-
-
-/* Media query for screens smaller than or equal to 400px */
-@media (max-width: 700px) {
-
-    .userPage {
-        padding: 20px;
-        border: #000 1px solid;
-        width: 90%;
-        border-radius: 5px;
-    }
-
-    .head {
-        font-size: 18px;
-
-    }
-
-    .profileCover {
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
+.successMessage {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #d4edda;
+    border-radius: 4px;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }

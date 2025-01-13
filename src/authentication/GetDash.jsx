@@ -23,6 +23,7 @@ import Withdrawal from "../pages/Widthdrawal";
 import TransactionForm from "../pages/TransactionForm";
 import AllUsers from "../pages/AllUsers";
 import User from "../pages/User";
+import Loading from "../components/loading";
 
 const GetDash = () => {
   const auth = getAuth();
@@ -47,13 +48,14 @@ const GetDash = () => {
 
   // Show loading until the auth state is determined
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   // If user is not authenticated, redirect to login page
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
+
 
   return (
     <div>

@@ -8,7 +8,7 @@
 .walletCredit {
   background: gold;
   flex: 1;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
   padding: 10px 20px;
@@ -21,7 +21,7 @@
 .walletDebit {
   background: red;
   flex: 1;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
   padding: 10px 20px;
@@ -33,7 +33,7 @@
 .walletBalance {
   background: #006633;
   flex: 1;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
   padding: 10px 20px;
@@ -67,4 +67,14 @@
   color: black;
   border-radius: 50%;
   padding: 20px;
+}
+
+@media (max-width: 796px) {
+  .walletDigit {
+font-size: 16px;
+  }
+ 
+  .walletCredit, .walletDebit, .walletBalance {
+    height: 100%;
+  }
 }

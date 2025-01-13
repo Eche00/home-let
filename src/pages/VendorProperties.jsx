@@ -10,7 +10,6 @@ function VendorProperties() {
 
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
-  const [selectedProperty, setSelectedProperty] = useState({});
 
   useEffect(() => {
     // const propertyDataRef = collection(db, "propertyData");

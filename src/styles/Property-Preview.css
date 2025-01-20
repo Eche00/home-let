@@ -71,11 +71,6 @@
     text-decoration: none;
 }
 
-.previewPropertyInspectButtonS {
-    display: flex;
-    align-items: end;
-}
-
 .previewPropertyInspectButton {
     background-color: #2c2c2c;
     color: white;
@@ -87,7 +82,7 @@
     text-decoration: none;
 }
 
-.previewPropertyVideoButton:hover,
+.previewPropertyVideoButton:hover, 
 .previewPropertyInspectButton:hover {
     background-color: gold;
     color: #2c2c2c;
@@ -100,6 +95,7 @@
 }
 
 
+
 .previewDetails {
     padding: 10px;
     background-color: #f9f9f9;
@@ -109,16 +105,17 @@
 
 .previewPropertyRoomSection {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: flex-start; 
+    align-items: flex-start; 
 }
 
 .previewPropertyRoomSection p {
-    margin: 10px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
+    margin: 10px; 
+    font-size: 16px; 
+    font-weight: 500; 
+    color: #333; 
 }
+
 
 
 /* Modal overlay to cover the background */
@@ -128,25 +125,25 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-/* Modal content box */
-.modal-content {
+  }
+  
+  /* Modal content box */
+  .modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     width: 90%;
     max-width: 500px;
-}
-
-/* Close button */
-.close-modal-button {
+  }
+  
+  /* Close button */
+  .close-modal-button {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #006633;
@@ -154,138 +151,61 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.skeleton {
+  }
+  
+  .skeleton {
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-.skeleton-img {
+  }
+  
+  .skeleton-img {
     width: 100%;
     height: 450px;
     background-color: #ddd;
     animation: shimmer 1.5s infinite;
-}
-
-.skeleton-details {
+  }
+  
+  .skeleton-details {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.skeleton-title,
-.skeleton-text,
-.skeleton-button {
+  }
+  
+  .skeleton-title, .skeleton-text, .skeleton-button {
     height: 20px;
     background-color: #ddd;
     border-radius: 4px;
     animation: shimmer 1.5s infinite;
-}
-
-.skeleton-title {
+  }
+  
+  .skeleton-title {
     width: 50%;
-}
-
-.skeleton-text {
+  }
+  
+  .skeleton-text {
     width: 80%;
-}
-
-.skeleton-button {
+  }
+  
+  .skeleton-button {
     width: 30%;
     height: 40px;
     background-color: #ddd;
     border-radius: 4px;
-}
-
-/* modal css  */
-.formModalContainer {
-    background: white;
-    width: fit-content;
-    margin: 120px auto;
-    height: fit-content;
-    border-radius: 10px;
-    padding: 18px;
-    overflow-y: scroll;
-}
-
-.formModalSubContainer {
-    display: flex;
-    gap: 50px;
-}
-
-.formModalImage {
-    height: 630px;
-    width: 450px;
-    object-fit: cover;
-    border-radius: 5px;
-    background: rgb(192, 191, 191);
-
-}
-
-.modalForm {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-items: start;
-}
-
-.eachModalInput {
-    padding: 10px;
-    background: rgb(185, 184, 184);
-    font-weight: 300;
-    font-size: 16px;
-    width: 320px;
-    border: none;
-    border-radius: 5px;
-    margin: 0;
-    color: black;
-
-}
-
-.eachModalInput:focus {
-    outline: #006633 solid 2px;
-    background: white;
-}
-
-.eachModalInputSection {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-}
-
-.inputModalText {
-    margin: 0;
-    color: gray;
-    font-weight: 600;
-}
-
-.modalButton {
-    background: #006633;
-    color: white;
-    width: 100%;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 13px 0;
-    border-radius: 5px;
-}
-
-@keyframes shimmer {
+  }
+  
+  @keyframes shimmer {
     0% {
-        background-color: #f0f0f0;
+      background-color: #f0f0f0;
     }
-
     50% {
-        background-color: #e0e0e0;
+      background-color: #e0e0e0;
     }
-
     100% {
-        background-color: #f0f0f0;
+      background-color: #f0f0f0;
     }
-}
-
+  }
+  
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
@@ -300,7 +220,6 @@
     .previewPropertyImg {
         height: 200px;
     }
-
     .flex-container {
         display: block;
     }

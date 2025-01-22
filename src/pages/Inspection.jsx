@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../styles/Inspection.css";
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
   onSnapshot,
   query,
@@ -11,7 +9,6 @@ import {
   where,
 } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
-import firebase from "firebase/compat/app";
 
 function Inspection() {
   const currentUser = auth.currentUser;

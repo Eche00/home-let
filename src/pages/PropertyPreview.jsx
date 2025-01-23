@@ -17,14 +17,14 @@ import { handleMakeInspection } from "../lib/inspectionLogic";
 const Skeleton = () => {
   return (
     <div className="skeleton">
-            <div className="skeleton-img"></div>
-            <div className="skeleton-details">
-                <div className="skeleton-title"></div>
-                <div className="skeleton-text"></div>
-                <div className="skeleton-text"></div>
-                <div className="skeleton-button"></div>
-            </div>
-        </div>
+      <div className="skeleton-img"></div>
+      <div className="skeleton-details">
+        <div className="skeleton-title"></div>
+        <div className="skeleton-text"></div>
+        <div className="skeleton-text"></div>
+        <div className="skeleton-button"></div>
+      </div>
+    </div>
   );
 };
 
@@ -58,12 +58,13 @@ const Modal = ({ isOpen, closeModal, property }) => {
     });
     console.log(formData);
   };
+
   // handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       handleMakeInspection(formData);
-
+      navigate("/inspection");
       setFormData({ time: "", date: "" }); // Reset form
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -80,7 +81,7 @@ const Modal = ({ isOpen, closeModal, property }) => {
             alt="///"
           />
 
-          <div className=" flex flex-col relative">
+          <div className=" ">
             <section className="previewPropertyInspectButtonS">
               <button
                 onClick={closeModal}
@@ -88,9 +89,7 @@ const Modal = ({ isOpen, closeModal, property }) => {
                 X
               </button>
             </section>
-            <h2 className="md:text-[36px] text-[24px] font-[600] text-[#034FE3] flex items-center justify-between">
-              {property.title}
-            </h2>
+            <h2 className="previewPropertyTitle">{property.title}</h2>
             <p className="previewPropertyAddress">
               <FontAwesomeIcon icon={faMapMarkerAlt} /> <b>Address: </b>
               {property.address}, {property.city}, {property.state} State

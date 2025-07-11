@@ -220,6 +220,7 @@ function PropertyPreview() {
                 <p className="previewPropertyAddress">
                   <FontAwesomeIcon icon={faMapMarkerAlt} /> <b>Address: </b>
                   {property.address}, {property.city}, {property.state} State
+                  <p>₦{property.price}</p>
                 </p>
               </div>
               <div className="flex-right">
@@ -263,7 +264,7 @@ function PropertyPreview() {
               </div>
               <div>
                 A physical tour of the building attracts an inspection fee of
-                4,000 NGN. Once requested, an inspection date will be set to
+                ₦4000. Once requested, an inspection date will be set to
                 physically inspect the {property.houseType}.
               </div>
             </div>

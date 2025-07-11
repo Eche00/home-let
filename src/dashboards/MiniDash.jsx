@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import "../styles/MiniDash.css";
 import flat from "../assets/fiat.png";
+import Avatar from "@mui/material/Avatar";
 
 // Skeleton loader component
 const SkeletonLoader = () => (
@@ -20,7 +21,8 @@ const SkeletonLoader = () => (
   </div>
 );
 
-function MiniDash({ closeMenu }) { // Accept closeMenu as a prop
+function MiniDash({ closeMenu }) {
+  // Accept closeMenu as a prop
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +41,8 @@ function MiniDash({ closeMenu }) { // Accept closeMenu as a prop
             role: userData.role,
             name: userData.fullName || "Guest User",
             email: userData.email || currentUser.email,
-            profilePhotoUrl: userData.profilePhotoUrl || currentUser.photoURL || flat,
+            profilePhotoUrl:
+              userData.profileImage || currentUser.photoURL || flat,
           });
         } else {
           console.log("No user document found");
@@ -78,16 +81,21 @@ function MiniDash({ closeMenu }) { // Accept closeMenu as a prop
         <div className="profileDetails">
           <h2 className="profileName">{user.name}</h2>
           <p className="profileEmail">{user.email}</p>
-          <Link to="/profile" className="profileButton" onClick={closeMenu}> {/* Close menu on click */}
-            Go to Profile
+           <div className="role">
+        {user.role === "admin" && <div>You have admin privileges.</div>}
+        {user.role === "vendor" && <div>You have vendor privileges.</div>}
+        {user.role === "customer" && (
+          <div>You do not have vendor privileges.</div>
+        )}
+      </div>
+          <Link to="/profile" className="profileButton" onClick={closeMenu}>
+            {" "}
+            {/* Close menu on click */}
+            Profile
           </Link>
         </div>
       </div>
-      <div className="role">
-        {user.role === "admin" && <div>You have admin privileges.</div>}
-        {user.role === "vendor" && <div>You have vendor privileges.</div>}
-        {user.role === "customer" && <div>You do not have vendor privileges.</div>}
-      </div>
+     
     </div>
   );
 }

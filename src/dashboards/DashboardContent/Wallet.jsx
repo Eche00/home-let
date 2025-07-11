@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../../lib/firebase"; // Import your Firebase Auth
 import { collection, getDocs, query, where } from "firebase/firestore";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import PaymentIcon from "@mui/icons-material/Payment";
+import WalletIcon from "@mui/icons-material/Wallet";
+import AddCardIcon from "@mui/icons-material/AddCard";
 import "../../styles/Wallet.css";
+import depositLogic from "../../lib/depositLogic";
 
 function Wallet() {
-  const [totalCredit, setTotalCredit] = useState(0);
-  const [totalDebit, setTotalDebit] = useState(0);
-  const [balance, setBalance] = useState(0);
+  const { balance } = depositLogic();
 
   // Get the currently logged-in user
   const currentUser = auth.currentUser;
@@ -46,20 +49,25 @@ function Wallet() {
     fetchTransactions();
   }, [currentUser]);
 
-  
   return (
     <div className="walletSubContainer">
       <div className="walletBalance">
-        <h3 className="walletDigit">NGN {balance.toFixed(2)}</h3>
-        <p className="walletCategory">Balance</p>
-      </div>
-      <div className="walletCredit">
-        <h3 className="walletDigit">NGN {totalCredit.toFixed(2)}</h3>
-        <p className="walletCategory">Income</p>
-      </div>
-      <div className="walletDebit">
-        <h3 className="walletDigit">NGN {totalDebit.toFixed(2)}</h3>
-        <p className="walletCategory">Expense</p>
+        <h2 className="walletTitle">
+          Current Balance{" "}
+          <span>
+            <WalletIcon fontSize="" />
+          </span>
+        </h2>
+        <div>
+          <h3 className="walletDigit">
+          ₦  {balance.toLocaleString("en-NG", { minimumFractionDigits: 2 })}
+          </h3>
+
+          <p className="walletCategory">
+            {" "}
+            <AccountBalanceWalletIcon /> Your current account balance
+          </p>
+        </div>
       </div>
     </div>
   );

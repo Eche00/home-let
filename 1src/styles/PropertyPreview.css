@@ -1,0 +1,327 @@
+.previewPropertyImgContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 50px;
+}
+
+.previewPropertyImgMain {
+    grid-column: 1;
+    height: 400px;
+}
+
+.previewPropertyImgSideContainer {
+    grid-column: 2;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.previewPropertyImgLarge {
+    width: 100%;
+    height: 510px;
+    object-fit: cover;
+    border: 5px solid #f4f4f4;
+    border-radius: 8px;
+}
+
+.previewPropertyImg {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 5px solid #f4f4f4;
+}
+
+.previewPropertyImgLarge:hover,
+.previewPropertyImg:hover {
+    cursor: pointer;
+}
+
+
+.previewPropertyVideoContainer {
+    margin: 20px 0;
+}
+
+.previewPropertyTitle {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.flex-left,
+.flex-right {
+    flex: 0 1 auto;
+}
+
+.previewPropertyVideoButton {
+    background-color: #006633;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.previewPropertyInspectButtonS{
+  display: flex;
+  align-items: end;
+}
+
+.previewPropertyInspectButton {
+    background-color: #2c2c2c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.previewPropertyVideoButton:hover, 
+.previewPropertyInspectButton:hover {
+    background-color: gold;
+    color: #2c2c2c;
+}
+
+
+
+.previewPropertyDescription {
+    padding: 20px;
+}
+
+
+
+.previewDetails {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.previewPropertyRoomSection {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-start; 
+}
+
+.previewPropertyRoomSection p {
+    margin: 10px; 
+    font-size: 16px; 
+    font-weight: 500; 
+    color: #333; 
+}
+
+
+
+/* Modal overlay to cover the background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal content box */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  /* Close button */
+  .close-modal-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #006633;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .skeleton-img {
+    width: 100%;
+    height: 450px;
+    background-color: #ddd;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .skeleton-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .skeleton-title, .skeleton-text, .skeleton-button {
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 4px;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .skeleton-title {
+    width: 50%;
+  }
+  
+  .skeleton-text {
+    width: 80%;
+  }
+  
+  .skeleton-button {
+    width: 30%;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 4px;
+  }
+
+  /* modal css  */
+  .formModalContainer{
+ background: white;
+ width: fit-content;
+margin: 120px auto;
+height: fit-content;
+border-radius: 10px;
+padding: 18px;
+overflow-y: scroll;
+  }
+  .formModalSubContainer{
+    display: flex;
+    gap: 50px;
+  }
+.formModalImage{
+  height: 630px;
+  width: 450px;
+  object-fit: cover;
+  border-radius: 5px;
+background: rgb(192, 191, 191);
+
+}
+
+.modalForm{
+  display: flex;
+  flex-direction: column;
+gap: 25px;
+align-items: start;
+}
+.eachModalInput{
+  padding: 10px;
+  background: rgb(185, 184, 184);
+  font-weight: 300;
+  font-size: 16px;
+  width:320px;
+  border: none;
+  border-radius: 5px;
+  margin: 0;
+  color: black;
+
+}
+.eachModalInput:focus {
+ outline: #006633 solid 2px;
+ background: white;
+}
+.eachModalInputSection{
+display: flex;
+flex-direction: column;
+padding: 0;
+}
+.inputModalText{
+  margin: 0;
+  color: gray;
+  font-weight: 600;
+}
+.modalButton{
+  background: #006633;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 13px 0;
+  border-radius: 5px;
+}
+  @keyframes shimmer {
+    0% {
+      background-color: #f0f0f0;
+    }
+    50% {
+      background-color: #e0e0e0;
+    }
+    100% {
+      background-color: #f0f0f0;
+    }
+  }
+  
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .previewPropertyImgContainer {
+        padding: 0;
+    }
+
+    .previewPropertyImgLarge {
+        height: 410px;
+    }
+
+    .previewPropertyImg {
+        height: 200px;
+    }
+    .flex-container {
+        display: block;
+    }
+   .formModalImage {display: none;}
+    
+}
+@media (max-width: 850px) {
+   
+    
+    .formModalSubContainer{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: scroll;
+      gap: 10px;
+    }
+    .formModalImage{
+      height: 230px;
+      width: 250px;
+      object-fit: cover;
+      border-radius: 5px;
+    background: rgb(192, 191, 191);
+    }
+    .modalForm{
+    gap: 10px;
+    }
+    .eachModalInput{
+      font-weight: 200;
+      font-size: 14px;
+      width:90%;
+    
+    }
+    .previewPropertyInspectButton {
+     margin-right: 20px;
+  }
+}

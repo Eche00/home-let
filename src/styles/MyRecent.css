@@ -1,11 +1,12 @@
 .myRecentProductsContainer {
-  width: 85%;
+  width: 100%;
 }
 
 .myRecentProducts {
   padding: 0 30px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 20px;
   width: 100%;

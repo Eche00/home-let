@@ -7,7 +7,7 @@ const Profile = () => {
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const [profileImage, setProfileImage] = useState(
-    "https://via.placeholder.com/150"
+    ""
   );
   const [formData, setFormData] = useState({
     firstName: "John",

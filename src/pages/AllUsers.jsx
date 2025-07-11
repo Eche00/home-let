@@ -27,8 +27,9 @@ const AllUsers = () => {
             id: userId,
             fullName: userData.fullName,
             email: userData.email,
-            profilePhotoUrl: userData.profilePhotoUrl || dummy,
+            profilePhotoUrl: userData.profileImage || dummy,
             role: userData.role || "Customer",
+            gender: userData.gender || "Male",
           };
         });
 
@@ -45,13 +46,17 @@ const AllUsers = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = users.filter(
-      (user) =>
-        user.fullName.toLowerCase().includes(searchT.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchT.toLowerCase())
-    );
+    const filtered = users.filter((user) => {
+      const fullName = user.fullName?.toLowerCase() || "";
+      const email = user.email?.toLowerCase() || "";
+      const search = searchT?.toLowerCase() || "";
+
+      return fullName.includes(search) || email.includes(search);
+    });
+
     setFilteredUsers(filtered);
   }, [searchT, users]);
+
 
   const handleUserClick = (userId) => {
     navigate(`/user/${userId}`);
@@ -74,7 +79,13 @@ const AllUsers = () => {
         />
       </div>
 
+
+      <div className="totalUsersCountContainer">
+        <h2 className="totalUsers">Total Users</h2>
+        <span className="userCount">{users.length}</span>
+      </div>
       {filteredUsers.length > 0 ? (
+
         <div className="usersList">
           {filteredUsers.map((user) => (
             <div
@@ -90,14 +101,12 @@ const AllUsers = () => {
               <div className="userDetailsFlex">
                 <p className="userDetail">{user.fullName}</p>
                 <p className="userDetail">{user.email}</p>
+                <p className="userDetail">{user.gender}</p>
                 <p className="userDetail">{user.role}</p>
               </div>
             </div>
           ))}
-          <div className="totalUsersCountContainer">
-            <h2 className="totalUsers">Total Users</h2>
-            <span className="userCount">{users.length}</span>
-          </div>
+
         </div>
       ) : (
         <p className="noUsers">No users found</p>

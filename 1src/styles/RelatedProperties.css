@@ -1,0 +1,111 @@
+.relatedPropertiesContainer {
+    margin-top: 30px;
+}
+
+.relatedPropertiesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.relatedPropertyCard {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.relatedPropertyImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.relatedPropertyDetails {
+    padding: 10px;
+    text-align: left;
+}
+
+.relatedPropertyDetails h4 {
+    margin: 10px 0 5px 0;
+}
+
+.relatedPropertyDetails p {
+    color: #777;
+    margin: 0;
+}
+
+
+/* Skeleton loader styles */
+.skeleton-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    min-height: 300px; 
+}
+
+.skeleton-property {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    border-radius: 8px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-title {
+    width: 70%;
+    height: 20px;
+    background-color: #ddd;
+    margin: 10px 0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-text {
+    width: 90%;
+    height: 15px;
+    background-color: #ddd;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Pulse animation for skeleton loaders */
+@keyframes pulse {
+    0% {
+        background-color: #eee;
+    }
+    50% {
+        background-color: #ddd;
+    }
+    100% {
+        background-color: #eee;
+    }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .relatedPropertiesGrid {
+        grid-template-columns: 1fr;
+    }
+    .skeleton-container {
+        display: block;
+    }
+    .skeleton-property {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin: 10px 0;
+        padding: 0;
+    }
+}

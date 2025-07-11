@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query } from "firebase/firestore";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'; // Import the FontAwesome icon you want to use
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"; // Import the FontAwesome icon you want to use
 import "../../styles/MyRecent.css";
 import { auth, db } from "../../lib/firebase";
 
@@ -50,8 +50,7 @@ function LastProperty() {
             <div
               key={index}
               className="eachPropertyRecent"
-              onClick={() => handleClick(property)}
-            >
+              onClick={() => handleClick(property)}>
               <h3 className="recentH3">My Latest Property</h3>
 
               {/* Property hero image  */}
@@ -69,9 +68,15 @@ function LastProperty() {
         </div>
       ) : (
         <div className="noPropertiesContainer">
-          <FontAwesomeIcon icon={faExclamationTriangle} size="3x" className="noPropertiesIcon" />
+          <FontAwesomeIcon
+            icon={faExclamationTriangle}
+            size="3x"
+            className="noPropertiesIcon"
+          />
           <h4 className="noPropertiesHeading">There are no properties yet.</h4>
-          <button className="addPropertyButton" onClick={() => navigate('/add')}>
+          <button
+            className="addPropertyButton"
+            onClick={() => navigate("/add")}>
             Add Property
           </button>
         </div>

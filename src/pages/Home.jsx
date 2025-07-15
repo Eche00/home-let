@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "../lib/firebase"
 import "../styles/Home.css"
 import defaultIMG from "../assets/bg-overlay.png"
+import hood from "../assets/hood.jpg"
 import { useNavigate } from "react-router-dom"
+import Loading from "../components/loading"
+import "@fortawesome/fontawesome-free/css/all.min.css"
 
 function Home() {
-    const [properties, setProperties] = useState([]) // all fetched properties
-    const [filteredProperties, setFilteredProperties] = useState([]) // filtered search results
+    const [properties, setProperties] = useState([])
+    const [filteredProperties, setFilteredProperties] = useState([])
     const [searchFilters, setSearchFilters] = useState({
         location: "",
         priceRange: "",
@@ -16,7 +19,9 @@ function Home() {
     })
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const featuredRef = useRef(null)
 
+    // Fetch properties from Firebase
     useEffect(() => {
         const fetchProperties = async () => {
             setLoading(true)
@@ -27,7 +32,6 @@ function Home() {
                     ...doc.data(),
                 }))
                 setProperties(data)
-                // initially, filteredProperties shows only first 9
                 setFilteredProperties(data.slice(0, 9))
             } catch (error) {
                 console.error("Error fetching properties:", error)
@@ -39,10 +43,12 @@ function Home() {
         fetchProperties()
     }, [])
 
+    // Navigate to property details
     const handleViewDetails = (id) => {
         navigate(`/preview/${id}`)
     }
 
+    // Handle search input change
     const handleInputChange = (e) => {
         const { name, value } = e.target
         setSearchFilters((prev) => ({
@@ -51,16 +57,17 @@ function Home() {
         }))
     }
 
+    // Apply filters and update results
     const handleSearch = (e) => {
         e.preventDefault()
-
         setLoading(true)
+
         const filtered = properties.filter((property) => {
             const data = property.data
 
             const locationMatch = searchFilters.location
                 ? (data.city?.toLowerCase().includes(searchFilters.location.toLowerCase()) ||
-                   data.address?.toLowerCase().includes(searchFilters.location.toLowerCase()))
+                    data.address?.toLowerCase().includes(searchFilters.location.toLowerCase()))
                 : true
 
             let priceMatch = true
@@ -90,17 +97,23 @@ function Home() {
             return locationMatch && priceMatch && typeMatch && bedroomsMatch
         })
 
-        setFilteredProperties(filtered)  // <-- show ALL matching results here, no slice
+        setFilteredProperties(filtered)
         setLoading(false)
+
+        if (featuredRef.current) {
+            featuredRef.current.scrollIntoView({ behavior: "smooth" })
+        }
     }
 
     return (
         <div className="home-container">
-            {/* Hero Section */}
+            {/* Hero Section with Search */}
             <section className="home-hero">
                 <div className="home-hero-overlay">
-                    <h1 className="home-hero-title">Home Let</h1>
-                    <p className="home-hero-subtitle">Find your perfect rental home</p>
+                    <h1 className="home-hero-title">Ready to Find your Next Rental?</h1>
+                    <p className="home-hero-subtitle">
+                        Discover verified homes in your ideal location. Whether you're upgrading, relocating, or just browsing, we’ve got something that fits your lifestyle and budget.
+                    </p>
                     <form className="home-search-form" onSubmit={handleSearch}>
                         <input
                             type="text"
@@ -114,10 +127,13 @@ function Home() {
                             value={searchFilters.priceRange}
                             onChange={handleInputChange}
                         >
-                            <option value="">Price Range</option>
-                            <option value="0-150000">₦0 - ₦150,000</option>
-                            <option value="150000-300000">₦150,000 - ₦300,000</option>
-                            <option value="300000+">₦300,000+</option>
+                            <option value="" disabled hidden>
+                                Select Price Range
+                            </option>
+                            <option value="0-200000">₦0 - ₦200,000</option>
+                            <option value="200000-500000">₦200,000 - ₦500,000</option>
+                            <option value="500000-1000000">₦500,000 - ₦1,000,000</option>
+                            <option value="1000000+">₦1,000,000+</option>
                         </select>
                         <select
                             name="propertyType"
@@ -126,7 +142,10 @@ function Home() {
                         >
                             <option value="">Property Type</option>
                             <option value="Apartment">Apartment</option>
-                            <option value="House">House</option>
+                            <option value="Duplex">Duplex</option>
+                            <option value="Bungalow">Bungalow</option>
+                            <option value="Farmhouse">Farmhouse</option>
+                            <option value="Flat">Flat</option>
                         </select>
                         <select
                             name="bedrooms"
@@ -145,48 +164,45 @@ function Home() {
             </section>
 
             {/* Featured Properties */}
-            <section className="home-property-section">
+            <section className="home-property-section" ref={featuredRef}>
                 <h2 className="home-section-title">Featured Properties</h2>
                 {loading ? (
-                    <p className="home-loading-message">Loading...</p>
+                    <Loading />
                 ) : filteredProperties.length === 0 ? (
                     <p className="home-empty-message">No properties available right now.</p>
                 ) : (
                     <div className="home-property-grid">
                         {filteredProperties.map((property) => (
-                            <div className="home-property-card" key={property.id}>
+                            <div
+                                className="home-property-card"
+                                key={property.id}
+                                onClick={() => handleViewDetails(property.id)}
+                            >
                                 <div className="home-property-image">
                                     <img
                                         src={property.data.imageUrls?.[0] || defaultIMG}
                                         alt={property.data.title || "Just Another House"}
                                     />
                                     <span className="home-property-type">
-                                        {property.data.houseType || "N/A"}
+                                        {property.data.houseType || "Free House"}
                                     </span>
                                 </div>
                                 <div className="home-property-info">
                                     <h3>{property.data.title || "Just Another House"}</h3>
                                     <p className="home-location">
-                                        {property.data.address}, {property.data.city},{" "}
-                                        {property.data.state}
+                                        {property.data.address}, {property.data.city}, {property.data.state}
                                     </p>
                                     <div className="home-property-details">
-                                        <span>{property.data.bedrooms || "N/A"} bed</span>
-                                        <span>{property.data.bathrooms || "N/A"} bath</span>
+                                        <span>{property.data.bedrooms || "2"} bed</span>
+                                        <span>{property.data.bathrooms || "3"} bath</span>
                                     </div>
                                     <p className="home-price">
                                         ₦
                                         {property.data.price
                                             ? parseInt(property.data.price).toLocaleString()
                                             : "15000"}{" "}
-                                        / month
+                                        Yearly
                                     </p>
-                                    <button
-                                        className="home-view-btn"
-                                        onClick={() => handleViewDetails(property.id)}
-                                    >
-                                        View Details
-                                    </button>
                                 </div>
                             </div>
                         ))}
@@ -199,43 +215,85 @@ function Home() {
                 <h2 className="home-section-title">Why Choose Home Let?</h2>
                 <div className="home-features-grid">
                     <div className="home-feature-card">
-                        <img src="/images/secure.svg" alt="Secure" />
-                        <h3>Secure Listings</h3>
-                        <p>We verify every property to ensure safety and trust.</p>
+                        <i className="fas fa-shield-alt feature-icon"></i>
+                        <h3>Verified Listings</h3>
+                        <p>Every property is carefully reviewed to ensure it’s safe, authentic, and ready for you.</p>
                     </div>
                     <div className="home-feature-card">
-                        <img src="/images/support.svg" alt="Support" />
-                        <h3>24/7 Support</h3>
-                        <p>Our team is here to help anytime during your rental journey.</p>
+                        <i className="fas fa-headset feature-icon"></i>
+                        <h3>Always Available</h3>
+                        <p>From viewing to moving in, our support team is here for you—day or night.</p>
                     </div>
                     <div className="home-feature-card">
-                        <img src="/images/affordable.svg" alt="Affordable" />
-                        <h3>Affordable Prices</h3>
-                        <p>Get the best deals without compromising on comfort.</p>
+                        <i className="fas fa-money-bill-wave feature-icon"></i>
+                        <h3>Transparent Pricing</h3>
+                        <p>No extra charges, no surprises. What you see is what you pay.</p>
                     </div>
                 </div>
             </section>
 
             {/* About Section */}
             <section className="home-about">
-                <div className="home-about-image">
-                    <img src="/images/about-home.jpg" alt="About Home Let" />
-                </div>
                 <div className="home-about-text">
                     <h2>About Home Let</h2>
                     <p>
-                        We believe everyone deserves a place to call home. Our platform
-                        makes it easy to find trusted rental properties across Nigeria.
+                        At Home Let, we’re more than just a rental platform — we’re your trusted partner in finding a place to truly call home. Whether you're a student looking for your first apartment, a family relocating to a new city, or a professional seeking comfort and convenience, our goal is to simplify your search and bring you closer to the perfect space.
                     </p>
                     <p>
-                        Whether moving to Lagos or Abuja, we offer verified listings and
-                        exceptional service to ease your search.
+                        We work hand-in-hand with landlords, agents, and local experts to ensure every listing is verified and up-to-date. From accurate pricing to high-quality photos and honest descriptions, we’re committed to transparency and reliability at every step. No more scams, misleading ads, or wasted time.
+                    </p>
+                    <p>
+                        With a growing presence in major cities across Nigeria — including Lagos, Abuja, Port Harcourt, and beyond — we’re constantly expanding our reach to connect more people with safe, affordable, and accessible rental homes. Our smart filters, user-friendly interface, and customer-first approach mean you spend less time searching and more time settling in.
+                    </p>
+                    <p>
+                        Home Let was built to put renters first. Backed by a passionate team, responsive support, and a vision for better housing experiences, we are here to help you navigate every part of your rental journey with confidence and ease.
                     </p>
                     <button className="home-learn-more-btn">Learn More</button>
                 </div>
             </section>
 
-            {/* Testimonials */}
+            {/* Stats & Explore Section */}
+            <section className="home-stats-section">
+                <div className="home-stats-grid">
+                    <div className="home-stats-left">
+                        <h2>Explore More With Home Let</h2>
+                        <p>
+                            Browse thousands of verified rental properties across Nigeria — from cozy apartments to spacious family homes. Whether you're relocating, investing, or simply searching for a better space, Home Let makes the journey easier, faster, and more reliable.
+                        </p>
+                        <button className="home-explore-btn" onClick={() => navigate("/explore")}>
+                            Explore Properties
+                        </button>
+                        <button className="home-contact-btn" onClick={() => navigate("/contact")}>
+                            Contact Us
+                        </button>
+                    </div>
+
+                    <div className="home-stats-center">
+                        <img src={hood} alt="Explore Home Let" />
+                    </div>
+
+                    <div className="home-stats-right">
+                        <div className="stat-item">
+                            <h3>{properties.length}</h3>
+                            <p>Properties</p>
+                        </div>
+                        <div className="stat-item">
+                            <h3>24/7</h3>
+                            <p>Support</p>
+                        </div>
+                        <div className="stat-item">
+                            <h3>200+</h3>
+                            <p>Vendors</p>
+                        </div>
+                        <div className="stat-item">
+                            <h3>5,000+</h3>
+                            <p>Customers</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
             <section className="home-testimonials">
                 <h2 className="home-section-title">What Our Users Say</h2>
                 <div className="home-testimonials-grid">
@@ -253,15 +311,6 @@ function Home() {
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-            <footer className="home-footer">
-                <div className="home-footer-content">
-                    <h3>Home Let</h3>
-                    <p>Helping you find your ideal rental home with ease and comfort.</p>
-                    <p>© {new Date().getFullYear()} Home Let. All rights reserved.</p>
-                </div>
-            </footer>
         </div>
     )
 }

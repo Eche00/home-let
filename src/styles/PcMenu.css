@@ -30,12 +30,13 @@
 /* Active link styling */
 .pc-menu li a.active-link {
     color: red !important; 
+    border-bottom: 1px solid red;
 }
 
 /* Active link styling */
-.pc-menu li a.active-link:hover {
+/* .pc-menu li a.active-link:hover {
     color: #dedede !important; 
-}
+} */
 
 /* Dropdown Menu */
 .dropdown-menu {

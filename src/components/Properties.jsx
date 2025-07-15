@@ -2,16 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import defaultIMG from "../assets/bg-overlay.png";
+import "../styles/Home.css";
 import "../styles/Properties.css";
 
-// Skeleton Loader Component
+
+// Skeleton loader styled like home property card
 function SkeletonLoader() {
   return (
-    <div className="skeleton-property">
-      <div className="skeleton-image"></div>
-      <div className="skeleton-title"></div>
+    <div className="home-property-card skeleton">
+      <div className="home-property-image skeleton-image" />
+      <div className="home-property-info">
+        <div className="skeleton-title" />
+        <div className="skeleton-text" />
+        <div className="skeleton-details" />
+      </div>
     </div>
   );
 }
@@ -21,7 +26,6 @@ function Properties() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Getting properties from db
   useEffect(() => {
     const propertyDataRef = collection(db, "propertyData");
 
@@ -31,63 +35,57 @@ function Properties() {
           id: doc.id,
           ...doc.data().data,
         }));
-        // Getting recently updated properties
+
         const last5Properties = propertyData
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 6);
+          .slice(0, 3);
+
         setProperties(last5Properties);
-        setLoading(false); // Set loading to false when data is loaded
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error retrieving document:", error);
-        setLoading(false); // Even in case of error, stop showing loading
+        setLoading(false);
       });
-  }, [navigate]);
+  }, []);
 
-  // Handling a clicked property
   const handleClick = (property) => {
     navigate(`/preview/${property.id}`);
   };
 
   return (
-    <div className="properties-covers">
-      <div className="reg-contents">
-        <div>
-          <h1 className="title">New Properties</h1>
-          <div className="lastFiveProduct">
-            {loading || properties.length === 0
-              ? // Show skeleton loader for each property when loading or no properties are found
-                [1, 2, 3].map((_, index) => <SkeletonLoader key={index} />)
-              : // Property container
-                properties.map((property) => (
-                  // Each property, click event attached to the entire div
-                  <div
-                    key={property.id}
-                    className="eachProp"
-                    onClick={() => handleClick(property)} // Event handler moved here
-                  >
-                    {/* Property hero image */}
-                    <img
-                      className="propHeroImage"
-                      src={property.imageUrls[0]}
-                      alt=""
-                    />
-                    {/* Property state (top-right corner of the image) */}
-                    <div className="prop-state">
-                      <FontAwesomeIcon icon={faMapMarkerAlt} />{" "}
-                      <span>{property.state}</span>
-                    </div>
-
-                    {/* Property title */}
-                    <h2 className="propTitle">
-                      {property.title} ({property.houseType}).
-                     <p>₦ {property.price}</p>
-                    </h2>
-                  </div>
-                ))}
-          </div>
+    <div className="home-container">
+      <section className="home-property-section">
+        <h2 className="home-section-title">Latest Listings</h2>
+        <div className="home-property-grid">
+          {loading || properties.length === 0
+            ? [1, 2, 3].map((_, i) => <SkeletonLoader key={i} />)
+            : properties.map((property) => (
+              <div
+                key={property.id}
+                className="home-property-card"
+                onClick={() => handleClick(property)}
+              >
+                <div className="home-property-image">
+                  <img
+                    src={property.imageUrls?.[0] || defaultIMG}
+                    alt={property.title || "Just Another Property"}
+                  />
+                  <span className="home-property-type">{property.houseType} for {property.type}</span>
+                </div>
+                <div className="home-property-info">
+                  <h3>{property.title}</h3>
+                  <p className="home-location">
+                    {property.address}, {property.state}
+                  </p>
+                  <p className="home-price">
+                    ₦{property.price ? parseInt(property.price).toLocaleString() : "150000"}
+                  </p>
+                </div>
+              </div>
+            ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

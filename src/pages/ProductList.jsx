@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import defaultIMG from "../assets/bg-overlay.png";
+import "../styles/Home.css";
 import "../styles/Properties.css";
+
 
 function ProductList() {
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Function to handle search input
+  // Update search input state
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Filter properties based on the search input
   useEffect(() => {
     const propertyDataRef = collection(db, "propertyData");
 
@@ -25,7 +27,7 @@ function ProductList() {
           ...doc.data().data,
         }));
 
-        // Filter properties based on the search query
+        // Filter properties based on search query
         const filteredData = propertyData.filter((property) => {
           return (
             property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -34,73 +36,70 @@ function ProductList() {
           );
         });
 
-        // Sort by most recent and set filtered properties
-        const last5Properties = filteredData.sort(
+        // Sort by most recent createdAt date
+        const sortedProperties = filteredData.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
 
-        setProperties(last5Properties);
+        setProperties(sortedProperties);
       })
       .catch((error) => {
         console.error("Error retrieving document:", error);
       });
-  }, [searchQuery, navigate]); // Update whenever searchQuery changes
+  }, [searchQuery]);
 
-  // Handling clicked property
+  // Navigate to property preview on click
   const handleClick = (property) => {
     navigate(`/preview/${property.id}`);
   };
 
   return (
     <div className="search-container">
-      {/* Search Input */}
-      <div className="searchContainer">
+      {/* Search input */}
+      <div className="home-search-form-section">
         <input
           type="text"
-          placeholder="Describe a Property eg. Duplex in Owerri"
+          placeholder="eg. Duplex in Owerri"
           value={searchQuery}
           onChange={handleSearchChange}
           className="searchInput"
         />
       </div>
 
-      {properties && properties.length > 0 ? (
-        // property container
-        <div className="searchDisplay">
+      {/* Properties grid or no properties message */}
+      {properties.length > 0 ? (
+        <section className="home-property-grid">
           {properties.map((property) => (
-            //  each property
-            <div key={property.id} className="eachsearchedProperty">
-              {/* property hero image  */}
-              <img
-                onClick={() => handleClick(property)}
-                className="propertysearchHeroImage"
-                src={property.imageUrls[0]}
-                alt=""
-              />
-              {/* property type / title  */}
-              <p className="property-type">For {property.type}</p>
-              <h2 className="propertySearchTitle">{property.title}</h2>
-              {/* property address  */}
-              <div className="propertySearchAddress">
-                <p className="property-Address">
-                  <span>{property.state}</span> State
-                </p>
-                <p className="property-housetype">{property.houseType} </p>
+            <div
+              key={property.id}
+              className="home-property-card"
+              onClick={() => handleClick(property)}
+            >
+              <div className="home-property-image">
+                <img
+                  src={property.imageUrls?.[0] || defaultIMG}
+                  alt={property.title || "Just Another Property's Image"}
+                />
+                <span className="home-property-type">{property.houseType || "Just Another Property"} for {property.type || "Renting"}</span>
               </div>
-
-              <p className="dashedLine">
-                <span className="dash0"></span>
-                <span className="dash1"></span>
-              </p>
-              <div className="propertySearchRoomSection">
-                <p>{property.bathrooms}: Bathrooms</p>
-                <p>{property.bedrooms}: Bedrooms</p>
+              <div className="home-property-info">
+                <h3>{property.title || "Just Another Property"}</h3>
+                <p className="home-location">
+                  {property.address || "My New House"}, {property.state || "My State"}
+                </p>
+                <div className="home-property-details">
+                  <span>{property.bedrooms || "2"} bed</span>
+                  <span>{property.bathrooms || "3"} bath</span>
+                </div>
+                <p className="home-price">
+                  ₦{property.price ? parseInt(property.price).toLocaleString() : "150000"} Yearly
+                </p>
               </div>
             </div>
           ))}
-        </div>
+        </section>
       ) : (
-        <p className="npProperty">No properties found</p>
+        <p className="home-empty-message">No properties found</p>
       )}
     </div>
   );

@@ -1,0 +1,285 @@
+.search-container {
+    /* width: 100%; */
+    margin: 15px;
+    margin-top: 150px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+.searchContainer {
+    margin-left: auto;
+    width: fit-content;
+    /* Ensures it doesn’t take full width */
+}
+
+
+.searchInput {
+    width: 300px;
+    padding: 10px;
+    border: 2px solid #006633;
+    outline: none;
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+
+.searchDisplay,
+.lastFiveProduct {
+    padding: 20px 0px;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    border-radius: 30px;
+}
+
+
+
+.properties-cover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: transparent;
+
+}
+
+.eachsearchedProperty {
+    width: 28%;
+    align-items: center;
+    border-radius: 30px 30px 0px 0px;
+    padding: 10px;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    border-bottom: #006633 solid 3px;
+    border-radius: 20px;
+}
+
+.eachProp {
+    width: 28%;
+    border-radius: 30px 30px 0px 0px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    background: white;
+    position: relative;
+    border-bottom: #006633 solid 3px;
+    border: 1px solid #006633;
+    border-radius: 20px;
+}
+
+.eachsearchedProperty:hover {
+    scale: 1.05;
+    transition: all 0.3s ease-in-out;
+    box-shadow: inset 0 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+.propertysearchHeroImage,
+.propHeroImage {
+    width: 100%;
+    height: 200px;
+    display: block;
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+}
+
+.propertySearchTitle {
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.propertySearchAddress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.property-Address {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.dashedLine {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dash0 {
+    flex: 1;
+    height: 3px;
+    background: #006633;
+}
+
+.dash1 {
+    flex: 1;
+    height: 3px;
+    background: rgb(189, 187, 187);
+}
+
+.propertySearchRoomSection {
+    display: flex;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+
+
+.reg-content {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.propTitle {
+    font-size: 15px;
+    /* width: 100%; */
+    overflow: hidden;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    z-index: -1;
+}
+
+.property-type,
+.prop-state {
+    width: fit-content;
+    padding: 2px 20px;
+    background-color: #0066334d;
+    color: #006633;
+    font-weight: bold;
+    border-radius: 50px;
+}
+
+.prop-state span {
+    margin-left: 5px;
+}
+
+
+
+
+
+
+/* Skeleton Loader Styles */
+.skeleton-container {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+}
+
+.skeleton-property {
+    flex: 1;
+    max-width: 33%;
+    /* background-color: #4CAF50; */
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 350px;
+    background-color: #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.skeleton-title,
+.skeleton-text,
+.skeleton-rooms {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.skeleton-title {
+    width: 80%;
+}
+
+.skeleton-rooms {
+    width: 50%;
+}
+
+.npProperty {
+    text-align: center;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        background-color: #f0f0f0;
+    }
+
+    50% {
+        background-color: #e0e0e0;
+    }
+}
+
+@media (max-width: 1100px) {
+
+    .eachsearchedProperty,
+    .eachProp {
+        width: 40%;
+    }
+}
+
+
+@media (max-width: 840px) {
+    .search-container {
+        margin: 0px;
+
+    }
+
+    .eachsearchedProperty,
+    .eachProp {
+        width: 100%;
+    }
+
+    .search-container {
+        box-shadow: none;
+        padding: 10px;
+        align-items: center;
+    }
+
+    .searchDisplay,
+    .lastFiveProduct {
+        padding: 0 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        background: transparent;
+
+    }
+}

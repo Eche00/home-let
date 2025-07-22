@@ -1,0 +1,240 @@
+.vendor-list-container {
+  width: 100%;
+  margin: 2rem 4rem;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.vendor-list-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #ccc;
+}
+
+.vendor-table-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+}
+
+.vendor-table {
+  width: 100%;
+  min-width: 800px;
+  color: #d4f36b;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+  table-layout: auto;
+}
+
+.vendor-table th,
+.vendor-table .td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.vendor-table th {
+  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+  color: white;
+  white-space: nowrap;
+}
+
+.vendor-table tr:hover {
+  background-color: #047d26;
+}
+
+.vendor-status {
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  text-transform: capitalize;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0.8rem auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vendor-status.approved {
+  background-color: #28a745;
+  color: white;
+}
+
+.vendor-status.rejected {
+  background-color: #dc3545;
+  color: white;
+}
+
+.vendor-status.pending {
+  background-color: orange;
+  color: white;
+}
+
+.vendor-actions button {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.approve-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.details-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: white;
+  color: black;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  min-width: 140px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  padding: 10px;
+  margin: 2px auto;
+  text-align: left;
+  border: none;
+  background-color: rgb(5, 95, 5);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu button:hover:not(:disabled) {
+  background-color: #09a934;
+}
+
+.dropdown-menu button.approve:hover:not(:disabled) {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.dropdown-menu button.reject:hover:not(:disabled) {
+  background-color: #fdecea;
+  color: #c62828;
+  font-weight: 500;
+}
+
+.dropdown-menu button.details:hover:not(:disabled) {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.dropdown-menu button:disabled {
+  color: gray;
+  cursor: not-allowed;
+}
+
+/* Modal */
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+  width: 400px !important;
+  padding: 20px;
+  text-align: left !important;
+  margin: 0;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+/* Tablet Responsiveness */
+@media screen and (max-width: 768px) {
+  .vendor-list-container {
+    margin: 1rem;
+    overflow-x: auto;
+  }
+
+  .vendor-list-title {
+    font-size: 1.5rem;
+  }
+
+  .vendor-table {
+    min-width: 700px;
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1rem;
+  }
+}
+
+/* Very Small Devices */
+@media screen and (max-width: 480px) {
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+
+  .vendor-actions button {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+}

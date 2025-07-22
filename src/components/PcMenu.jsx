@@ -52,7 +52,7 @@ const PcMenu = ({ closeMenu }) => {
                 </li>
             )}
             <li className="dropdown" ref={dropdownRef}>
-                <span onClick={toggleDropdown} className="dropdown-toggle">
+                <span onClick={toggleDropdown} className="dropdown">
                     Our Services <FontAwesomeIcon icon={faCaretDown} />
                 </span>
                 {showDropdown && (

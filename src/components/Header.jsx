@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import '../styles/Header.css';
 import '../styles/MobileNav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../lib/firebase"; 
-import { getFirestore, doc, getDoc } from "firebase/firestore"; 
-import { useNavigate } from 'react-router-dom'; 
+import { auth } from "../lib/firebase";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 import PcMenu from './PcMenu';
 import MobileMenu from './MobileMenu';
 import flat from "../assets/fiat.png";
@@ -15,29 +16,29 @@ import logo from '../assets/home-let-white.png';
 const Header = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     // State to hold authenticated user data
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(null);
     // Loading state to handle the authentication check
-    const [isLoading, setIsLoading] = useState(true); 
+    const [isLoading, setIsLoading] = useState(true);
     // Initialize useNavigate
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Initialize Firestore
-        const db = getFirestore(); 
+        const db = getFirestore();
 
         // Function to fetch user data from Firestore
         const fetchUserData = async (uid) => {
             try {
-                const userDoc = await getDoc(doc(db, "users", uid)); 
+                const userDoc = await getDoc(doc(db, "users", uid));
                 if (userDoc.exists()) {
                     // Store the user data in state
-                    setUser(userDoc.data()); 
+                    setUser(userDoc.data());
                 }
             } catch (error) {
                 console.error("Error fetching user data: ", error);
             } finally {
                 // Set loading to false once data is fetched
-                setIsLoading(false); 
+                setIsLoading(false);
             }
         };
 
@@ -45,12 +46,12 @@ const Header = () => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
                 // Fetch user data from Firestore using user ID
-                fetchUserData(currentUser.uid); 
+                fetchUserData(currentUser.uid);
             } else {
                 // If no user, stop loading
-                setIsLoading(false); 
+                setIsLoading(false);
                 // Set to null if not authenticated
-                setUser(null); 
+                setUser(null);
             }
         });
 
@@ -68,14 +69,17 @@ const Header = () => {
 
     // Handle profile image click to navigate to dashboard
     const handleProfileClick = () => {
-        navigate('/profile'); 
+        navigate('/profile');
     };
 
     return (
         <div className="header">
             <div className="logo">
-                <img src={logo} alt="Logo" />
+                <Link to="/">
+                    <img src={logo} alt="Logo" />
+                </Link>
             </div>
+
             <div className="menu">
                 {/* PC menu, visible only on larger screens */}
                 <div className='pcOnly'><PcMenu /></div>
@@ -86,10 +90,10 @@ const Header = () => {
                         {user ? (
                             // if user is logged in, display profile photo
                             <img
-                                src={user.profilePhotoUrl || flat} 
+                                src={user.profilePhotoUrl || flat}
                                 alt="User Profile"
-                                className="profile-picture" 
-                                onClick={handleProfileClick} 
+                                className="profile-picture"
+                                onClick={handleProfileClick}
                             />
                         ) : (
                             // if user is not logged in, display navbar

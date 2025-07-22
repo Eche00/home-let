@@ -216,14 +216,14 @@ section {
 
 .home-features-grid {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 40px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     margin-top: 30px;
 }
 
 .home-feature-card {
-    max-width: 260px;
+    width: 100%;
     background: white;
     border-radius: 12px;
     padding: 25px 20px;
@@ -311,7 +311,6 @@ section {
     grid-template-columns: 2fr 2fr 1fr;
     gap: 1rem;
     align-items: center;
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -339,6 +338,7 @@ section {
 .home-explore-btn,
 .home-contact-btn {
     margin-right: 1rem;
+    margin-left: 1rem;
     margin-top: 0.5rem;
 }
 
@@ -421,6 +421,13 @@ section {
         box-sizing: border-box;
     }
 
+    .home-features-grid {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
     .home-hero-title {
         font-size: 1.5rem;
         text-align: left;
@@ -433,12 +440,11 @@ section {
 
     .home-stats-grid {
         grid-template-columns: 1fr;
-        text-align: center;
     }
 
     .home-explore-btn,
     .home-contact-btn {
-        margin: 0.5rem 0;
+        margin: 0.5rem 1rem;
     }
 
     .home-search-form input,

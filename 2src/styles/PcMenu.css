@@ -1,0 +1,89 @@
+.pc-menu {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    color: #dedede; 
+    position: relative;
+}
+
+.pc-menu li {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pc-menu li a {
+    color: #dedede; 
+    text-decoration: none; 
+    display: block; 
+}
+
+.pc-menu li:hover {
+    background-color: #555;
+}
+
+.pc-menu li a:hover {
+    color: #fff; 
+}
+
+/* Active link styling */
+.pc-menu li a.active-link {
+    color: red !important; 
+    border-bottom: 1px solid red;
+}
+
+/* Active link styling */
+/* .pc-menu li a.active-link:hover {
+    color: #dedede !important; 
+} */
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute; 
+    top: 100%; 
+    left: 0;
+    background-color: #333;
+    list-style: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: #dedede; 
+    display: none; 
+}
+
+.dropdown-menu.show {
+    display: block; 
+}
+
+.dropdown-menu li {
+    padding: 8px 15px;
+}
+
+.dropdown-menu li a {
+    color: #dedede; 
+}
+
+.dropdown-menu li:hover {
+    background-color: #555;
+}
+
+.dropdown-menu li a:hover {
+    color: #fff; 
+}
+
+/* Hide PC menu on smaller screens */
+@media screen and (max-width: 768px) {
+    .pc-menu {
+        display: block;
+    }
+
+    /* To ensure dropdown appears under the parent in mobile view */
+    .dropdown-menu {
+        position: relative; 
+    }
+
+    .pc-menu li:hover {
+        background-color: #555;
+    }
+
+}

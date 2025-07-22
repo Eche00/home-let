@@ -1,0 +1,12 @@
+.mobile-menu {
+    display: none; /* Hidden on larger screens */
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Show mobile menu on smaller screens */
+@media screen and (max-width: 768px) {
+    .mobile-menu {
+        display: block;
+    }
+}

@@ -1,0 +1,169 @@
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  
+  .register-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 900px;
+    background-color: #fff;
+    background-image: url("../assets//bg-overlay.png");
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .register-image {
+    width: 50%;
+  }
+  
+  .register-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .register-form-container {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .register-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .auth-nav {
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+}
+
+  
+  .register-error {
+    color: red;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-field {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ccc;
+    width: 100%; 
+    color: #006633;
+    box-sizing: border-box; 
+  }
+
+  .input-field::placeholder, select.input-field::placeholder {
+    color: #2c2c2c;  /* Gray color for placeholder text */
+    opacity: 1;   /* Ensures that the placeholder text is fully visible */
+    font-size: 0.9rem; /* Adjust font size */
+  }
+  
+  /* Add focus state styles if needed */
+  .input-field:focus::placeholder, select.input-field:focus::placeholder  {
+    color: green;  /* Slightly lighter on focus */
+    transition: color 0.3s ease;
+  }
+  
+  
+  select.input-field:focus, .input-field:focus {
+    outline: none;
+    color: #006633;
+    border-color: #006633; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+  }
+  
+  
+  select.input-field {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ccc;
+    width: 100%; 
+    color: #2c2c2c;
+    box-sizing: border-box;  
+  }
+  
+  select.input-field option[disabled] {
+    color: #aaa;
+  }
+  
+  select.input-field option {
+    color: #000; 
+  }
+  
+  .dob-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .dob-container select {
+    width: 50%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .register-button {
+    background-color: #006633;
+    color: white;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 90%;
+    align-self: center;
+  }
+  
+  .register-button:hover:not(.disabled) {
+    background-color: #004d26;
+  }
+  
+  .register-button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .register-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .register-form-container {
+        width: 100%;
+      }
+  }
+  

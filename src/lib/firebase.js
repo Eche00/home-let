@@ -1,23 +1,19 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage'; 
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-// Your Firebase configuration
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY, 
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyBVX2GEBknV9fsO6cOXgVcy3aJfXM2bmyE",
+  authDomain: "auth-omelet.firebaseapp.com",
+  projectId: "auth-omelet",
+  storageBucket: "auth-omelet.appspot.com",
+  messagingSenderId: "1031123167170",
+  appId: "1:1031123167170:web:9455a5bf1539fc97c1585b",
+  measurementId: "G-MJ0EHCQYYX",
 };
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase services
-export const auth = getAuth(app); 
-export const db = getFirestore(app); 
-export const storageF = getStorage(app); 
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storageF = getStorage(app);

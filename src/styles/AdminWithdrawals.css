@@ -1,0 +1,157 @@
+.dashboard-container {
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.request-card {
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+  color: white;
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.request-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.request-card {
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.request-card:hover {
+  transform: scale(1.01);
+}
+
+.request-user {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.request-card p {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.request-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.button-approve,
+.button-reject {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.button-approve {
+  background-color: #2bd66a;
+}
+
+.button-approve:hover {
+  background-color: #15803d;
+}
+
+.button-reject {
+  background-color: #dc2626;
+}
+
+.button-reject:hover {
+  background-color: #b91c1c;
+}
+
+.status {
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 0.95rem;
+}
+
+.status.pending {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.status.approved {
+  background-color: #42da65;
+  color: white;
+}
+
+.status.rejected {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .request-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .request-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .request-card {
+    padding: 1rem;
+  }
+
+  .request-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .button-approve,
+  .button-reject {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .request-card p {
+    font-size: 0.95rem;
+  }
+
+  .status {
+    font-size: 0.9rem;
+  }
+}

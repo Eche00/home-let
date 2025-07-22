@@ -37,19 +37,19 @@
 .vendor-table th,
 .vendor-table .td {
   padding: 0.8rem;
-  width: 100%;
+  /* width: 100%; */
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
 .vendor-table th {
-background-color: #006633;
+  background-color: #006633;
   color: white;
   white-space: nowrap;
 }
 
 .vendor-table tr:hover {
-  background-color: #047d26;
+  cursor: pointer;
 }
 
 .vendor-status {
@@ -146,19 +146,19 @@ background-color: #006633;
   background-color: #09a934;
 }
 
-.dropdown-list button.approve:hover:not(:disabled) {
+.dropdown-list button.approve:not(:disabled) {
   background-color: #e6f4ea;
   color: #2e7d32;
   font-weight: 500;
 }
 
-.dropdown-list button.reject:hover:not(:disabled) {
+.dropdown-list button.reject:not(:disabled) {
   background-color: #fdecea;
   color: #c62828;
   font-weight: 500;
 }
 
-.dropdown-list button.details:hover:not(:disabled) {
+.dropdown-list button.details:not(:disabled) {
   background-color: #e3f2fd;
   color: #1565c0;
   font-weight: 500;
@@ -243,4 +243,22 @@ background-color: #006633;
   .modal-content {
     width: 95%;
   }
+}
+
+.no-vendors-row {
+  text-align: center;
+}
+
+.no-vendors-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.no-vendors-image {
+  width: 160px;
+  height: auto;
+  margin-bottom: 1rem;
+  opacity: 0.6;
 }

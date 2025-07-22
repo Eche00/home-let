@@ -1,25 +1,29 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";  // for navigation
 import { db } from "../lib/firebase";
 import {
   collection,
   getDocs,
   doc,
+  getDoc,
   updateDoc,
-  runTransaction,
+  deleteDoc,
   query,
   orderBy,
-  serverTimestamp,
 } from "firebase/firestore";
 import Loading from "../components/loading";
 import "../styles/AdminWithdrawals.css";
+import fiat from "../assets/fiat.png";
 import toast from "react-hot-toast";
 
 export default function AdminWithdrawal() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error] = useState(null);
   const [processingId, setProcessingId] = useState(null);
 
+  const navigate = useNavigate();
+
+  // Fetch withdrawal requests + user data
   async function fetchRequests() {
     setLoading(true);
     try {
@@ -28,21 +32,27 @@ export default function AdminWithdrawal() {
         orderBy("timestamp", "desc")
       );
       const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map((doc) => {
-        const requestData = doc.data();
-        const fullName = `${requestData.firstName || ""} ${
-          requestData.lastName || ""
-        }`.trim();
-        return {
-          id: doc.id,
+      const data = [];
+
+      for (const docSnap of querySnapshot.docs) {
+        const requestData = docSnap.data();
+        const userRef = doc(db, "users", requestData.userId);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.exists() ? userSnap.data() : {};
+
+        data.push({
+          id: docSnap.id,
           ...requestData,
-          fullName: fullName || "Unknown User",
-        };
-      });
+          fullName: userData.fullName || "Unknown User",
+          email: userData.email || "No email",
+          balance: userData.balance || 0,
+        });
+      }
 
       setRequests(data);
     } catch (error) {
       console.error("Error fetching withdrawal requests:", error);
+      toast.error("Error loading requests");
     } finally {
       setLoading(false);
     }
@@ -52,69 +62,56 @@ export default function AdminWithdrawal() {
     fetchRequests();
   }, []);
 
+  // Approve request: Deduct amount from user balance, delete request, then navigate
   async function handleApprove(request) {
     setProcessingId(request.id);
-
-    const userRef = doc(db, "users", request.userId);
-    const requestRef = doc(db, "withdrawalRequests", request.id);
-    const transactionsRef = collection(db, "transactions");
-
     try {
-      await runTransaction(db, async (transaction) => {
-        const userDoc = await transaction.get(userRef);
-        if (!userDoc.exists()) {
-          throw new Error("User not found.");
-        }
+      const userRef = doc(db, "users", request.userId);
+      const userSnap = await getDoc(userRef);
 
-        const userData = userDoc.data();
-        const currentBalance = userData.balance || 1000000;
+      if (!userSnap.exists()) {
+        throw new Error("User not found.");
+      }
 
-        if (request.amount > currentBalance) {
-          throw new Error("User has insufficient funds.");
-        }
+      const userData = userSnap.data();
+      const currentBalance = userData.balance || 0;
 
-        transaction.update(userRef, {
-          balance: currentBalance - request.amount,
-        });
+      if (request.amount > currentBalance) {
+        toast.error("User has insufficient balance.");
+        setProcessingId(null);
+        return;
+      }
 
-        const newTransactionRef = doc(transactionsRef);
-        transaction.set(newTransactionRef, {
-          userId: request.userId,
-          amount: request.amount,
-          type: "withdrawal",
-          timestamp: serverTimestamp(),
-          fullName:
-            `${request.firstName || ""} ${request.lastName || ""}`.trim() ||
-            "Unknown User",
-          email: request.email || "no-email@example.com",
-        });
+      const newBalance = currentBalance - request.amount;
 
-        transaction.update(requestRef, { status: "approved" });
-      });
+      // Update balance
+      await updateDoc(userRef, { balance: newBalance });
 
-      toast.success("Withdrawal approved and processed!");
-      fetchRequests();
+      // Delete withdrawal request
+      await deleteDoc(doc(db, "withdrawalRequests", request.id));
+
+      toast.success("Withdrawal approved and balance updated.");
+
+      // Refresh list (optional, since we navigate away)
+      // await fetchRequests();
+
+      // Navigate to user details page
+      navigate(`/user/${request.userId}`);
     } catch (error) {
-      console.error("Approval failed:", error);
+      console.error("Approval error:", error);
       toast.error(`Approval failed: ${error.message}`);
     } finally {
       setProcessingId(null);
     }
   }
 
+  // Reject request: Just delete it
   async function handleReject(requestId) {
     setProcessingId(requestId);
-
     try {
-      await updateDoc(doc(db, "withdrawalRequests", requestId), {
-        status: "rejected",
-      });
-
-      setRequests((prevRequests) =>
-        prevRequests.filter((req) => req.id !== requestId)
-      );
-
-      toast("Withdrawal request rejected.");
+      await deleteDoc(doc(db, "withdrawalRequests", requestId));
+      setRequests((prev) => prev.filter((req) => req.id !== requestId));
+      toast.success("Withdrawal request rejected and removed.");
     } catch (error) {
       console.error("Rejection failed:", error);
       toast.error(`Rejection failed: ${error.message}`);
@@ -122,6 +119,7 @@ export default function AdminWithdrawal() {
       setProcessingId(null);
     }
   }
+
   const formatter = new Intl.NumberFormat("en-NG", {
     style: "currency",
     currency: "NGN",
@@ -129,63 +127,66 @@ export default function AdminWithdrawal() {
 
   if (loading)
     return (
-      <div className="loader-container">
+      <div>
         <Loading />
       </div>
     );
-  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Admin Withdrawal Dashboard</h1>
-      {requests.length === 0 && <p>No withdrawal requests found.</p>}
+      {requests.length === 0 && (
+        <div className="empty-state">
+          <p>No withdrawal requests found.</p>
+          <img
+            src={fiat}
+            alt="No requests"
+            style={{ maxWidth: "200px", marginTop: "1rem" }}
+          />
+        </div>
+      )}
 
       <div className="request-grid">
-        {requests
-          .filter((req) => req.status !== "rejected")
-          .map((req) => (
-            <div key={req.id} className="request-card">
-              <p className="request-user">
-                <strong>User:</strong> {req.fullName || "N/A"} (
-                {req.email || "no-email@gmail.com"})
-              </p>
-
-              <p>
-                <strong>Amount:</strong> {formatter.format(req.amount)}
-              </p>
-
-              <p>
-                <strong>Status:</strong>{" "}
-                <span className={`status ${req.status}`}>{req.status}</span>
-              </p>
-
-              <p>
-                <strong>Date:</strong>{" "}
-                {req.timestamp?.toDate
-                  ? req.timestamp.toDate().toLocaleString()
-                  : "N/A"}
-              </p>
-
-              {req.status === "pending" && (
-                <div className="request-actions">
-                  <button
-                    onClick={() => handleApprove(req)}
-                    className="button-approve"
-                    disabled={processingId === req.id}
-                  >
-                    {processingId === req.id ? "Processing..." : "Approve"}
-                  </button>
-                  <button
-                    onClick={() => handleReject(req.id)}
-                    className="button-reject"
-                    disabled={processingId === req.id}
-                  >
-                    {processingId === req.id ? "Processing..." : "Reject"}
-                  </button>
-                </div>
-              )}
+        {requests.map((req) => (
+          <div key={req.id} className="request-card">
+            <div className="request-user">
+              <h2>{req.fullName}</h2>
+              <p>({req.email})</p>
             </div>
-          ))}
+
+            <p>
+              <strong>Amount to Withdraw:</strong> {formatter.format(req.amount)}
+            </p>
+
+            <p>
+              <strong>Current Balance:</strong> {formatter.format(req.balance)}
+            </p>
+
+            <p>
+              <strong>Date:</strong>{" "}
+              {req.timestamp?.toDate
+                ? req.timestamp.toDate().toLocaleString()
+                : "N/A"}
+            </p>
+
+            <div className="request-actions">
+              <button
+                onClick={() => handleApprove(req)}
+                className="button-approve"
+                disabled={processingId === req.id}
+              >
+                {processingId === req.id ? "Processing..." : "Approve"}
+              </button>
+              <button
+                onClick={() => handleReject(req.id)}
+                className="button-reject"
+                disabled={processingId === req.id}
+              >
+                {processingId === req.id ? "Processing..." : "Reject"}
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

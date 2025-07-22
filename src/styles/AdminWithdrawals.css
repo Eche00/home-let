@@ -1,6 +1,6 @@
 .dashboard-container {
   padding: 2rem;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .dashboard-title {
@@ -13,11 +13,10 @@
 .request-card {
   border: 1px solid #ddd;
   padding: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease-in-out;
-  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
-  color: white;
+  color: #2d2d2d;
   display: flex;
   min-width: 300px;
   flex-direction: column;

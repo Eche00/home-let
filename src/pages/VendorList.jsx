@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/VendorList.css";
 import { db } from "../lib/firebase";
 import { toast } from "react-hot-toast";
+import fiat from "../assets/fiat.png"
 import {
   collection,
   getDocs,
@@ -73,29 +74,25 @@ const VendorList = () => {
 
       const vendorData = vendorSnap.data();
 
-      // ✅ Check if vendor is already approved
       if (vendorData.status === "approved") {
         toast("Vendor is already approved.", { id: toastId });
         return;
       }
 
-      // ✅ Step 1: Update user role in users collection
       const userRef = doc(db, "users", vendorId);
       await updateDoc(userRef, { role: "vendor" });
-
-      // ✅ Step 2: Delete from vendors collection
       await deleteDoc(vendorRef);
 
-      // ✅ Step 3: Update UI
       setVendors((prev) => prev.filter((vendor) => vendor.id !== vendorId));
 
-      toast.success("Vendor approved and promoted to user role.", { id: toastId });
+      toast.success("Vendor approved and promoted to user role.", {
+        id: toastId,
+      });
     } catch (error) {
       console.error("Error approving vendor:", error.message);
       toast.error("Failed to approve vendor.", { id: toastId });
     }
   };
-
 
   const rejectVendor = async (vendorId) => {
     const toastId = toast.loading("Rejecting vendor...");
@@ -116,6 +113,7 @@ const VendorList = () => {
         <Loading />
       </div>
     );
+
   if (error) return <div className="error-message">{error}</div>;
 
   return (
@@ -133,52 +131,67 @@ const VendorList = () => {
             </tr>
           </thead>
           <tbody>
-            {vendors.map((vendor) => (
-              <tr key={vendor.id}>
-                <td data-label="Name" className="td">
-                  {vendor.fullName}
-                </td>
-                <td data-label="Email" className="td hide">
-                  {vendor.email}
-                </td>
-                <td data-label="Phone Number" className="td hide">
-                  {vendor.number}
-                </td>
-                <td
-                  data-label="Status"
-                  className={`hide vendor-status ${vendor.status}`}
-                >
-                  {vendor.status}
-                </td>
-                <td data-label="Actions" className="vendor-actions">
-                  <div className="dropdown">
-                    <button className="dropdown-toggle">Actions ▾</button>
-                    <div className="dropdown-list">
-                      <button
-                        className="approve"
-                        onClick={() => approveVendor(vendor.id)}
-                        disabled={vendor.status === "approved"}
-                      >
-                        {vendor.status === "approved" ? "Approved" : "Approve"}
-                      </button>
-                      <button
-                        className="reject"
-                        onClick={() => rejectVendor(vendor.id)}
-                        disabled={vendor.status === "rejected"}
-                      >
-                        {vendor.status === "rejected" ? "Rejected" : "Reject"}
-                      </button>
-                      <button
-                        className="details"
-                        onClick={() => fetchVendorDetails(vendor.id)}
-                      >
-                        Details
-                      </button>
-                    </div>
+            {vendors.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="no-vendors-row">
+                  <div className="no-vendors-content">
+                    <img
+                      src={fiat}
+                      alt="No vendor requests"
+                      className="no-vendors-image"
+                    />
+                    <p>No new vendor requests.</p>
                   </div>
                 </td>
               </tr>
-            ))}
+            ) : (
+              vendors.map((vendor) => (
+                <tr key={vendor.id}>
+                  <td data-label="Name" className="td">
+                    {vendor.fullName}
+                  </td>
+                  <td data-label="Email" className="td hide">
+                    {vendor.email}
+                  </td>
+                  <td data-label="Phone Number" className="td hide">
+                    {vendor.number}
+                  </td>
+                  <td
+                    data-label="Status"
+                    className={`hide vendor-status ${vendor.status}`}
+                  >
+                    {vendor.status}
+                  </td>
+                  <td data-label="Actions" className="vendor-actions">
+                    <div className="dropdown">
+                      <button className="dropdown-toggle">Actions ▾</button>
+                      <div className="dropdown-list">
+                        <button
+                          className="approve"
+                          onClick={() => approveVendor(vendor.id)}
+                          disabled={vendor.status === "approved"}
+                        >
+                          {vendor.status === "approved" ? "Approved" : "Approve"}
+                        </button>
+                        <button
+                          className="reject"
+                          onClick={() => rejectVendor(vendor.id)}
+                          disabled={vendor.status === "rejected"}
+                        >
+                          {vendor.status === "rejected" ? "Rejected" : "Reject"}
+                        </button>
+                        <button
+                          className="details"
+                          onClick={() => fetchVendorDetails(vendor.id)}
+                        >
+                          Details
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

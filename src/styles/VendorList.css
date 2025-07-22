@@ -1,6 +1,6 @@
 .vendor-list-container {
   width: 100%;
-  margin: 2rem 4rem;
+  /* margin: 2rem 4rem; */
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
@@ -26,23 +26,24 @@
 
 .vendor-table {
   width: 100%;
-  min-width: 800px;
-  color: #d4f36b;
+  min-width: 350px;
+  color: #2d2d2d;
   border-collapse: collapse;
   border: 1px solid #ddd;
-  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+  /* background: linear-gradient(135deg, #0b572f, #006633, #1fa85e); */
   table-layout: auto;
 }
 
 .vendor-table th,
 .vendor-table .td {
   padding: 0.8rem;
+  width: 100%;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
 .vendor-table th {
-  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+background-color: #006633;
   color: white;
   white-space: nowrap;
 }
@@ -116,54 +117,54 @@
   border-radius: 4px;
 }
 
-.dropdown-menu {
+.dropdown-list {
   display: none;
   position: absolute;
   min-width: 140px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  right: 0;
   z-index: 1;
   border-radius: 2px;
   overflow: hidden;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-list {
   display: block;
 }
 
-.dropdown-menu button {
+.dropdown-list button {
   width: 100%;
   padding: 10px;
   margin: 2px auto;
   text-align: left;
   border: none;
-  background-color: rgb(5, 95, 5);
+  /* background-color: rgb(5, 95, 5); */
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.dropdown-menu button:hover:not(:disabled) {
+.dropdown-list button:hover:not(:disabled) {
   background-color: #09a934;
 }
 
-.dropdown-menu button.approve:hover:not(:disabled) {
+.dropdown-list button.approve:hover:not(:disabled) {
   background-color: #e6f4ea;
   color: #2e7d32;
   font-weight: 500;
 }
 
-.dropdown-menu button.reject:hover:not(:disabled) {
+.dropdown-list button.reject:hover:not(:disabled) {
   background-color: #fdecea;
   color: #c62828;
   font-weight: 500;
 }
 
-.dropdown-menu button.details:hover:not(:disabled) {
+.dropdown-list button.details:hover:not(:disabled) {
   background-color: #e3f2fd;
   color: #1565c0;
   font-weight: 500;
 }
 
-.dropdown-menu button:disabled {
+.dropdown-list button:disabled {
   color: gray;
   cursor: not-allowed;
 }
@@ -203,7 +204,7 @@
 /* Tablet Responsiveness */
 @media screen and (max-width: 768px) {
   .vendor-list-container {
-    margin: 1rem;
+    /* margin: 1rem; */
     overflow-x: auto;
   }
 
@@ -212,7 +213,7 @@
   }
 
   .vendor-table {
-    min-width: 700px;
+    max-width: 768px;
     font-size: 0.9rem;
   }
 
@@ -220,6 +221,11 @@
     width: 90%;
     padding: 1rem;
   }
+
+  .hide {
+    display: none;
+  }
+
 }
 
 /* Very Small Devices */

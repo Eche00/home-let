@@ -61,20 +61,41 @@ const VendorList = () => {
 
   const approveVendor = async (vendorId) => {
     const toastId = toast.loading("Approving vendor...");
+
     try {
       const vendorRef = doc(db, "vendors", vendorId);
-      await updateDoc(vendorRef, { status: "approved" });
-      setVendors((prev) =>
-        prev.map((vendor) =>
-          vendor.id === vendorId ? { ...vendor, status: "approved" } : vendor
-        )
-      );
-      toast.success("Vendor approved successfully!", { id: toastId });
+      const vendorSnap = await getDoc(vendorRef);
+
+      if (!vendorSnap.exists()) {
+        toast.error("Vendor not found.", { id: toastId });
+        return;
+      }
+
+      const vendorData = vendorSnap.data();
+
+      // ✅ Check if vendor is already approved
+      if (vendorData.status === "approved") {
+        toast("Vendor is already approved.", { id: toastId });
+        return;
+      }
+
+      // ✅ Step 1: Update user role in users collection
+      const userRef = doc(db, "users", vendorId);
+      await updateDoc(userRef, { role: "vendor" });
+
+      // ✅ Step 2: Delete from vendors collection
+      await deleteDoc(vendorRef);
+
+      // ✅ Step 3: Update UI
+      setVendors((prev) => prev.filter((vendor) => vendor.id !== vendorId));
+
+      toast.success("Vendor approved and promoted to user role.", { id: toastId });
     } catch (error) {
       console.error("Error approving vendor:", error.message);
       toast.error("Failed to approve vendor.", { id: toastId });
     }
   };
+
 
   const rejectVendor = async (vendorId) => {
     const toastId = toast.loading("Rejecting vendor...");
@@ -99,15 +120,15 @@ const VendorList = () => {
 
   return (
     <div className="vendor-list-container">
-      <h1 className="vendor-list-title">Vendor List</h1>
+      <h1 className="vendor-list-title">Vendor Application List</h1>
       <div className="vendor-table-container">
         <table className="vendor-table">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Status</th>
+              <th className="hide">Email</th>
+              <th className="hide">Phone</th>
+              <th className="hide">Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -117,22 +138,22 @@ const VendorList = () => {
                 <td data-label="Name" className="td">
                   {vendor.fullName}
                 </td>
-                <td data-label="Email" className="td">
+                <td data-label="Email" className="td hide">
                   {vendor.email}
                 </td>
-                <td data-label="Phone Number" className="td">
+                <td data-label="Phone Number" className="td hide">
                   {vendor.number}
                 </td>
                 <td
                   data-label="Status"
-                  className={`vendor-status ${vendor.status}`}
+                  className={`hide vendor-status ${vendor.status}`}
                 >
                   {vendor.status}
                 </td>
                 <td data-label="Actions" className="vendor-actions">
                   <div className="dropdown">
                     <button className="dropdown-toggle">Actions ▾</button>
-                    <div className="dropdown-menu">
+                    <div className="dropdown-list">
                       <button
                         className="approve"
                         onClick={() => approveVendor(vendor.id)}

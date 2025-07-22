@@ -90,7 +90,7 @@ const Header = () => {
                         {user ? (
                             // if user is logged in, display profile photo
                             <img
-                                src={user.profilePhotoUrl || flat}
+                                src={user.profileImage || flat}
                                 alt="User Profile"
                                 className="profile-picture"
                                 onClick={handleProfileClick}

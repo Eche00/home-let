@@ -4,7 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import "../styles/Sidebar.css";
-import MiniDash from "./MiniDash";
+import Mini from "./MobileMini";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUser, faPlus, faHistory, faCog, faClipboardCheck, faSignOutAlt, faCommentsDollar, faCircleDollarToSlot } from "@fortawesome/free-solid-svg-icons";
 
@@ -47,7 +47,7 @@ function SideItem({ closeMenu }) {
     return (
         <div className="sidebars">
             <div className="userContainer">
-                <MiniDash closeMenu={closeMenu} />
+                <Mini closeMenu={closeMenu} />
             </div>
             <div className="side-item">
                 <Link

@@ -1,7 +1,5 @@
 .allVendorPropertyContainer {
   padding: 20px;
-  background-color: #f4f4f4;
-  min-height: 100vh;
 }
 
 .recentH3 {
@@ -19,11 +17,10 @@
 
 .vendorProducts {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   justify-content: center;
   padding: 10px;
-  
 }
 
 .eachProperty {
@@ -57,8 +54,15 @@
 }
 
 /* Media query for mobile screens */
-@media (max-width: 468px) {
+@media (max-width: 900px) {
+  .vendorProducts {
+    grid-template-columns: repeat(2, 1fr); /* Medium screens: 2 columns */
+  }
+}
+
+@media (max-width: 768px) {
   .vendorProducts {
     grid-template-columns: 1fr;
+    padding: 0;
   }
 }

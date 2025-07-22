@@ -42,7 +42,7 @@ function VendorProperties() {
   };
   return (
     <div className="allVendorPropertyContainer">
-      <h3 className="recentH3">My Properties:</h3>
+      <h3 className="recentH3">My Properties</h3>
 
       {properties && properties.length > 0 ? (
         // property container

@@ -10,15 +10,16 @@
     justify-content: space-between; 
     align-items: center; 
     color: #dedede; 
-    z-index: 10000001;
+    z-index: 101;
 }
 
 .profile-picture {
     width: 50px; 
     height: 50px;
     border-radius: 50%;
-    border: 1px solid #fff;
+    /* border: 1px solid #fff; */
     object-fit: cover;
+    background-color: #006633;
     cursor: pointer;
 }
 
@@ -80,6 +81,27 @@
     right: 0; 
     opacity: 1; 
     visibility: visible;
+}
+
+
+.sidebars {
+    height: 100vh; 
+    overflow-y: auto; 
+    box-sizing: border-box;
+}
+
+/* Optional smooth scrolling */
+.sidebars::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebars::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.sidebars::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 

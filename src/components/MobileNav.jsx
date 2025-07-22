@@ -25,7 +25,7 @@ const MobileNav = () => {
                 <ul className='mobile-nav-links'>
                     <li>
                         <NavLink
-                            to="/dashboard"
+                            to="/"
                             className={({ isActive }) => (isActive ? 'nav-active-link' : 'nav-inactive-link')}
                         >
                             <FontAwesomeIcon icon={faBank} className="nav-icon" />

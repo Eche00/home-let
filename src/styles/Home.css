@@ -463,4 +463,8 @@ section {
         padding: 0 20px;
         margin-top: -100px;
     }
+
+    .h-title {
+        margin-top: 80px;
+    }
 }

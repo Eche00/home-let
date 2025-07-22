@@ -54,9 +54,9 @@ function Properties() {
   };
 
   return (
-    <div className="home-container">
+    <div className="home-containers">
       <section className="home-property-section">
-        <h2 className="home-section-title">Latest Listings</h2>
+        <h2 className="home-section-title h-title">Latest Listings</h2>
         <div className="home-property-grid">
           {loading || properties.length === 0
             ? [1, 2, 3].map((_, i) => <SkeletonLoader key={i} />)

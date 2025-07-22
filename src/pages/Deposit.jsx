@@ -4,13 +4,22 @@ import depositLogic from "../lib/depositLogic";
 import "../styles/Deposit.css";
 import Wallet from "../dashboards/DashboardContent/Wallet";
 import depositImg from "../assets/hand.png";
+import MiniDash from "../dashboards/MiniDash";
 
 function Deposit() {
   const { handleDeposit, amount, setAmount, message } = depositLogic();
 
   return (
-    <div className="depositContainerBody">
-      <Wallet />
+    <div className="depositContainerBodys">
+      <div className="walletContainer">
+        <div className="wallet">
+          <Wallet />
+        </div>
+        <div className="mini-profile">
+          {" "}
+          <MiniDash />
+        </div>
+      </div>
 
       <div className="depositContainer">
         {/* Deposit Form */}

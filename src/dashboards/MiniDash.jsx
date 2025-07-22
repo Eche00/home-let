@@ -80,9 +80,9 @@ function MiniDash({ closeMenu }) {
         />
         <div className="profileDetails">
           <h2 className="profileName">{user.name}</h2>
-          <p className="profileEmail">{user.email}</p>
+          <strong className="profileEmail">{user.email}</strong>
            <div className="role">
-        {user.role === "admin" && <div>You have admin privileges.</div>}
+        {user.role === "admin" && <div><strong>Account Type:</strong> Admin</div>}
         {user.role === "vendor" && <div>You have vendor privileges.</div>}
         {user.role === "customer" && (
           <div>You do not have vendor privileges.</div>

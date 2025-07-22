@@ -1,23 +1,16 @@
 .withdrawal-container {
-  border: 1px solid #ddd;
   padding: 1.5rem;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease-in-out;
-  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
-  color: white;
   display: flex;
-  max-width: 600px;
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.withdrawal-container h2 {
-  text-align: center;
-}
+
 .withdrawal-container h4 {
-  font-size: 2rem;
+  font-size: 1.2rem;
 }
 .balance {
   font-size: 1.2rem;
@@ -28,33 +21,34 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 15px;
 }
 
 .withdrawal-container input[type="number"] {
-  padding: 0.5rem;
+  padding: 15px;
+  border-radius: 5px;
   font-size: 1rem;
+  border: 1px;
 }
 
 .withdrawal-container button {
   padding: 0.6rem;
-  background-color: white;
-  color: #0b572f;
+  background-color: #006633;
+  color: #f4f4f4;
   font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 .withdrawal-container button:hover {
-  background-color: #d4f36b;
+  background-color: #006600;
 }
 .withdrawal-container button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.withdrawal-container p {
-  color: #d4f36b;
-}
+
 .error {
   color: red;
   margin-top: 1rem;

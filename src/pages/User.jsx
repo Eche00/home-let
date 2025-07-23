@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { getAuth } from "firebase/auth"; 
-import "../styles/UserProfile.css";
+import { getAuth } from "firebase/auth";
 import flat from "../assets/fiat.png";
+import "../styles/Profile.css";
 import Loading from "../components/loading";
 
 const User = () => {
@@ -15,148 +15,150 @@ const User = () => {
     const [successMessage, setSuccessMessage] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
 
-    // Fetch user data on component mount or when userId changes
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const userDoc = await getDoc(doc(db, "users", userId));
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    setUser(userData);
-                    setRole(userData.role || "Customer");
-                } else {
-                    console.log("No such document!");
+                const userSnap = await getDoc(doc(db, "users", userId));
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    setUser(data);
+                    setRole(data.role || "customer");
                 }
-                setLoading(false);
             } catch (error) {
-                console.error("Error fetching user: ", error);
+                console.error("Error fetching user:", error);
+            } finally {
                 setLoading(false);
             }
         };
 
-        // Check if the logged-in user is an admin
-        const checkAdminStatus = () => {
-            const currentUser = getAuth().currentUser;
-            if (currentUser) {
-                // Compare the logged-in user's role or user data to determine if they are an admin
-                const userRef = doc(db, "users", currentUser.uid);
-                getDoc(userRef).then((docSnap) => {
-                    if (docSnap.exists()) {
-                        const loggedInUserData = docSnap.data();
-                        if (loggedInUserData.role === "admin") {
-                            // Set admin status if role is admin
-                            setIsAdmin(true);
-                        }
-                    }
-                });
+        const checkAdmin = async () => {
+            const current = getAuth().currentUser;
+            if (current) {
+                const snap = await getDoc(doc(db, "users", current.uid));
+                if (snap.exists() && snap.data().role === "admin") {
+                    setIsAdmin(true);
+                }
             }
         };
 
         fetchUser();
-        checkAdminStatus();
+        checkAdmin();
     }, [userId]);
 
-    // Handle role change
-    const handleRoleChange = (e) => {
-        setRole(e.target.value);
-    };
+    const handleRoleChange = (e) => setRole(e.target.value);
 
-    // Update user role in Firestore
     const handleRoleUpdate = async () => {
-        if (role !== user?.role) {
-            try {
-                const userDocRef = doc(db, "users", userId);
-                await updateDoc(userDocRef, { role: role });
-                setUser({ ...user, role: role });
-                setSuccessMessage("User role updated successfully!");
-            } catch (error) {
-                console.error("Error updating role: ", error);
-                setSuccessMessage("Failed to update role.");
-            }
+        if (!user) return;
+        try {
+            const userRef = doc(db, "users", userId);
+            await updateDoc(userRef, { role });
+            setUser((prev) => ({ ...prev, role }));
+            setSuccessMessage("Role updated!");
+            setTimeout(() => setSuccessMessage(""), 3000);
+        } catch (err) {
+            console.error("Error updating role:", err);
+            setSuccessMessage("Update failed.");
         }
     };
 
-    if (loading) {
-        return <Loading />;
-    }
+    if (loading) return <Loading />;
+
+    const imgSrc = user?.profileImage || flat;
 
     return (
-        <div>
-            <div className="userPage">
-                {/* Profile Image Section */}
-                <div className="profileCover">
-                    <img src={flat} alt="Profile" className="profilePicture" />
-                    <div className="heads">
-                        <>{user?.fullName}</>
-                        <p className="emails">{user?.email}</p>
+        <div className="profile-container">
+             <div className="profile-wrapper">
+                <div className="profile-details">
+                    <div className="personal-info">
+                        <h2>User Profile</h2>
+                    </div>
+    
+                    <div className="profile-summary">
+                        <div className="profile-summary-content">
+                            <img className="profile-summary-image" src={imgSrc} alt="User DP" />
+                            <h1 className="profile-summary-name">{user?.fullName || "No Name"}</h1>
+                            <p className="profile-summary-balance">
+                                <strong>Balance:</strong> ₦{user?.balance?.toLocaleString() || "0"}
+                            </p>
+                        </div>
+                    </div>
+    
+    
+                    <div className="profile-section">
+                        <div className="contact-socials-container">
+                            {/* Details grid */}
+                            <div className="flex-row">
+                                <div className="flex-column">
+                                    <label>Full Name</label>
+                                    <input type="text" value={user?.fullName} disabled />
+                                </div>
+                                <div className="flex-column">
+                                    <label>Email</label>
+                                    <input type="email" value={user?.email} disabled />
+                                </div>
+                            </div>
+    
+                            <div className="flex-row">
+                                <div className="flex-column">
+                                    <label>Phone</label>
+                                    <input type="text" value={user?.number || ""} disabled />
+                                </div>
+                                <div className="flex-column">
+                                    <label>State</label>
+                                    <input type="text" value={user?.state || ""} disabled />
+                                </div>
+                            </div>
+    
+                            <div className="flex-row">
+                                <div className="flex-column">
+                                    <label>Home Address</label>
+                                    <input type="text" value={user?.address || ""} disabled />
+                                </div>
+                                <div className="flex-column">
+                                    <label>Role</label>
+                                    {isAdmin ? (
+                                        <select value={role} onChange={handleRoleChange}>
+                                            <option value="customer">Customer</option>
+                                            <option value="vendor">Vendor</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    ) : (
+                                        <input type="text" value={user?.role} disabled />
+                                    )}
+                                </div>
+                            </div>
+    
+                            <div className="flex-row">
+                                <div className="flex-column">
+                                    <label>Bank Name</label>
+                                    <input type="text" value={user?.bankName || ""} disabled />
+                                </div>
+                                <div className="flex-column">
+                                    <label>Account Number</label>
+                                    <input type="text" value={user?.accountNumber || ""} disabled />
+                                </div>
+                                <div className="flex-column">
+                                    <label>Account Holder</label>
+                                    <input type="text" value={user?.accountHolderName || ""} disabled />
+                                </div>
+                            </div>
+    
+                            {isAdmin && (
+                                <div className="flex-row">
+                                    <button onClick={handleRoleUpdate} className="save-button">
+                                        Update Role
+                                    </button>
+                                    {successMessage && (
+                                        <p style={{ color: "green", marginLeft: "1rem" }}>
+                                            {successMessage}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
-
-                {/* Second Column for Basic Info */}
-                <div>
-                    <div className="infoCover">
-                        <div className="col-md-6">
-                            <strong>Full Name: </strong>
-                            <>{user?.fullName}</>
-                            <hr />
-                        </div>
-                        <div className="col-md-6">
-                            <strong>Gender: </strong>
-                            <>{user?.gender}</>
-                            <hr />
-                        </div>
-                        {/* Success Message */}
-                        {successMessage && (
-                            <div className="successMessage">
-                                {successMessage}
-                            </div>
-                        )}
-
-                        {isAdmin && (
-                            <div className="col-md-6">
-                                <strong>Role: </strong>
-                                <select className="select" value={role} onChange={handleRoleChange}>
-                                    <option value="customer">Customer</option>
-                                    <option value="vendor">Vendor</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                <button className="updateRoleButton" onClick={handleRoleUpdate}>
-                                    Update Role
-                                </button>
-                            </div>
-                        )}
-
-                    </div>
-
-                    {/* User's Address and Other Info */}
-                    <div className="row infoCover">
-                        <div className="col-md-12">
-                            <strong>Home Address: </strong>
-                            <>{user?.address || "N/A"}</>
-                            <hr />
-                        </div>
-                        <div className="col-md-6">
-                            <strong>State: </strong>
-                            <>{user?.state || "N/A"}</>
-                            <hr />
-                        </div>
-                    </div>
-
-                    <div className="row infoCover">
-                        <div className="col-md-6">
-                            <strong>Phone Number: </strong>
-                            {user?.number || "N/A"}
-                            <hr />
-                        </div>
-                        <div className="col-md-6">
-                            <strong>Email: </strong>
-                            <>{user?.email}</>
-                            <hr />
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+           </div>
         </div>
     );
 };

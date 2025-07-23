@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/Profile.css";
-// import { db } from "../lib/firebase";
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
-
 import flat from "../assets/fiat.png";
 
 const Profile = () => {
@@ -11,17 +9,21 @@ const Profile = () => {
   const [setUser] = useState(null);
   const [profileImage, setProfileImage] = useState("");
   const [formData, setFormData] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    username: "Doe",
-    title: "Apartment Seeker",
-    aboutMe: "I am actively seeking apartments in major cities...",
-    email: "johndoe@example.com",
+    firstName: "",
+    lastName: "",
+    username: "",
+    role: "",
+    balance: "",
+    aboutMe: "",
+    email: "",
     number: "",
     state: "",
     linkedin: "",
     twitter: "",
-    instagram: "",
+    address: "",
+    bankName: "",
+    accountNumber: "",
+    accountHolderName: ""
   });
   const [isEditable, setIsEditable] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -39,16 +41,22 @@ const Profile = () => {
           setFormData({
             firstName: data.fullName?.split(" ")[0] || "",
             lastName: data.fullName?.split(" ")[1] || "",
-            title: "Apartment Seeker",
             username: data.username || "",
-            aboutMe: "I am actively seeking apartments in major cities...",
-            email: data.email,
+            role: data.role,
+            balance: data.balance,
+            aboutMe: data.aboutMe || "",
+            email: data.email || "",
             number: data.number || "",
             state: data.state || "",
             linkedin: data.linkedin || "",
             twitter: data.twitter || "",
-            instagram: data.instagram || "",
+            address: data.address || "",
+            bankName: data.bankName || "",
+            accountNumber: data.accountNumber || "",
+            accountHolderName: data.accountHolderName || ""
           });
+
+          setProfileImage(data.profileImage || "");
         }
 
         setUser(currentUser);
@@ -82,15 +90,21 @@ const Profile = () => {
       try {
         const db = getFirestore();
         const userRef = doc(db, "users", currentUser.uid);
+
         await updateDoc(userRef, {
           fullName: `${formData.firstName} ${formData.lastName}`,
           number: formData.number,
           username: formData.username,
           state: formData.state,
+          balance: formData.balance,
           linkedin: formData.linkedin,
           twitter: formData.twitter,
-          instagram: formData.instagram,
+          address: formData.address,
           aboutMe: formData.aboutMe,
+          bankName: formData.bankName,
+          accountNumber: formData.accountNumber,
+          accountHolderName: formData.accountHolderName,
+          profileImage: profileImage
         });
 
         setIsEditable(false);
@@ -109,57 +123,22 @@ const Profile = () => {
       [name]: value,
     }));
   };
+
   const statesInNigeria = [
-    "Abia",
-    "Adamawa",
-    "Akwa Ibom",
-    "Anambra",
-    "Bauchi",
-    "Bayelsa",
-    "Benue",
-    "Borno",
-    "Cross River",
-    "Delta",
-    "Ebonyi",
-    "Edo",
-    "Ekiti",
-    "Enugu",
-    "FCT - Abuja",
-    "Gombe",
-    "Imo",
-    "Jigawa",
-    "Kaduna",
-    "Kano",
-    "Katsina",
-    "Kebbi",
-    "Kogi",
-    "Kwara",
-    "Lagos",
-    "Nasarawa",
-    "Niger",
-    "Ogun",
-    "Ondo",
-    "Osun",
-    "Oyo",
-    "Plateau",
-    "Rivers",
-    "Sokoto",
-    "Taraba",
-    "Yobe",
-    "Zamfara",
+    "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
+    "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe",
+    "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos",
+    "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto",
+    "Taraba", "Yobe", "Zamfara",
   ];
 
   return (
     <div className="profile-container">
-      <div className="profile-setting">
-        <h1>Profile Settings</h1>
-        <span>Manage your account settings and set your preferences.</span>
-      </div>
       <div className="profile-details">
         <div className="personal-info">
           <h2>Personal Information</h2>
-          <span>Update your personal details and profile infornation</span>
         </div>
+
         <div className="personal-details">
           <div className="profile-img">
             <img
@@ -183,17 +162,19 @@ const Profile = () => {
             )}
             <div className="edit-icon" onClick={handleEditClick} />
           </div>
+
           <div className="profile-intro">
             <h1 className="profile-name">
-              {formData.username || "No name to display"}
+              {formData.firstName} {formData.lastName}
             </h1>
-
-            <p className="profile-title">{formData.title}</p>
+            <p className="profile-title"><strong>Account Balance:</strong> ₦{formData.balance}</p>
+            <p className="profile-title"><strong>Account Type:</strong> {formData.role}</p>
           </div>
         </div>
 
         <div className="profile-section">
           <div className="contact-socials-container">
+            {/* Name */}
             <div className="flex-row">
               <div className="flex-column">
                 <label>First Name</label>
@@ -217,6 +198,7 @@ const Profile = () => {
               </div>
             </div>
 
+            {/* Contact */}
             <div className="flex-row">
               <div className="flex-column">
                 <label>Email</label>
@@ -227,10 +209,7 @@ const Profile = () => {
                   onChange={handleInputChange}
                   disabled
                 />
-                <span>
-                  Email cannot be changed. Contact administration for email
-                  update
-                </span>
+                <span>Email cannot be changed. Contact support to update.</span>
               </div>
               <div className="flex-column">
                 <label>Phone</label>
@@ -243,19 +222,9 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <div className="flex-row">
-              <div className="flex-column">
-                <h2>About Me</h2>
-                <textarea
-                  className="about-me"
-                  name="aboutMe"
-                  value={formData.aboutMe}
-                  onChange={handleInputChange}
-                  disabled={!isEditable}
-                />
-              </div>
-            </div>
 
+
+            {/* Social Links */}
             <div className="flex-row">
               <div className="flex-column">
                 <label>State</label>
@@ -274,42 +243,58 @@ const Profile = () => {
                   ))}
                 </select>
               </div>
+
+              <div className="flex-column">
+                <label>Home Address</label>
+                <input
+                  type="url"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  disabled={!isEditable}
+                />
+              </div>
             </div>
 
+            {/* ✅ Bank Details */}
             <div className="flex-row">
               <div className="flex-column">
-                <label>LinkedIn</label>
+                <label>Bank Name</label>
                 <input
-                  type="url"
-                  name="linkedin"
-                  value={formData.linkedin}
+                  type="text"
+                  name="bankName"
+                  value={formData.bankName}
                   onChange={handleInputChange}
                   disabled={!isEditable}
+                  placeholder="My Bank"
                 />
               </div>
               <div className="flex-column">
-                <label>Twitter</label>
+                <label>Account Number</label>
                 <input
-                  type="url"
-                  name="twitter"
-                  value={formData.twitter}
+                  type="text"
+                  name="accountNumber"
+                  value={formData.accountNumber}
                   onChange={handleInputChange}
                   disabled={!isEditable}
+                  placeholder="1234567890"
                 />
               </div>
               <div className="flex-column">
-                <label>Instagram</label>
+                <label>Account Holder Name</label>
                 <input
-                  type="url"
-                  name="instagram"
-                  value={formData.instagram}
+                  type="text"
+                  name="accountHolderName"
+                  value={formData.accountHolderName}
                   onChange={handleInputChange}
                   disabled={!isEditable}
+                  placeholder={formData.firstName + " " + formData.lastName}
                 />
               </div>
             </div>
           </div>
 
+          {/* Save Button */}
           {isEditable && (
             <button
               onClick={handleSaveClick}

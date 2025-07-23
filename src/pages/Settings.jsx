@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import "../styles/Settings.css";
 import VendorImg from "../assets/vendorImg.jpg";
-import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, onSnapshot, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "../lib/firebase";
 import Loading from "../components/loading";
 import toast from "react-hot-toast";
 
 const auth = getAuth();
+
 const Settings = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -17,6 +18,7 @@ const Settings = () => {
     number: "",
     location: "",
   });
+
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -65,16 +67,34 @@ const Settings = () => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const vendorDocRef = doc(db, "vendors", user.uid);
+        const userDocRef = doc(db, "users", user.uid);
 
-        const unsubscribeSnapshot = onSnapshot(vendorDocRef, (docSnap) => {
+        const unsubscribeSnapshot = onSnapshot(vendorDocRef, async (docSnap) => {
+          let fullName = "";
+          let email = user.email;
+          let number = "";
+
+          // Try to get fullName from vendors doc
           if (docSnap.exists()) {
             const data = docSnap.data();
+            fullName = data.fullName || "";
+            email = data.email || email;
+            number = data.number || number;
+
+            // Fallback to users collection if missing
+            if (!fullName) {
+              const userDocSnap = await getDoc(userDocRef);
+              if (userDocSnap.exists()) {
+                fullName = userDocSnap.data().fullName || "";
+              }
+            }
+
             setFormData({
-              fullName: data.fullName || "",
-              email: data.email || user.email,
+              fullName,
+              email,
               businessName: data.businessName || "",
               businessDescription: data.businessDescription || "",
-              number: data.number || "",
+              number,
               location: data.location || "",
             });
 
@@ -102,10 +122,21 @@ const Settings = () => {
               setError("");
             }
           } else {
-            setFormData((prev) => ({
-              ...prev,
-              email: user.email,
-            }));
+            // No vendor doc: fallback to user doc
+            const userDocSnap = await getDoc(userDocRef);
+            if (userDocSnap.exists()) {
+              fullName = userDocSnap.data().fullName || "";
+            }
+
+            setFormData({
+              fullName,
+              email,
+              businessName: "",
+              businessDescription: "",
+              number,
+              location: "",
+            });
+
             setSubmitted(false);
             setError("");
           }
@@ -157,12 +188,15 @@ const Settings = () => {
       setError("Failed to submit your request. Please try again.");
     }
   };
-  if (loading)
+
+  if (loading) {
     return (
       <div className="loader-container">
         <Loading />
       </div>
     );
+  }
+
   return (
     <div className="settings">
       <div className="settings-info">
@@ -176,9 +210,7 @@ const Settings = () => {
         </div>
 
         <section className="vendor-request-section">
-          {loading ? (
-            <Loading />
-          ) : submitted ? (
+          {submitted ? (
             <div>
               <p className="success-message">
                 {status === "approved"
@@ -191,17 +223,13 @@ const Settings = () => {
                 <p>Number: {formData.number}</p>
                 <p>Business Name: {formData.businessName}</p>
                 <p>Business Description: {formData.businessDescription}</p>
-                <p>
-                  Status: {status.charAt(0).toUpperCase() + status.slice(1)}
-                </p>
+                <p>Status: {status.charAt(0).toUpperCase() + status.slice(1)}</p>
               </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="vendor-request-form">
               <h3>Request to Become a Vendor</h3>
-
-             {error && <p style={{ color: "red" }}>{error}</p>}
-
+              {error && <p style={{ color: "red" }}>{error}</p>}
 
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
@@ -209,8 +237,8 @@ const Settings = () => {
                   type="text"
                   id="fullName"
                   value={formData.fullName}
-                  onChange={handleChange}
-                  required
+                  readOnly
+                  className="read-only-field"
                 />
               </div>
 

@@ -32,7 +32,7 @@ function Home() {
                     ...doc.data(),
                 }))
                 setProperties(data)
-                setFilteredProperties(data.slice(0, 9))
+                setFilteredProperties(data.slice(0, 8))
             } catch (error) {
                 console.error("Error fetching properties:", error)
             } finally {

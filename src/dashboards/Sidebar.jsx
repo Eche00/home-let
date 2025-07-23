@@ -11,6 +11,7 @@ function Sidebar() {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [adminToggleOpen, setAdminToggleOpen] = useState(false); // New state
   const location = useLocation();
 
   useEffect(() => {
@@ -35,13 +36,8 @@ function Sidebar() {
     return () => unsubscribe();
   }, [auth]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (!user) {
-    return <Navigate to="/login" state={{ from: location }} />;
-  }
+  if (loading) return <Loading />;
+  if (!user) return <Navigate to="/login" state={{ from: location }} />;
 
   const isActive = (path) => location.pathname === path;
 
@@ -56,6 +52,53 @@ function Sidebar() {
       <Link to="/" className={`routeLinks ${isActive("/") ? "active" : ""}`}>
         Dashboard
       </Link>
+
+      {/* Admin Toggle Button */}
+      {userRole === "admin" && (
+        <>
+          <span
+            onClick={() => setAdminToggleOpen(!adminToggleOpen)}
+            className="admin-toggle-button"
+          >
+            Admin Mode {adminToggleOpen ? "↴" : "→"}
+          </span>
+
+          {adminToggleOpen && (
+            <div className="admin-links">
+              <Link
+                to="/users"
+                className={`routeLinks ${isActive("/users") ? "active" : ""}`}
+              >
+                All Users
+              </Link>
+
+              <Link
+                to="/new-transaction"
+                className={`routeLinks ${isActive("/new-transaction") ? "active" : ""
+                  }`}
+              >
+                Add Transactions
+              </Link>
+              <Link
+                to="/vendor-list"
+                className={`routeLinks ${isActive("/vendor-list") ? "active" : ""
+                  }`}
+              >
+                Vendor List
+              </Link>
+              <Link
+                to="/adminwithdrawals"
+                className={`routeLinks ${isActive("/adminwithdrawals") ? "active" : ""
+                  }`}
+              >
+                Withdrawal List
+              </Link>
+            </div>
+          )}
+        </>
+      )}
+
+
       {(userRole === "admin" || userRole === "vendor") && (
         <>
           <Link
@@ -66,49 +109,14 @@ function Sidebar() {
           </Link>
           <Link
             to="/vendor-properties"
-            className={`routeLinks ${
-              isActive("/vendor-properties") ? "active" : ""
-            }`}
+            className={`routeLinks ${isActive("/vendor-properties") ? "active" : ""
+              }`}
           >
             Created Properties
           </Link>
         </>
       )}
-      {userRole === "admin" && (
-        <>
-          <Link
-            to="/users"
-            className={`routeLinks ${isActive("/users") ? "active" : ""}`}
-          >
-            All Users
-          </Link>
 
-          <Link
-            to="/new-transaction"
-            className={`routeLinks ${
-              isActive("/new-transaction") ? "active" : ""
-            }`}
-          >
-            Add Transactions
-          </Link>
-          <Link
-            to="/vendor-list"
-            className={`routeLinks ${
-              isActive("/vendor-list") ? "active" : ""
-            }`}
-          >
-          Vendor List
-          </Link>
-           <Link
-            to="/adminwithdrawals"
-            className={`routeLinks ${
-              isActive("/adminwithdrawals") ? "active" : ""
-            }`}
-          >
-            Withdrawal List
-          </Link>
-        </>
-      )}
       <Link
         to="/deposit"
         className={`routeLinks ${isActive("/deposit") ? "active" : ""}`}
@@ -128,12 +136,6 @@ function Sidebar() {
         Inspection
       </Link>
       <Link
-        to="/history"
-        className={`routeLinks ${isActive("/history") ? "active" : ""}`}
-      >
-        History
-      </Link>
-      <Link
         to="/profile"
         className={`routeLinks ${isActive("/profile") ? "active" : ""}`}
       >
@@ -145,6 +147,7 @@ function Sidebar() {
       >
         Settings
       </Link>
+
       <button onClick={handleLogout} className="logout">
         Logout
       </button>

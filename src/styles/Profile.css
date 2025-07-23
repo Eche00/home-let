@@ -3,7 +3,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #f8f9fa;
   border-radius: 10px;
-  padding: 2rem 1rem;
+  padding: 1rem;
 }
 
 .profile-wrapper {
@@ -13,7 +13,7 @@
 }
 
 .profile-details {
-  padding: 2rem;
+  /* padding: 2rem; */
   border-radius: 10px;
   color: #2d2d2d;
 }
@@ -38,7 +38,7 @@
 }
 
 .personal-info {
-  padding: 0 0 3rem 0;
+  /* padding: 0 0 3rem 0; */
   font-size: 1.6rem;
 }
 

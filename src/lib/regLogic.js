@@ -33,6 +33,7 @@ export const handleRegistration = async (formData) => {
             state,
             number,
             termsAgreed: true,
+            balance: 0,
         });
 
         console.log('User registered successfully:');

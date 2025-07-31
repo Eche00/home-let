@@ -3,6 +3,8 @@ import "../styles/Profile.css";
 import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import flat from "../assets/fiat.png";
+import storageImage from "../lib/uploadLogic"; // adjust path if needed
+
 
 const Profile = () => {
   const auth = getAuth();
@@ -66,13 +68,19 @@ const Profile = () => {
     fetchUserData();
   }, [auth]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
+const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    try {
+      const downloadUrl = await storageImage(file); // Upload to Firebase Storage
+      setProfileImage(downloadUrl); // Set permanent URL from Firebase
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      alert("Failed to upload image. Please try again.");
     }
-  };
+  }
+};
+
 
   const handleUploadClick = () => {
     document.getElementById("hiddenFileInput").click();

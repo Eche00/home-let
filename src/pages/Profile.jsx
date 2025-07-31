@@ -6,14 +6,14 @@ import flat from "../assets/fiat.png";
 
 const Profile = () => {
   const auth = getAuth();
-  const [setUser] = useState(null);
+  const [user, setUser] = useState(null); // ✅ Fixed this line
   const [profileImage, setProfileImage] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     username: "",
     role: "",
-    balance: "",
+    balance: 0, // ✅ Default number instead of string
     aboutMe: "",
     email: "",
     number: "",
@@ -42,8 +42,8 @@ const Profile = () => {
             firstName: data.fullName?.split(" ")[0] || "",
             lastName: data.fullName?.split(" ")[1] || "",
             username: data.username || "",
-            role: data.role,
-            balance: data.balance,
+            role: data.role || "",
+            balance: data.balance ?? 0, // ✅ Fallback to 0 if undefined
             aboutMe: data.aboutMe || "",
             email: data.email || "",
             number: data.number || "",
@@ -96,7 +96,7 @@ const Profile = () => {
           number: formData.number,
           username: formData.username,
           state: formData.state,
-          balance: formData.balance,
+          balance: Number(formData.balance), // ✅ Ensure it's saved as number
           linkedin: formData.linkedin,
           twitter: formData.twitter,
           address: formData.address,

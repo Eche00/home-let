@@ -146,48 +146,57 @@ export default function AdminWithdrawal() {
         </div>
       )}
 
-      <div className="request-grid">
-        {requests.map((req) => (
-          <div key={req.id} className="request-card">
-            <div className="request-user">
-              <h2>{req.fullName}</h2>
-              <p>({req.email})</p>
-            </div>
-
-            <p>
-              <strong>Amount to Withdraw:</strong> {formatter.format(req.amount)}
-            </p>
-
-            <p>
-              <strong>Current Balance:</strong> {formatter.format(req.balance)}
-            </p>
-
-            <p>
-              <strong>Date:</strong>{" "}
-              {req.timestamp?.toDate
-                ? req.timestamp.toDate().toLocaleString()
-                : "N/A"}
-            </p>
-
-            <div className="request-actions">
-              <button
-                onClick={() => handleApprove(req)}
-                className="button-approve"
-                disabled={processingId === req.id}
-              >
-                {processingId === req.id ? "Processing..." : "Approve"}
-              </button>
-              <button
-                onClick={() => handleReject(req.id)}
-                className="button-reject"
-                disabled={processingId === req.id}
-              >
-                {processingId === req.id ? "Processing..." : "Reject"}
-              </button>
-            </div>
-          </div>
-        ))}
+ <div className="request-grid">
+  {requests.map((req) => (
+    <div
+      key={req.id}
+      className="request-card"
+      onClick={() => navigate(`/user/${req.userId}`)}
+      style={{ cursor: "pointer" }}
+    >
+      <div className="request-user">
+        <h2>{req.fullName}</h2>
+        <p>({req.email})</p>
       </div>
+
+      <p>
+        <strong>Amount to Withdraw:</strong> {formatter.format(req.amount)}
+      </p>
+
+      <p>
+        <strong>Current Balance:</strong> {formatter.format(req.balance)}
+      </p>
+
+      <p>
+        <strong>Date:</strong>{" "}
+        {req.timestamp?.toDate
+          ? req.timestamp.toDate().toLocaleString()
+          : "N/A"}
+      </p>
+
+      <div
+        className="request-actions"
+        onClick={(e) => e.stopPropagation()} // prevent navigation on button click
+      >
+        <button
+          onClick={() => handleApprove(req)}
+          className="button-approve"
+          disabled={processingId === req.id}
+        >
+          {processingId === req.id ? "Processing..." : "Approve"}
+        </button>
+        <button
+          onClick={() => handleReject(req.id)}
+          className="button-reject"
+          disabled={processingId === req.id}
+        >
+          {processingId === req.id ? "Processing..." : "Reject"}
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 }

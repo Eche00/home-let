@@ -6,8 +6,10 @@ import {
   updateDoc,
   where,
   onSnapshot,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
+import { useNavigate } from "react-router-dom";
 
 // Match inspections with properties and determine user role
 export const useInspectionsData = (currentUser) => {
@@ -16,6 +18,8 @@ export const useInspectionsData = (currentUser) => {
   const [matchedData, setMatchedData] = useState([]);
   const [vendor, setVendor] = useState(false);
   const [client, setClient] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch inspections data in real-time
@@ -64,32 +68,74 @@ export const useInspectionsData = (currentUser) => {
       matched.some((inspection) => inspection.userReqId === currentUser.uid)
     );
   }, [inspections, properties, currentUser]);
+  const handleStatusChange = async (inspectionId, submittedAt, status) => {
+    setLoading(false);
+    try {
+      const inspectionsCollectionRef = collection(db, "inspectionData");
+      const q = query(
+        inspectionsCollectionRef,
+        where("data.id", "==", inspectionId),
+        where("data.submittedAt", "==", submittedAt)
+      );
+      const querySnapshot = await getDocs(q);
 
-  return { matchedData, vendor, client };
-};
+      if (querySnapshot.empty) {
+        console.error(`No document found with inspectionId: ${inspectionId}`);
+        return;
+      }
 
-// General handler for accept/reject functionality
-export const handleStatusChange = async (inspectionId, submittedAt, status) => {
-  try {
-    const inspectionsCollectionRef = collection(db, "inspectionData");
-    const q = query(
-      inspectionsCollectionRef,
-      where("data.id", "==", inspectionId),
-      where("data.submittedAt", "==", submittedAt)
-    );
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      console.error(`No document found with inspectionId: ${inspectionId}`);
-      return;
+      querySnapshot.forEach(async (docSnapshot) => {
+        const docRef = docSnapshot.ref;
+        await updateDoc(docRef, { "data.status": status });
+        console.log(`Inspection ${inspectionId} status updated to ${status}.`);
+      });
+    } catch (error) {
+      console.error(`Error updating inspection status to ${status}:`, error);
     }
+  };
 
-    querySnapshot.forEach(async (docSnapshot) => {
-      const docRef = docSnapshot.ref;
-      await updateDoc(docRef, { "data.status": status });
-      console.log(`Inspection ${inspectionId} status updated to ${status}.`);
-    });
-  } catch (error) {
-    console.error(`Error updating inspection status to ${status}:`, error);
-  }
+  // handle delete functionality
+  const handleDelete = async (inspectionId, submittedAt) => {
+    setLoading(true);
+    try {
+      const inspectionsCollectionRef = collection(db, "inspectionData");
+      const q = query(
+        inspectionsCollectionRef,
+        where("data.id", "==", inspectionId),
+        where("data.submittedAt", "==", submittedAt)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.error(`No document found with inspectionId: ${inspectionId}`);
+        return;
+      }
+
+      querySnapshot.forEach(async (docSnapshot) => {
+        const docRef = docSnapshot.ref;
+
+        // Delete the inspection document
+        await deleteDoc(docRef);
+        setLoading(false);
+        console.log(`Inspection Deleted.`);
+      });
+    } catch (error) {
+      console.error(`Error deleting inspection : ${error}`);
+      setLoading(false);
+    }
+  };
+  // Handling clicked property
+  const handleClick = (property) => {
+    navigate(`/preview/${property}`);
+  };
+  return {
+    matchedData,
+    vendor,
+    client,
+    setLoading,
+    loading,
+    handleStatusChange,
+    handleDelete,
+    handleClick,
+  };
 };

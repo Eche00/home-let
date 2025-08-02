@@ -11,7 +11,7 @@ import {
   faRestroom,
 } from "@fortawesome/free-solid-svg-icons";
 import { getAuth } from "firebase/auth";
-import { handleMakeInspection } from "../lib/inspectionLogic";
+import useFormData, { handleMakeInspection } from "../lib/inspectionLogic";
 
 // Skeleton Component
 const Skeleton = () => {
@@ -31,43 +31,51 @@ const Skeleton = () => {
 // Modal Component
 const Modal = ({ isOpen, closeModal, property }) => {
   if (!isOpen) return null; // Don't render the modal if it's not open
-  const currentUser = auth.currentUser;
-  const navigate = useNavigate();
-  //   checking if there is a user , if not the user gets redirected to login
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/login");
-      console.log("no current user");
-    }
-  }, []);
-  const [formData, setFormData] = useState({
-    time: "",
-    date: "",
-    id: property.id,
-    userReqId: currentUser.uid,
-    status: "Pending",
-    submittedAt: new Date(),
-  });
+  // get current date && time
+  const now = new Date();
+  const today = now.toISOString().split("T")[0];
+  const currentTime = now.toISOString().split("T")[1].substring(0, 5);
+  const [timeMin, setTimeMin] = useState(currentTime);
 
-  // Handling form input change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    console.log(formData);
-  };
+  const navigate = useNavigate();
+  const {
+    formData,
+    error,
+    formattedDate,
+    formattedTime,
+    handleChange,
+    setFormData,
+    setError,
+    setLoading,
+    loading,
+  } = useFormData(property, auth);
+
+  // Update the time when the day changes
+  useEffect(() => {
+    if (formData?.date === today) {
+      // If today's date, set time min to current time
+      setTimeMin(currentTime);
+    } else if (formData?.date > today) {
+      // If future date, allow any time
+      setTimeMin("00:00");
+    }
+  }, [formData.date]);
 
   // handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+    setError(false);
     try {
       handleMakeInspection(formData);
       navigate("/inspection");
       setFormData({ time: "", date: "" }); // Reset form
     } catch (error) {
       console.error("Error submitting form:", error);
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,12 +84,12 @@ const Modal = ({ isOpen, closeModal, property }) => {
       <div className="formModalContainer">
         <div className="  formModalSubContainer">
           <img
-            src={property.imageUrls[0]}
+            src={property?.imageUrls[0]}
             className=" formModalImage"
-            alt="///"
+            alt="Home Let INC"
           />
 
-          <div className=" ">
+          <div className=" modalContainer">
             <section className="previewPropertyInspectButtonS">
               <button
                 onClick={closeModal}
@@ -95,9 +103,7 @@ const Modal = ({ isOpen, closeModal, property }) => {
               {property.address}, {property.city}, {property.state} State
             </p>
             <p className="previewPropertyAddress">Physical Inspection</p>
-            <form
-              className=" flex flex-col gap-[25px] relative modalForm"
-              onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className=" containerForm">
               {/* inputs  */}
 
               <section className=" eachModalInputSection">
@@ -107,9 +113,12 @@ const Modal = ({ isOpen, closeModal, property }) => {
                   type="date"
                   id="date"
                   name="date"
+                  min={today}
                   value={formData.date}
                   onChange={handleChange}
+                  required
                 />
+                {formattedDate && <p>Date: {formattedDate}</p>}
               </section>
               <section className=" eachModalInputSection">
                 <p className="inputModalText">Time</p>
@@ -118,16 +127,29 @@ const Modal = ({ isOpen, closeModal, property }) => {
                   type="time"
                   id="time"
                   name="time"
+                  min={timeMin}
                   value={formData.time}
                   onChange={handleChange}
+                  required
                 />
+                {formattedTime && <p>Time: {formattedTime}</p>}
               </section>
 
-              <button
-                className=" bg-[#034FE3] text-[#FFF] font-[600] text-[16px] py-[13px] rounded-[6px] md:w-full w-[320px] disabled:cursor-not-allowed disabled:bg-[#0350e0d4] modalButton"
-                type="submit">
-                Submit
-              </button>
+              <section className="modalButtonContainer">
+                <button
+                  disabled={loading}
+                  className="  modalButton"
+                  type="submit">
+                  {loading ? "Loading.." : "Submit"}
+                </button>
+              </section>
+              <section className="formStatusSection">
+                {error && (
+                  <p className="formError">
+                    Form Submission failed, Please try again later.
+                  </p>
+                )}
+              </section>
             </form>
           </div>
         </div>
@@ -220,7 +242,10 @@ function PropertyPreview() {
                 <p className="previewPropertyAddress">
                   <FontAwesomeIcon icon={faMapMarkerAlt} /> <b>Address: </b>
                   {property.address}, {property.city}, {property.state} State
-                  <p>₦{property.price}</p>
+                  <p>&#8358; {Number(property?.price).toLocaleString()}</p>
+                  <p className="previewPropertyAddress">
+                    <b>VendorName:</b> <span>{property?.creatorName}</span>
+                  </p>
                 </p>
               </div>
               <div className="flex-right">

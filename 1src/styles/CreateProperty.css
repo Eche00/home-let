@@ -1,0 +1,419 @@
+.create-container {
+  /* max-width: 100%; */
+  margin: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+}
+
+.createPropertyForm {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  /* width: 70rem; */
+  padding: 20px
+}
+
+.msg {
+  font-size: 20px;
+  font-weight: 900;
+  font-family: Arial, sans-serif;
+}
+
+.line {
+  max-width: 100%;
+  height: 2px;
+  border-radius: 20px;
+  background: #006633;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 97%;
+  padding-top: 20px;
+  border-bottom: rgb(199, 196, 196) 0.1px solid;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.propertyTypeButtons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.propertyTypeLabel {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.propertyTypeLabel.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.propertyTypeLabel:hover {
+  background-color: #e0e0e0;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+
+.createPropertyLabels {
+  color: black;
+  font-size: 18px;
+  font-weight: 700px;
+  font-family: Arial, sans-serif;
+  margin: 0%;
+  white-space: nowrap;
+
+}
+
+.addImg {
+  width: 60%;
+  height: 50px;
+  border: dashed 1px #006633;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  background: #00663309;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plus {
+  background: #006633;
+  color: white;
+  font-size: 20x;
+  padding: 5px 10px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.formContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.addressStateCity {
+  display: flex;
+  padding: 20px 0;
+  width: 100%;
+  gap: 20px;
+}
+
+
+/* Adjust the flex ratios */
+.address {
+  margin: 0 5px;
+  flex: 2;
+}
+
+.city,
+.state {
+  flex: 1;
+  margin: 0 5px;
+}
+
+
+
+.propertyForm input {
+  /* width: 100%; */
+  height: 20px;
+  border: rgb(199, 196, 196) 0.1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #EBECED;
+  color: #1A1A1A;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+
+.state select {
+  width: 100%;
+  height: 40px;
+  border: rgb(199, 196, 196) 0.1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #EBECED;
+  color: #1A1A1A;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.formDescription textarea {
+  /* width: 100%; */
+  height: 40px;
+  border: rgb(199, 196, 196) 0.1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #EBECED;
+  color: #1A1A1A;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.boxContainer {
+  display: flex;
+  gap: 20px;
+
+}
+
+.eachBox {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.box {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+}
+
+.roomBoxes {
+  width: 40px;
+  height: 30px;
+  border: rgb(199, 196, 196) 0.1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: transparent;
+  color: black;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.submitContainer {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  align-items: center;
+
+}
+
+.propertySubmitButton {
+  background: #006633;
+  padding: 10px 50px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  width: fit-content;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.cancel {
+  font-size: 15px;
+  font-weight: 400;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.success {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  background: #00663343;
+  height: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.error {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  background: #f8160143;
+  height: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.redirect {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.addVideo {
+  width: 60%;
+  height: fit-content;
+  border: dashed 1px #006633;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  background: #00663309;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.load {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.videoPreview {
+  width: 200px;
+  border-radius: 10px;
+}
+
+
+@media (max-width: 1120px) {
+  .addressStateCity {
+    display: block;
+    padding: 0;
+  }
+
+  .create-container {
+    /* max-width: fit-content; */
+    margin: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .createPropertyForm {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 40rem;
+    /* padding: 20px */
+  }
+}
+
+@media (max-width: 990px) {
+  .addressStateCity {
+    display: block;
+    padding: 0;
+  }
+
+  .create-container {
+    /* max-width: fit-content; */
+    margin: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .createPropertyForm {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 35rem;
+    /* padding: 20px */
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 800px) {
+  .addressStateCity {
+    display: block;
+    padding: 0;
+  }
+
+  .create-container {
+    /* max-width: fit-content; */
+    margin: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .createPropertyForm {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 30rem;
+    /* padding: 20px */
+  }
+
+  .address,
+  .city, section,
+  .state {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .state select {
+    width: 100%;
+    margin: 0;
+  }
+
+  .addVideo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background: #00663309;
+  }
+
+  .createVideoPreview {
+    width: 50%;
+    border-radius: 10px;
+  }
+}
+
+
+
+@media (max-width: 1000px) {
+  .addImg {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: start;
+    width: 80%;
+    height: fit-content;
+    gap: 20px;
+  }
+
+  .boxContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+  }
+
+}

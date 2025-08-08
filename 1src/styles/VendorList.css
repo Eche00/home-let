@@ -1,0 +1,264 @@
+.vendor-list-container {
+  width: 100%;
+  /* margin: 2rem 4rem; */
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.vendor-list-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #ccc;
+}
+
+.vendor-table-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+}
+
+.vendor-table {
+  width: 100%;
+  min-width: 350px;
+  color: #2d2d2d;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  /* background: linear-gradient(135deg, #0b572f, #006633, #1fa85e); */
+  table-layout: auto;
+}
+
+.vendor-table th,
+.vendor-table .td {
+  padding: 0.8rem;
+  /* width: 100%; */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.vendor-table th {
+  background-color: #006633;
+  color: white;
+  white-space: nowrap;
+}
+
+.vendor-table tr:hover {
+  cursor: pointer;
+}
+
+.vendor-status {
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  text-transform: capitalize;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0.8rem auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vendor-status.approved {
+  background-color: #28a745;
+  color: white;
+}
+
+.vendor-status.rejected {
+  background-color: #dc3545;
+  color: white;
+}
+
+.vendor-status.pending {
+  background-color: orange;
+  color: white;
+}
+
+.vendor-actions button {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.approve-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.details-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: white;
+  color: black;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dropdown-list {
+  display: none;
+  position: absolute;
+  min-width: 140px;
+  right: 0;
+  z-index: 1;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dropdown:hover .dropdown-list {
+  display: block;
+}
+
+.dropdown-list button {
+  width: 100%;
+  padding: 10px;
+  margin: 2px auto;
+  text-align: left;
+  border: none;
+  /* background-color: rgb(5, 95, 5); */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-list button:hover:not(:disabled) {
+  background-color: #09a934;
+}
+
+.dropdown-list button.approve:not(:disabled) {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.dropdown-list button.reject:not(:disabled) {
+  background-color: #fdecea;
+  color: #c62828;
+  font-weight: 500;
+}
+
+.dropdown-list button.details:not(:disabled) {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.dropdown-list button:disabled {
+  color: gray;
+  cursor: not-allowed;
+}
+
+/* Modal */
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #0b572f, #006633, #1fa85e);
+  width: 400px !important;
+  padding: 20px;
+  text-align: left !important;
+  margin: 0;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+/* Tablet Responsiveness */
+@media screen and (max-width: 768px) {
+  .vendor-list-container {
+    /* margin: 1rem; */
+    overflow-x: auto;
+  }
+
+  .vendor-list-title {
+    font-size: 1.5rem;
+  }
+
+  .vendor-table {
+    max-width: 768px;
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .hide {
+    display: none;
+  }
+
+}
+
+/* Very Small Devices */
+@media screen and (max-width: 480px) {
+  .dropdown-toggle {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+
+  .vendor-actions button {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+}
+
+.no-vendors-row {
+  text-align: center;
+}
+
+.no-vendors-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.no-vendors-image {
+  width: 160px;
+  height: auto;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}

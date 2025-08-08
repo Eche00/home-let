@@ -1,0 +1,470 @@
+/* General container */
+.home-container {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.5;
+    padding: 0 20px;
+    margin-top: -20px;
+}
+
+
+section {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.home-hero {
+    color: #dedede;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    left: 50%;
+    right: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.home-hero-overlay::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+}
+
+.home-hero>* {
+    position: relative;
+    z-index: 1;
+}
+
+
+.home-hero-overlay {
+    background: rgba(0, 0, 0, 0.55);
+    background: url("../assets/main.png") center/cover no-repeat;
+    padding: 80px 20px;
+    display: inline-block;
+}
+
+.home-hero-title {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.home-hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.home-search-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.home-search-form input,
+.home-search-form select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    color: #b2b2b2;
+}
+
+.home-search-form button {
+    background-color: #f4f4f4;
+    color: #006633;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 40px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.home-search-form button:hover {
+    background-color: #3a3a3b;
+    color: #dedede;
+}
+
+.home-property-section {
+    margin: 10px 0;
+}
+
+.home-section-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.home-empty-message {
+    text-align: center;
+    font-style: italic;
+    margin-top: 40px;
+}
+
+.home-property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.home-property-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+}
+
+.home-property-card:hover {
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.home-property-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.home-property-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.home-property-type {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #006633;
+    color: white;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.home-property-info {
+    padding: 16px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-property-info h3 {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+}
+
+.home-location {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.home-property-details {
+    display: flex;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 14px;
+}
+
+.home-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+    color: #006633;
+}
+
+.home-view-btn {
+    background-color: #006633;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.home-view-btn:hover {
+    background-color: #006600;
+}
+
+.home-features {
+    padding: 50px 20px;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.home-features-grid {
+    display: flex;
+    /* justify-content: center; */
+    gap: 40px;
+    /* flex-wrap: wrap; */
+    margin-top: 30px;
+}
+
+.home-feature-card {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.home-feature-card:hover {
+    transform: translateY(-8px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #006633;
+    margin-bottom: 0.75rem;
+}
+
+.home-feature-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+}
+
+.home-feature-card p {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.home-about {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+}
+
+.home-about-image {
+    flex: 1 1 320px;
+    max-width: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.home-about-image img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+}
+
+.home-about-text {
+    flex: 1 1 320px;
+}
+
+.home-about-text h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.home-about-text p {
+    margin-bottom: 16px;
+    color: #444;
+    font-size: 1.1rem;
+}
+
+.home-learn-more-btn {
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.home-learn-more-btn:hover {
+    background-color: #e65c00;
+}
+
+
+.home-stats-section {
+    padding: 4rem 2rem;
+}
+
+.home-stats-grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.home-stats-left,
+.home-stats-center,
+.home-stats-right {
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.home-stats-center img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.home-stats-left h2 {
+    margin-bottom: 1rem;
+}
+
+.home-stats-left p {
+    margin-bottom: 1.5rem;
+}
+
+.home-explore-btn,
+.home-contact-btn {
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.home-stats-right {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.stat-item h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.stat-item p {
+    font-size: 1rem;
+    color: #666;
+}
+
+
+.home-testimonials {
+    text-align: center;
+}
+
+.home-testimonials-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.home-testimonial-card {
+    max-width: 320px;
+    background: white;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.07);
+    font-style: italic;
+    color: #555;
+    transition: box-shadow 0.3s ease;
+}
+
+.home-testimonial-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.home-testimonial-card span {
+    display: block;
+    margin-top: 18px;
+    font-style: normal;
+    font-weight: 700;
+    color: #333;
+}
+
+.home-footer {
+    background-color: #222;
+    color: #ddd;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.home-footer-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.home-footer-content p {
+    margin: 5px 0;
+}
+
+
+@media (max-width: 800px) {
+    .home-container {
+        max-width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .home-features-grid {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .home-hero-title {
+        font-size: 1.5rem;
+        text-align: left;
+        margin-bottom: 50px;
+    }
+
+    .home-search-form {
+        justify-content: left;
+    }
+
+    .home-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-explore-btn,
+    .home-contact-btn {
+        margin: 0.5rem 1rem;
+    }
+
+    .home-search-form input,
+    .home-search-form select {
+        width: 100%;
+    }
+
+    .home-hero-subtitle {
+        display: none;
+    }
+
+    .home-container {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.5;
+        padding: 0 20px;
+        margin-top: -100px;
+    }
+
+    .h-title {
+        margin-top: 80px;
+    }
+}

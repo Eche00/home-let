@@ -1,0 +1,248 @@
+.inspectionC {
+  width: 90%;
+  margin: 0% auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.inspectionContainer {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  width: 100%;
+  border-radius: 10px;
+  
+}
+
+
+.inpectionH {
+  margin: 0;
+  padding: 10px;
+  border-bottom: 3px solid #006633;
+  font-size: 20px;
+}
+
+.inspectionSubContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 20px;
+
+}
+
+
+.inspectorPropertySchedule {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  padding: 0 20px;
+
+}
+
+.scheduleDetail {
+  margin: 0;
+  font-size: 14px;
+  /* font-weight: bold; */
+  background: #0066331c;
+  padding: 18px 10px;
+  border-radius: 5px;
+}
+
+
+.inspectionPropertyAddressContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  flex: 1;
+
+}
+
+
+.place {
+  margin: 0;
+  font-size: 16px;
+  /* font-weight: bold; */
+}
+
+
+.placeB {
+  margin: 0;
+  font-weight: bold;
+  background: #0066331c;
+  padding: 20px 10px;
+  border-radius: 5px;
+}
+
+
+.placeC {
+  margin: 0;
+
+}
+
+
+.inspectorPropertyDetails {
+  flex: 1;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); */
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  gap: 0;
+  cursor: pointer;
+}
+
+
+.inspectorPropertyImage {
+  width: 100%;
+  height: 150px;
+  background: rgb(191, 190, 190);
+  object-fit: cover;
+}
+
+
+.inspectorPropertyTitle {
+  margin: 0;
+  padding: 5px 20px;
+  font-weight: bold;
+}
+
+
+.inspectorPropertyDetail {
+  margin: 0;
+  padding: 0px 20px;
+  font-weight: bold;
+  font-size: 14px;
+
+}
+
+
+.inspectorPropertySubDetail {
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+
+}
+
+
+.vButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.accept {
+  background: green;
+  padding: 5px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  border: none;
+
+}
+
+
+.reject {
+  background: red;
+  padding: 5px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  border: none;
+
+}
+
+
+.pending {
+  background: orange;
+  padding: 5px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  border: none;
+
+}
+
+
+.pending:hover,
+.reject:hover,
+.accept:hover {
+  cursor: pointer;
+  opacity: 0.80;
+
+}
+
+.tabs {
+  background: gray;
+  padding: 5px;
+  border-radius: 10px;
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.activeTab {
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  color: black;
+  font-size: 12px;
+  font-weight: bolder;
+  width: 80px;
+  text-align: center;
+  padding: 10px 0;
+  display: inline-block;
+  line-height: normal;
+}
+
+.activeTab:focus {
+  outline: none;
+  border: none;
+}
+
+.inActiveTab {
+  background: gray;
+  border: none;
+  font-size: 12px;
+  font-weight: bolder;
+  width: 80px;
+  text-align: center;
+  padding: 10px 0;
+  display: inline-block;
+  line-height: normal;
+}
+
+@media (max-width: 1060px) {
+.accept{
+  font-size: 10px;
+ }
+ 
+
+}
+@media (max-width: 796px) {
+  .inspectionSubContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    padding: 5px;
+  }
+
+
+  .activeTab,
+  .inActiveTab {
+    font-size: 10px;
+    font-weight: bolder;
+    width: 60px;
+    text-align: center;
+    padding: 10px 0;
+    display: inline-block;
+    line-height: normal;
+  }
+
+
+  .inspectionPropertyAddressContainer {
+    width: 90%;
+  }
+
+}

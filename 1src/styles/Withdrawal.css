@@ -1,0 +1,73 @@
+.withdrawal-container {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.withdrawal-container h4 {
+  font-size: 1.2rem;
+}
+.balance {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.withdrawal-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 15px;
+}
+
+.withdrawal-container input[type="number"] {
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: 1px;
+}
+
+.withdrawal-container button {
+  padding: 0.6rem;
+  background-color: #006633;
+  color: #f4f4f4;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.withdrawal-container button:hover {
+  background-color: #006600;
+}
+.withdrawal-container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+.message {
+  color: green;
+  margin-top: 1rem;
+}
+
+.requests-list {
+  margin-top: 2rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.requests-list li {
+  background: #f1f1f1;
+  margin-bottom: 0.5rem;
+  padding: 0.7rem;
+  border-radius: 4px;
+}
